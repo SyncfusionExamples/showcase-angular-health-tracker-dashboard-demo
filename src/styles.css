@@ -1,0 +1,793 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('assets/fonts/icomoon.eot?hvguwa');
+  src: url('assets/fonts/icomoon.eot?hvguwa#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon.ttf?hvguwa') format('truetype'),
+    url('assets/fonts/icomoon.woff?hvguwa') format('woff'),
+    url('assets/fonts/icomoon.svg?hvguwa#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow-down:before {
+  content: "\e900";
+}
+
+.icon-arrow-left:before {
+  content: "\e901";
+}
+
+.icon-arrow-left-circle:before {
+  content: "\e902";
+}
+
+.icon-arrow-right:before {
+  content: "\e903";
+}
+
+.icon-arrow-right-circle:before {
+  content: "\e904";
+}
+
+.icon-arrow-up:before {
+  content: "\e905";
+}
+
+.icon-calendar1:before {
+  content: "\e906";
+}
+
+.icon-check:before {
+  content: "\e907";
+}
+
+.icon-chevron-down:before {
+  content: "\e908";
+}
+
+.icon-chevron-left:before {
+  content: "\e909";
+}
+
+.icon-chevron-right:before {
+  content: "\e90a";
+}
+
+.icon-chevron-up:before {
+  content: "\e90b";
+}
+
+.icon-chevrons-left:before {
+  content: "\e90c";
+}
+
+.icon-chevrons-right:before {
+  content: "\e90d";
+}
+
+.icon-droplet:before {
+  content: "\e90e";
+}
+
+.icon-edit-2:before {
+  content: "\e90f";
+}
+
+.icon-heart:before {
+  content: "\e910";
+}
+
+.icon-home:before {
+  content: "\e911";
+}
+
+.icon-log-in:before {
+  content: "\e912";
+}
+
+.icon-log-out:before {
+  content: "\e913";
+}
+
+.icon-minus:before {
+  content: "\e914";
+}
+
+.icon-minus-circle:before {
+  content: "\e915";
+}
+
+.icon-minus-square:before {
+  content: "\e916";
+}
+
+.icon-plus:before {
+  content: "\e917";
+}
+
+.icon-plus-circle:before {
+  content: "\e918";
+}
+
+.icon-plus-square:before {
+  content: "\e919";
+}
+
+.icon-settings:before {
+  content: "\e91a";
+}
+
+.icon-trash:before {
+  content: "\e91b";
+}
+
+.icon-user:before {
+  content: "\e91c";
+}
+
+.icon-zoom-in:before {
+  content: "\e91d";
+}
+
+.icon-zoom-out:before {
+  content: "\e91e";
+}
+
+.icon-Activities:before {
+  content: "\e91f";
+}
+
+.icon-Breakfast:before {
+  content: "\e920";
+}
+
+.icon-calendar:before {
+  content: "\e921";
+}
+
+.icon-Calories:before {
+  content: "\e922";
+}
+
+.icon-Diet:before {
+  content: "\e923";
+}
+
+.icon-Dinner:before {
+  content: "\e924";
+}
+
+.icon-Fasting:before {
+  content: "\e925";
+}
+
+.icon-Heart:before {
+  content: "\e926";
+}
+
+.icon-Logo:before {
+  content: "\e927";
+}
+
+.icon-Lunch:before {
+  content: "\e928";
+}
+
+.icon-Profile:before {
+  content: "\e929";
+}
+
+.icon-Sleep:before {
+  content: "\e92a";
+}
+
+.icon-Snack-1:before {
+  content: "\e92b";
+}
+
+.icon-Snack-2:before {
+  content: "\e92c";
+}
+
+.icon-Steps:before {
+  content: "\e92d";
+}
+
+.icon-Thunder:before {
+  content: "\e92e";
+}
+
+.icon-Water:before {
+  content: "\e92f";
+}
+
+.e-tab .e-tab-header-icon-div {
+  float: left !important;
+  margin-top: 10px;
+}
+
+.e-tab .e-tab-header-icon {
+  font-size: 32px !important;
+  color: #F15223 !important;
+  background-color: #FFFFFF !important;
+  border-radius: 8px !important;
+}
+
+.e-tab .e-tab-header .e-tab-title {
+  float: left !important;
+  margin-left: 10px;
+  margin-top: 10px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: #56648A;
+  padding-top: 8px;
+}
+
+.e-tab-header-icon-container,
+.e-tab-header-mobile-icon-container {
+  margin-left: 10px;
+}
+
+.e-tab .e-tab-header .e-tab-wrap:hover {
+  color: #F15223 !important;
+  background: initial !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
+  color: #F15223 !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-items {
+  width: calc(100% - 80px) !important;
+  text-align: center !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-items .e-tab-wrap {
+  text-align: center !important;
+}
+
+.e-heart-rate-card {
+  background: linear-gradient(242.93deg, #9BEAFF -8.23%, #2084FE 96.9%);
+  border-radius: 24px;
+}
+
+.e-steps-card {
+  background: linear-gradient(43.81deg, #F542A7 0%, #FFBABE 114.67%);
+  border-radius: 24px;
+}
+
+.e-calories-card {
+  background: linear-gradient(42.9deg, #FFAF65 2.17%, #FFE8C7 114.69%);
+  border-radius: 24px;
+}
+
+.e-sleep-card {
+  background: linear-gradient(222.15deg, #93F7EE -10.41%, #02C3DE 97.98%);
+  border-radius: 24px;
+}
+
+.e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-icon {
+  color: #ff0200 !important;
+  font-weight: bolder;
+}
+
+.e-tab .e-tab-header .e-tab-icon::before {
+  font-size: 32px !important;
+}
+
+.e-tab .e-tab-header .e-indicator {
+  background: #ff0200 !important;
+}
+
+.e-card .e-card-header .e-card-header-image {
+  font-size: 28px;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+.e-card .e-card-header .e-card-header-caption {
+  padding: 0;
+}
+
+.e-card {
+  margin-right: 30px;
+  float: left;
+  height: 220px;
+}
+
+.e-activity-card-title,
+.e-steps-card-title,
+.e-calories-card-title,
+.e-sleep-card-title {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 28px !important;
+  line-height: 125% !important;
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2) !important;
+}
+
+.e-activity-actual {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 125%;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.e-activity-goal {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 125%;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.e-activity-panel,
+.e-workout-panel,
+.e-profile-panel {
+  background: #FFFFFF !important;
+  border: 1px solid #ECF3F8 !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.08) !important;
+  border-radius: 24px !important;
+}
+
+.e-grid,
+.e-chart {
+  margin: 20px;
+  width: 98%;
+}
+
+.e-grid .e-row.e-altrow {
+  background: #F5F8FB;
+  border-radius: 6px;
+}
+
+.e-grid .e-headercell {
+  background: #F5F8FB;
+}
+
+.e-grid .e-columnheader {
+  height: 52px !important;
+}
+
+.e-grid .e-rowcell.completion-color {
+  color: #F15223 !important;
+}
+
+.e-grid .e-rowcell {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+}
+
+.e-grid .e-headercell .e-headertext {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+  text-transform: none !important;
+}
+
+.e-panel-header {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 24px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+  background: #FFFFFF !important;
+}
+
+.profile-row {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #F15223 !important;
+  margin: 10px 25px !important;
+}
+
+.profile-value {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #303343 !important;
+  margin: 0 25px !important;
+}
+
+.e-profile-card {
+  background: #FAFAFC !important;
+  border: 1px solid #F1F1F8 !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 4px 12px rgba(103, 173, 255, 0.08) !important;
+  border-radius: 20px !important;
+}
+
+.e-profile-card .e-card-header-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #303343 !important;
+}
+
+.e-profile-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #56648A !important;
+}
+
+.e-journal-date {
+  margin-top: 20px;
+}
+
+.e-journal {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 125%;
+  color: #303343;
+  margin-top: 25px;
+}
+
+.e-diet-card {
+  background: #FAFAFC !important;
+  border: 1px solid #F1F1F8 !important;
+  box-sizing: border-box !important;
+  border-radius: 16px !important;
+  width: 100% !important;
+  height: 100px !important;
+  margin-top: 20px !important;
+}
+
+.e-diet-card .e-card-header-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+}
+
+.e-diet-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  color: #7D96A6 !important;
+  margin-top: 10px !important;
+}
+
+.e-heart-rate-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  color: #FFFFFF !important;
+  opacity: 0.75 !important;
+  margin-top: 8px;
+}
+
+.e-tab-header-icon {
+  background: #F15223 !important;
+  border-radius: 8px !important;
+  width: 32px !important;
+  height: 32px !important;
+  float: left !important;
+  font-size: 32px !important;
+}
+
+.e-tab-header .e-tab-title {
+  float: left !important;
+}
+
+.e-progressbar {
+  overflow: hidden;
+}
+
+.e-workout-panel,
+.e-activity-panel,
+.e-my-activities-panel {
+  margin: 0 32px;
+  width: 77% !important;
+}
+
+.e-workout-panel .e-panel-container,
+.e-activity-panel .e-panel-container,
+.e-my-activities-panel .e-panel-container {
+  width: 100%;
+  height: 300px;
+}
+
+.e-dashboardlayout.e-control .e-panel {
+  box-shadow: none;
+}
+
+.e-dashboardlayout.e-control .e-panel:hover {
+  box-shadow: none;
+}
+
+.e-panel.e-my-activities-panel {
+  border: none !important;
+}
+
+.e-panel.e-my-activities-panel:hover {
+  border: none;
+}
+
+.e-panel.e-my-activities-panel:active {
+  background: #FFFFFF !important;
+}
+
+.e-tab .e-tab-header {
+  top: 0 !important;
+  position: sticky !important;
+  z-index: 10000 !important;
+  background: #FFFFFF !important;
+  margin-bottom: 30px;
+}
+
+.e-chart-dropdown {
+  display: none;
+}
+
+.e-profile-editor div {
+  border: 2px solid #B5C2CA;
+  transform: rotate(90deg);
+  margin-right: 3px;
+  float: right;
+}
+
+.e-profile-editor {
+  margin-right: 10px;
+  margin-top: 25px;
+  width: 30px;
+  float: right;
+}
+
+.e-profile-pic {
+  width: 80px;
+  height: 80px;
+  background: #FFC6B5;
+  border-radius: 50%;
+  margin-left: calc(100%/2.7);
+  margin-top: 10px;
+  float: left;
+}
+
+.e-heart-rate-card {
+  width: 25%;
+}
+
+.e-steps-card,
+.e-calories-card,
+.e-sleep-card {
+  width: 22%;
+}
+
+.e-activity-card-title {
+  float: left;
+}
+
+.e-activity-card-sub-title {
+  float: right;
+}
+
+.e-profile-pic-text {
+  font-size: 30px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  color: #FFFFFF;
+}
+
+.gauge-container {
+  display: block;
+  width: 100%;
+}
+
+@media only screen and (max-width: 1200px) {
+
+  .e-workout-panel,
+  .e-activity-panel,
+  .e-my-activities-panel {
+    margin: 0 20px;
+    width: 95% !important;
+  }
+
+  .e-heart-rate-card,
+  .e-steps-card,
+  .e-calories-card,
+  .e-sleep-card {
+    width: 45%;
+    font-size: 20px !important;
+  }
+
+  .e-activity-card-title,
+  .e-steps-card-title,
+  .e-calories-card-title,
+  .e-sleep-card-title {
+    font-size: 20px !important;
+  }
+
+  .e-activity-actual {
+    font-size: 25px !important;
+  }
+
+  .e-activity-goal {
+    font-size: 20px !important;
+  }
+
+  .e-card {
+    height: 130px;
+    margin-right: 15px;
+    margin-bottom: 10px;
+  }
+
+  .e-tab .e-tab-header .e-toolbar-items {
+    margin-left: initial;
+  }
+
+  .e-card-header-image {
+    display: none !important;
+  }
+
+  .e-tab .e-tab-header .e-toolbar-item .e-tab-text {
+    font-size: 12px;
+  }
+
+  .e-activity-card-sub-title {
+    float: left;
+  }
+
+  .e-tab .e-tab-header {
+    top: initial !important;
+    bottom: 0 !important;
+    position: fixed !important;
+    z-index: 10000 !important;
+    background: #FFFFFF !important;
+    margin-bottom: 0px !important;
+  }
+
+  .e-tab-header-icon-container {
+    display: none;
+  }
+
+  .e-tab-header-mobile-icon-container {
+    height: 60px;
+    top: 0 !important;
+    position: sticky !important;
+    z-index: 10000 !important;
+    background: #FFFFFF !important;
+  }
+
+  .tab-container {
+    padding-top: 20px;
+  }
+
+  .e-tab-header-icon-div {
+    float: left !important;
+    margin-top: 10px;
+  }
+
+  .e-tab-header-icon {
+    font-size: 32px !important;
+    color: #F15223 !important;
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+  }
+
+  .e-tab-title {
+    float: left !important;
+    margin-left: 10px;
+    margin-top: 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #56648A;
+    padding-top: 8px;
+  }
+
+  .separator-div {
+    height: 1px;
+    background: #E8EDF6;
+  }
+
+  .e-profile-card {
+    height: 250px;
+    background: #FFFFFF !important;
+    border: 1px solid #F1F1F8 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0px 4px 12px rgba(103, 173, 255, 0.08) !important;
+    border-radius: 20px !important;
+  }
+
+  .e-diet-card {
+    background: #FFFFFF !important;
+    border: 1px solid #F1F1F8 !important;
+    box-sizing: border-box !important;
+    border-radius: 16px !important;
+    margin-top: 12px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .e-grid,
+  .e-chart {
+    margin: 10px;
+  }
+
+  .e-tab .e-tab-header .e-indicator {
+    display: none;
+  }
+
+  .e-profile-panel {
+    height: auto !important;
+  }
+
+  .e-heart-rate-card .e-card-header {
+    margin-top: 10px;
+  }
+}

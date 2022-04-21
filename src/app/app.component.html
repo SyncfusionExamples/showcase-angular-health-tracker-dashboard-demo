@@ -1,0 +1,161 @@
+<div *ngIf="isDevice" class="e-tab-header-mobile-icon-container">
+  <div class="e-tab-header-icon-div">
+    <span class="e-tab-header-icon icon-Logo"></span>
+  </div>
+  <div class="e-tab-title">GOFIT</div>
+</div>
+<div *ngIf="isDevice" class="separator-div"></div>
+<ejs-tab id="tab-element" #tab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
+  (selecting)="select($event)">
+  <e-tabitems>
+    <e-tabitem [header]='headerText[0]'>
+      <ng-template #content>
+        <ejs-dashboardlayout id='default_dashboard' columns="5" #default_dashboard [cellSpacing]='cellSpacing'
+          [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery'>
+          <div id="activity-panel-id" class="e-panel e-my-activities-panel" data-row="0" data-col="0" data-sizeX="4"
+            data-sizeY="1">
+            <div class="e-panel-container">
+              <div class="e-panel-header">
+                <div style="float: left; margin-top: 5px;">My Activities</div>
+                <div style="float: right;">
+                  <ejs-datepicker #datepicker [value]='today' [max]="maxDate" [width]="datePickerWidth"
+                    (change)="onDateChange($event)"></ejs-datepicker>
+                </div>
+              </div>
+              <div style="margin: 50px 0;">
+                <div tabindex="0" class="e-card e-heart-rate-card">
+                  <div class="e-card-header" style="width: 100%">
+                    <div class="e-card-header-image icon-Heart e-card-corner"></div>
+                    <div class="e-card-header-caption" style="width: 100%">
+                      <div>
+                        <div class="e-card-header-title e-activity-card-title"> Heart Rate</div>
+                        <div class="e-card-header-sub-title e-activity-card-sub-title">{{ heartRate }} BPM</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="e-card-content">
+                    <ejs-progressbar #linear id='linear' type='Linear' maximum='100' minimum='60' [value]='heartRate'
+                      width='100%' height='60' [animation]='animation' [trackThickness]='trackThickness'
+                      [progressThickness]='progressThickness' [segmentCount]='segmentCount' cornerRadius='Square'
+                      [gapWidth]='gapWidth'>
+                    </ejs-progressbar>
+                    <!-- <ejs-lineargauge id='lineargauge' class="gauge-container" #lineargauge orientation='Horizontal' [container]="container"
+                      [axes]='axes' width="100%" height="70px" theme="Tailwind">
+                    </ejs-lineargauge> -->
+                  </div>
+                </div>
+                <div tabindex="0" class="e-card e-steps-card">
+                  <div class="e-card-header" style="width: 100%">
+                    <div class="e-card-header-image icon-Steps e-card-corner"></div>
+                    <div class="e-card-header-caption">
+                      <div class="e-card-header-title e-steps-card-title"> Steps</div>
+                    </div>
+                  </div>
+                  <div class="e-card-content">
+                    <div class="e-activity-actual">{{ steps }}</div>
+                    <div class="e-activity-goal">6000</div>
+                  </div>
+                </div>
+                <div tabindex="0" class="e-card e-calories-card">
+                  <div class="e-card-header" style="width: 100%">
+                    <div class="e-card-header-image icon-Calories e-card-corner"></div>
+                    <div class="e-card-header-caption">
+                      <div class="e-card-header-title e-calories-card-title"> Calories</div>
+                    </div>
+                  </div>
+                  <div class="e-card-content">
+                    <div class="e-activity-actual">{{ calories }} kcal</div>
+                    <div class="e-activity-goal">3095 kcal</div>
+                  </div>
+                </div>
+                <div tabindex="0" class="e-card e-sleep-card">
+                  <div class="e-card-header" style="width: 100%">
+                    <div class="e-card-header-image icon-Sleep e-card-corner"></div>
+                    <div class="e-card-header-caption">
+                      <div class="e-card-header-title e-sleep-card-title"> Sleep</div>
+                    </div>
+                  </div>
+                  <div class="e-card-content">
+                    <div class="e-activity-actual">{{ sleepInHours }}</div>
+                    <div class="e-activity-goal">8h</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="activity-chart-panel-id" class="e-panel e-activity-panel" data-row="1" data-col="0" data-sizeX="4"
+            data-sizeY="1">
+            <div class="e-panel-container">
+              <div class="e-panel-header">
+                <div style="float: left;">Activity Statistics</div>
+                <div>
+                  <ejs-dropdownlist #ddlelement id='ddlelement' class="e-chart-dropdown" [dataSource]='dropDownData'
+                    index="0" (change)="onDropDownChange($event)" style="float: right;"></ejs-dropdownlist>
+                </div>
+              </div>
+              <div>
+                <ejs-chart #chart [chartArea]='chartArea' [width]='chartWidth' [primaryXAxis]='primaryXAxis'
+                  [primaryYAxis]='primaryYAxis' height="300px" [legendSettings]="legendSettings" theme="Tailwind"
+                  [tooltip]='tooltip' [marker]="marker" [crosshair]="crosshair">
+                  <e-series-collection>
+                    <e-series [dataSource]='data' type='SplineArea' fill="#F547A8" xName='x' yName='y' name='Workout'
+                      opacity=0.1 legendShape='Circle'></e-series>
+                    <e-series [dataSource]='data' type='Spline' fill="#F547A8" xName='x' yName='y' width="3">
+                    </e-series>
+                  </e-series-collection>
+                </ejs-chart>
+              </div>
+            </div>
+          </div>
+          <div id="workout-panel-id" class="e-panel e-workout-panel" data-row="2" data-col="0" data-sizeX="4"
+            data-sizeY="1">
+            <div class="e-panel-container">
+              <div class="e-panel-header" style="margin-bottom: 5px;">
+                <div>Recent Workout</div>
+              </div>
+              <ejs-grid #grid [dataSource]='gridData' gridLines="None" rowHeight="60"
+                (queryCellInfo)='customiseCell($event)' gridLines="None">
+                <e-columns>
+                  <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
+                  <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200" format="###.# km">
+                  </e-column>
+                  <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left' width="200"
+                    format='### mins'>
+                  </e-column>
+                  <e-column field='Date' headerText='Date & Time' textAlign='Left' width="200"
+                    format="MMM dd,yyyy hh:mm a">
+                  </e-column>
+                  <e-column field='Completion' headerText='Completion' textAlign='Left' width="200" format="###'%'">
+                  </e-column>
+                </e-columns>
+              </ejs-grid>
+            </div>
+          </div>
+          <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="4" data-sizeX="1"
+            data-sizeY="3">
+            <div class="e-panel-container" style="width: 90%; margin: 20px;">
+              <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+            </div>
+          </div>
+        </ejs-dashboardlayout>
+      </ng-template>
+    </e-tabitem>
+    <e-tabitem [header]='headerText[1]'></e-tabitem>
+    <e-tabitem [header]='headerText[2]'></e-tabitem>
+    <e-tabitem *ngIf="isDevice" [header]='headerText[3]'>
+      <ng-template #content>
+        <ejs-dashboardlayout id='profile_dashboard' columns="1" #profile_dashboard [cellSpacing]='cellSpacing'
+          [allowDragging]="false">
+          <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
+            data-sizeY="1">
+            <div class="e-panel-container" style="width: 90%; height: 90%; margin: 20px;">
+              <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+            </div>
+          </div>
+        </ejs-dashboardlayout>
+      </ng-template>
+    </e-tabitem>
+  </e-tabitems>
+</ejs-tab>
+
+<router-outlet></router-outlet>

@@ -1,0 +1,1529 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('assets/fonts/icomoon.eot?hvguwa');
+  src: url('assets/fonts/icomoon.eot?hvguwa#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon.ttf?hvguwa') format('truetype'),
+    url('assets/fonts/icomoon.woff?hvguwa') format('woff'),
+    url('assets/fonts/icomoon.svg?hvguwa#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow-down:before {
+  content: "\e900";
+}
+
+.icon-arrow-left:before {
+  content: "\e901";
+}
+
+.icon-arrow-left-circle:before {
+  content: "\e902";
+}
+
+.icon-arrow-right:before {
+  content: "\e903";
+}
+
+.icon-arrow-right-circle:before {
+  content: "\e904";
+}
+
+.icon-arrow-up:before {
+  content: "\e905";
+}
+
+.icon-calendar1:before {
+  content: "\e906";
+}
+
+.icon-check:before {
+  content: "\e907";
+}
+
+.icon-chevron-down:before {
+  content: "\e908";
+}
+
+.icon-chevron-left:before {
+  content: "\e909";
+}
+
+.icon-chevron-right:before {
+  content: "\e90a";
+}
+
+.icon-chevron-up:before {
+  content: "\e90b";
+}
+
+.icon-chevrons-left:before {
+  content: "\e90c";
+}
+
+.icon-chevrons-right:before {
+  content: "\e90d";
+}
+
+.icon-droplet:before {
+  content: "\e90e";
+}
+
+.icon-edit-2:before {
+  content: "\e90f";
+}
+
+.icon-heart:before {
+  content: "\e910";
+}
+
+.icon-home:before {
+  content: "\e911";
+}
+
+.icon-log-in:before {
+  content: "\e912";
+}
+
+.icon-log-out:before {
+  content: "\e913";
+}
+
+.icon-minus:before {
+  content: "\e914";
+}
+
+.icon-minus-circle:before {
+  content: "\e915";
+}
+
+.icon-minus-square:before {
+  content: "\e916";
+}
+
+.icon-plus:before {
+  content: "\e917";
+}
+
+.icon-plus-circle:before {
+  content: "\e918";
+}
+
+.icon-plus-square:before {
+  content: "\e919";
+}
+
+.icon-settings:before {
+  content: "\e91a";
+}
+
+.icon-trash:before {
+  content: "\e91b";
+}
+
+.icon-user:before {
+  content: "\e91c";
+}
+
+.icon-zoom-in:before {
+  content: "\e91d";
+}
+
+.icon-zoom-out:before {
+  content: "\e91e";
+}
+
+.icon-Activities:before {
+  content: "\e91f";
+}
+
+.icon-Breakfast:before {
+  content: "\e920";
+}
+
+.icon-calendar:before {
+  content: "\e921";
+}
+
+.icon-Calories:before {
+  content: "\e922";
+}
+
+.icon-Diet:before {
+  content: "\e923";
+}
+
+.icon-Dinner:before {
+  content: "\e924";
+}
+
+.icon-Fasting:before {
+  content: "\e925";
+}
+
+.icon-Heart:before {
+  content: "\e926";
+}
+
+.icon-Logo:before {
+  content: "\e927";
+}
+
+.icon-Lunch:before {
+  content: "\e928";
+}
+
+.icon-Profile:before {
+  content: "\e929";
+}
+
+.icon-Sleep:before {
+  content: "\e92a";
+}
+
+.icon-Snack-1:before {
+  content: "\e92b";
+}
+
+.icon-Snack-2:before {
+  content: "\e92c";
+}
+
+.icon-Steps:before {
+  content: "\e92d";
+}
+
+.icon-Thunder:before {
+  content: "\e92e";
+}
+
+.icon-Water:before {
+  content: "\e92f";
+}
+
+body {
+  overflow: hidden;
+  margin: 0;
+}
+
+@media only screen and (min-width: 1250px) {
+
+  /*! Firefox */
+  .e-dashboardlayout-container {
+    scrollbar-color: rgba(0, 0, 0, .5) none;
+  }
+
+  /*! Other Browser */
+  .e-dashboardlayout-container::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .e-dashboardlayout-container {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, .5);
+  }
+
+  .e-dashboardlayout-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 6px;
+  }
+}
+
+.e-dashboardlayout-container {
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100vh - 75px) !important;
+}
+
+.e-fasting-dashboardlayout-container {
+  height: calc(100vh - 110px) !important;
+}
+
+.e-dashboardlayout {
+  margin-top: 30px;
+}
+
+.e-tab-header-icon-div {
+  float: left !important;
+  margin-top: 15px;
+  margin-left: 10px;
+}
+
+.e-tab .e-tab-header-icon {
+  font-size: 32px !important;
+  color: #F15223 !important;
+  background-color: #FFFFFF !important;
+  border-radius: 8px !important;
+}
+
+.e-tab .e-tab-header .e-tab-title {
+  float: left !important;
+  margin-left: 10px;
+  margin-top: 15px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 125%;
+  color: #56648A;
+  padding-top: 8px;
+}
+
+.e-tab .e-tab-header .e-tab-wrap:hover {
+  color: #F15223 !important;
+  background: initial !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
+  color: #F15223 !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-items {
+  width: calc(100% - 150px) !important;
+  text-align: center !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-items .e-tab-wrap {
+  text-align: center !important;
+}
+
+.e-heart-rate-card {
+  background: linear-gradient(242.93deg, #9BEAFF -8.23%, #2084FE 96.9%);
+  border-radius: 24px;
+}
+
+.e-steps-card {
+  background: linear-gradient(43.81deg, #F542A7 0%, #FFBABE 114.67%);
+  border-radius: 24px;
+}
+
+.e-calories-card {
+  background: linear-gradient(42.9deg, #FFAF65 2.17%, #FFE8C7 114.69%);
+  border-radius: 24px;
+}
+
+.e-sleep-card {
+  background: linear-gradient(222.15deg, #93F7EE -10.41%, #02C3DE 97.98%);
+  border-radius: 24px;
+}
+
+.e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-text,
+.e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-icon {
+  color: #ff0200 !important;
+  font-weight: bolder;
+}
+
+.e-tab .e-tab-header .e-tab-icon::before {
+  font-size: 32px !important;
+}
+
+.e-tab .e-tab-header .e-indicator {
+  background: #ff0200 !important;
+}
+
+.e-card .e-card-header .e-card-header-image {
+  font-size: 28px;
+  align-items: center;
+  color: #FFFFFF;
+}
+
+.e-card .e-card-header .e-card-header-caption {
+  padding: 0;
+}
+
+.e-card {
+  margin-right: 15px;
+  float: left;
+}
+
+.e-activity-card-title,
+.e-steps-card-title,
+.e-calories-card-title,
+.e-sleep-card-title {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 28px !important;
+  line-height: 125% !important;
+  color: #FFFFFF !important;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2) !important;
+}
+
+.e-activity-actual {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 38px;
+  line-height: 125%;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.e-activity-goal {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 125%;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.e-activity-panel,
+.e-workout-panel,
+.e-profile-panel,
+.e-diet-profile-panel,
+.e-fasting-profile-panel,
+.e-fasting-panel,
+.e-water-panel,
+.e-fasting-chart-panel {
+  background: #FFFFFF !important;
+  border: 1px solid #ECF3F8 !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.08) !important;
+  border-radius: 24px !important;
+  padding-right: 10px;
+}
+
+.e-fasting-chart-panel .e-panel-header {
+  margin: 24px 0;
+}
+
+.e-fasting-panel,
+.e-water-panel {
+  width: 38% !important;
+  margin-left: 20px;
+}
+
+.e-grid,
+.e-chart {
+  margin: 20px;
+  width: 98%;
+}
+
+.e-grid .e-row.e-altrow {
+  background: #F5F8FB;
+  border-radius: 6px;
+}
+
+.e-grid .e-headercell {
+  background: #F5F8FB;
+}
+
+.e-grid .e-columnheader {
+  height: 52px !important;
+}
+
+.e-grid .e-rowcell.completion-color {
+  color: #F15223 !important;
+}
+
+.e-grid .e-rowcell {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+}
+
+.e-grid .e-headercell .e-headertext {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+  text-transform: none !important;
+}
+
+.e-panel-header {
+  font-family: 'Inter' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 24px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+  background: #FFFFFF !important;
+}
+
+.profile-row {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #F15223 !important;
+  margin: 10px 25px !important;
+}
+
+.profile-value {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #303343 !important;
+  margin: 0 25px !important;
+}
+
+.e-profile-card {
+  background: #FAFAFC !important;
+  border: 1px solid #F1F1F8 !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 4px 12px rgba(103, 173, 255, 0.08) !important;
+  border-radius: 20px !important;
+}
+
+.e-profile-card .e-card-header-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #303343 !important;
+}
+
+.e-profile-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  text-align: center !important;
+  color: #56648A !important;
+}
+
+.e-journal-date {
+  margin-top: 20px;
+}
+
+.e-journal {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 125%;
+  color: #303343;
+  margin-top: 25px;
+}
+
+.e-diet-card {
+  background: #FAFAFC !important;
+  border: 1px solid #F1F1F8 !important;
+  box-sizing: border-box !important;
+  border-radius: 16px !important;
+  width: 100% !important;
+  margin-top: 20px !important;
+}
+
+.e-last-diet-card {
+  margin-bottom: 20px;
+}
+
+.e-diet-card .e-card-header {
+  padding: 25px !important;
+}
+
+.e-diet-card .e-card-header-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  line-height: 125% !important;
+  color: #303343 !important;
+}
+
+.e-diet-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 10px !important;
+  line-height: 125% !important;
+  color: #7D96A6 !important;
+  margin-top: 10px !important;
+}
+
+.e-heart-rate-card .e-card-header-sub-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  font-size: 18px !important;
+  line-height: 125% !important;
+  color: #FFFFFF !important;
+  opacity: 0.75 !important;
+  margin-top: 8px;
+}
+
+.e-tab-header-icon {
+  background: #F15223 !important;
+  border-radius: 8px !important;
+  width: 32px !important;
+  height: 32px !important;
+  float: left !important;
+  font-size: 32px !important;
+}
+
+.e-tab-header .e-tab-title {
+  float: left !important;
+}
+
+.e-progressbar {
+  overflow: hidden;
+}
+
+.e-workout-panel,
+.e-activity-panel,
+.e-my-activities-panel,
+.e-fasting-chart-panel {
+  width: 78% !important;
+  margin: 0 20px;
+}
+
+.e-fasting-chart-panel {
+  height: auto !important;
+}
+
+.e-workout-panel .e-panel-container,
+.e-activity-panel .e-panel-container,
+.e-my-activities-panel .e-panel-container {
+  width: 100%;
+}
+
+.e-dashboardlayout.e-control .e-panel {
+  box-shadow: none;
+}
+
+.e-dashboardlayout.e-control .e-panel:hover {
+  box-shadow: none;
+}
+
+.e-panel.e-my-activities-panel,
+.e-panel.e-meals-panel {
+  border: none !important;
+}
+
+.e-panel.e-my-activities-panel:hover,
+.e-panel.e-meals-panel:hover {
+  border: none;
+}
+
+.e-panel.e-my-activities-panel:active,
+.e-panel.e-meals-panel:active {
+  background: #FFFFFF !important;
+}
+
+.e-tab .e-tab-header {
+  top: 0 !important;
+  position: sticky !important;
+  z-index: 10000 !important;
+  background: #FFFFFF !important;
+}
+
+.e-chart-dropdown {
+  display: none;
+}
+
+.e-profile-editor div {
+  border: 2px solid #B5C2CA;
+  transform: rotate(90deg);
+  margin-right: 3px;
+  float: right;
+}
+
+.e-profile-editor {
+  margin-right: 10px;
+  margin-top: 25px;
+  width: 30px;
+  float: right;
+}
+
+.e-profile-pic {
+  width: 80px;
+  height: 80px;
+  background: #FFC6B5;
+  border-radius: 50%;
+  float: left;
+}
+
+.e-heart-rate-card {
+  width: 25%;
+}
+
+.e-steps-card,
+.e-calories-card,
+.e-sleep-card {
+  width: 22%;
+}
+
+.e-activity-card-title {
+  float: left;
+}
+
+.e-activity-card-sub-title {
+  float: right;
+}
+
+.e-profile-pic-text {
+  font-size: 30px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500 !important;
+  color: #FFFFFF;
+}
+
+.gauge-container {
+  display: block;
+  width: 100%;
+}
+
+.e-profile-details,
+.e-profile-pic-container {
+  width: 100%;
+}
+
+.e-profile-pic-container {
+  display: flex;
+  justify-content: center;
+}
+
+.e-diet-chart-panel .e-panel-header {
+  margin-top: 24px;
+}
+
+.e-diet-panel-header-text,
+.e-consumed {
+  float: left;
+}
+
+.e-diet-panel-header-text,
+.e-consumed,
+.e-burned {
+  width: 33%;
+}
+
+.e-consumed-wrapper-value {
+  width: 70%;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 125%;
+  color: #303343;
+}
+
+.e-consumed-wrapper-text {
+  width: 20%;
+  float: left;
+  white-space: normal !important;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 125%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #B5C2CA;
+}
+
+.e-pie-chart-container {
+  width: 25%;
+  display: inline-block;
+  margin-left: 20px;
+}
+
+.e-nutrition-container {
+  width: 65%;
+  display: grid;
+  margin-left: 60px;
+}
+
+.e-nutrition-img {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  float: left;
+  margin-right: 8px;
+}
+
+.e-nutrition-protein-img {
+  background: #4DD291;
+}
+
+.e-nutrition-fat-img {
+  background: #901C53;
+}
+
+.e-nutrition-carbo-img {
+  background: #CB4967;
+}
+
+.e-nutrition-calcium-img {
+  background: #E25641;
+}
+
+.e-nutrition-sodium-img {
+  background: #FC892C;
+}
+
+.e-nutrition-iron-img {
+  background: #FFC147;
+}
+
+.e-nutrition-text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 125%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #7D96A6;
+}
+
+.e-nutrition-value {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 125%;
+  color: #303343;
+  margin-top: 8px;
+}
+
+.e-chart-parent-div {
+  width: 100%;
+  display: flex;
+}
+
+.e-meals-card {
+  width: 18%;
+  height: 90%;
+  margin-right: 20px;
+  background: #FFFFFF;
+  border: 1px solid #E1E9ED;
+  box-sizing: border-box;
+  border-radius: 24px;
+  box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0);
+}
+
+.e-meals-card .e-card-header {
+  width: 50%;
+  display: block;
+}
+
+.e-meals-card .e-card-header .e-card-header-image {
+  font-size: 42px;
+  color: #222222;
+}
+
+.e-meals-card .e-card-header-img-container {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+}
+
+.e-breakfast-card-container {
+  background: #FF7D7D;
+}
+
+.e-snack1-card-container {
+  background: #FFD67C;
+}
+
+.e-lunch-card-container {
+  background: #CDC5FF;
+}
+
+.e-snack2-card-container {
+  background: #FF9F86;
+}
+
+.e-dinner-card-container {
+  background: #9FDBFF;
+}
+
+.e-meals-card .e-card-header-title {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px !important;
+  line-height: 125%;
+  color: #303343;
+}
+
+.e-meals-card .e-had-meals {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #7D96A6;
+  margin-top: 16px;
+}
+
+.e-meals-card .e-calories-gain {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 125%;
+  color: #000000;
+  margin-top: 42px;
+}
+
+.e-diet-chart-panel-container {
+  margin: 70px 0;
+}
+
+.e-diet-chart-panel {
+  background: #FFFFFF !important;
+  border: 1px solid #E1E9ED !important;
+  box-sizing: border-box !important;
+  box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.08) !important;
+  border-radius: 20px !important;
+  margin: 0 20px;
+  width: 79% !important;
+  height: 50% !important;
+}
+
+.e-meals-panel {
+  margin: 0 20px;
+  background: #fdfdff !important;
+}
+
+.e-meals-panel .e-panel-header {
+  padding: 0 !important;
+}
+
+.e-meals-card-container {
+  display: -webkit-inline-box;
+  margin-top: 20px;
+  overflow: auto;
+  width: 100%;
+}
+
+.e-recom-meals-text {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+  color: #7D96A6;
+  margin-top: 16px;
+}
+
+.e-recom-meals-value {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 125%;
+  color: #D4E1E9;
+  margin-top: 4px;
+}
+
+.e-add-menu-btn,
+.e-add-menu-btn:hover,
+.e-add-menu-btn:active,
+.e-add-menu-btn:focus {
+  background: #FFEAE3;
+  border-radius: 8px;
+  border: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 125%;
+  text-align: center;
+  color: #F15223;
+  height: 48px;
+  width: 100%;
+  margin-top: 32px;
+  box-shadow: none;
+}
+
+.e-card-cal-unit {
+  font-size: 16px;
+}
+
+.e-add-cal-unit {
+  font-weight: 500;
+  color: #7D96A6;
+}
+
+.e-profile-panel,
+.e-diet-profile-panel,
+.e-fasting-profile-panel {
+  height: auto !important;
+}
+
+.e-fasting-header {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 125%;
+  color: #303343;
+  margin: 10px 0 0 20px;
+}
+
+.e-gauge-percent-img {
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(90deg, #FB5F64 0%, #FC9A62 106.75%);
+  border: 2px solid #FFFFFF;
+  border-radius: 54px;
+  color: #FFFFFF;
+  font-size: 36px;
+  line-height: 130%;
+  text-align: center;
+}
+
+.e-fasting-label-container,
+.e-fasting-value-container,
+.e-fasting-button-container {
+  display: flex;
+}
+
+.e-fasting-label-container div {
+  margin: 0 18%;
+}
+
+.e-fasting-value-container div {
+  margin: 0 11%;
+}
+
+.e-fasting-button-container button {
+  margin: 0 5%;
+}
+
+.e-fasting-label-container {
+  font-weight: 500;
+  font-size: 14px;
+  color: #7D96A6;
+}
+
+.e-fasting-value-container {
+  font-weight: 500;
+  font-size: 20px;
+  color: #000000;
+  margin-top: 16px;
+}
+
+.e-fasting-button-container {
+  margin: 30px 0;
+}
+
+.e-fast-time-btn,
+.e-fast-end-btn {
+  width: 38%;
+}
+
+.e-fast-time-btn,
+.e-fast-end-btn,
+.e-fast-time-btn:hover,
+.e-fast-time-btn:active,
+.e-fast-time-btn:focus,
+.e-fast-end-btn:hover,
+.e-fast-end-btn:active,
+.e-fast-end-btn:focus {
+  height: 40px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 125%;
+  text-align: center;
+  box-shadow: none;
+}
+
+.e-fast-time-btn,
+.e-fast-time-btn:hover,
+.e-fast-time-btn:active,
+.e-fast-time-btn:focus {
+  background: #FFEAE3;
+  color: #F15223;
+}
+
+.e-fast-end-btn,
+.e-fast-end-btn:hover,
+.e-fast-end-btn:active,
+.e-fast-end-btn:focus {
+  background: #F15223;
+  color: #FFFFFF;
+}
+
+.e-water-label-container,
+.e-water-value-container {
+  display: flex;
+  justify-content: center;
+}
+
+.e-water-minus,
+.e-water-plus {
+  background: #FFEAE3;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  font-size: 30px;
+  color: #F15223;
+  vertical-align: middle;
+  line-height: 52px;
+  text-align: center;
+}
+
+.e-water-count {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 125%;
+  color: #56648A;
+}
+
+.e-water-image {
+  width: 40px;
+  height: 56px;
+  font-size: 52px;
+  color: #3993F5;
+}
+
+.e-water-count {
+  margin-left: 18px;
+}
+
+.e-water-plus,
+.e-water-image {
+  margin-left: 50px;
+}
+
+.e-water-label-container {
+  margin-top: 60px;
+}
+
+.e-water-value-container {
+  margin: 60px 0;
+}
+
+.e-water-consumed-text {
+  margin-right: 16px;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #B5C2CA;
+  width: 15%;
+}
+
+.e-water-consumed-value {
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 125%;
+  color: #303343;
+}
+
+.e-water-consumed-expect {
+  font-weight: 500;
+  font-size: 30px;
+  line-height: 125%;
+  color: #56648A;
+}
+
+.e-fasting-gauge {
+  margin: 40px 0;
+}
+
+.e-fast-ellapsed {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 125%;
+  text-align: center;
+  color: #7D96A6;
+}
+
+.e-fast-completed {
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 125%;
+  text-align: center;
+  color: #000000;
+  margin-top: 4px;
+}
+
+.e-fast-left {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 125%;
+  text-align: center;
+  color: #FB5F64;
+  margin-top: 4px;
+}
+
+.e-water-annotation-text {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 125%;
+  color: #56648A;
+}
+
+.e-highlight-text {
+  font-weight: 700;
+}
+
+@media only screen and (max-width: 1200px) {
+
+  .e-diet-panel-header-text,
+  .e-consumed,
+  .e-burned,
+  .e-consumed-wrapper-value,
+  .e-consumed-wrapper-text {
+    width: 100%;
+  }
+
+  .e-consumed-wrapper-text {
+    font-size: 12px;
+    margin-top: 20px;
+  }
+
+  .e-consumed-wrapper-value {
+    font-size: 28px;
+    margin-top: 2px;
+  }
+
+  .e-pie-chart-container,
+  .e-nutrition-container {
+    width: 100%;
+    height: 50%;
+  }
+
+  .e-diet-panel-header-text {
+    font-size: 20px;
+  }
+
+  .e-chart-parent-div {
+    display: block;
+  }
+
+  .e-dashboardlayout-container,
+  .e-dashboardlayout-container.e-diet-dashboardlayout-container {
+    height: calc(100vh - 150px) !important;
+  }
+
+  .e-workout-panel,
+  .e-activity-panel,
+  .e-my-activities-panel,
+  .e-profile-panel,
+  .e-diet-profile-panel,
+  .e-fasting-profile-panel {
+    width: 97% !important;
+    margin: 0 12px !important;
+  }
+
+  .e-heart-rate-card,
+  .e-steps-card,
+  .e-calories-card,
+  .e-sleep-card {
+    width: 46%;
+    font-size: 20px !important;
+    margin-left: 2%;
+  }
+
+  .e-activity-card-title,
+  .e-steps-card-title,
+  .e-calories-card-title,
+  .e-sleep-card-title {
+    font-size: 20px !important;
+  }
+
+  .e-activity-actual {
+    font-size: 25px !important;
+  }
+
+  .e-activity-goal {
+    font-size: 20px !important;
+  }
+
+  .e-card {
+    height: 130px;
+    margin-bottom: 5%;
+  }
+
+  .e-tab .e-tab-header .e-toolbar-items {
+    margin-left: initial;
+    width: 100% !important;
+  }
+
+  .e-card-header-image {
+    display: none !important;
+  }
+
+  .e-meals-card .e-card-header .e-card-header-image {
+    display: block !important;
+  }
+
+  .e-tab .e-tab-header .e-toolbar-item .e-tab-text {
+    font-size: 12px;
+  }
+
+  .e-activity-card-sub-title {
+    float: left;
+  }
+
+  .e-tab .e-tab-header {
+    top: initial !important;
+    bottom: 0 !important;
+    position: fixed !important;
+    z-index: 10000 !important;
+    background: #FFFFFF !important;
+    margin-bottom: 0px !important;
+  }
+
+  .e-tab-header-icon-container {
+    display: none;
+  }
+
+  .e-tab-header-mobile-icon-container {
+    height: 60px;
+    top: 0 !important;
+    position: sticky !important;
+    z-index: 10000 !important;
+    background: #FFFFFF !important;
+  }
+
+  .e-tab-header-icon {
+    font-size: 32px !important;
+    color: #F15223 !important;
+    background-color: #FFFFFF !important;
+    border-radius: 8px !important;
+  }
+
+  .e-tab-title {
+    float: left !important;
+    margin-left: 10px;
+    margin-top: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 125%;
+    color: #56648A;
+    padding-top: 8px;
+  }
+
+  .separator-div {
+    height: 1px;
+    background: #E8EDF6;
+  }
+
+  .e-profile-card {
+    height: 250px;
+    background: #FFFFFF !important;
+    border: 1px solid #F1F1F8 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0px 4px 12px rgba(103, 173, 255, 0.08) !important;
+    border-radius: 20px !important;
+  }
+
+  .e-diet-card {
+    background: #FFFFFF !important;
+    border: 1px solid #F1F1F8 !important;
+    box-sizing: border-box !important;
+    border-radius: 16px !important;
+    height: auto !important;
+  }
+
+  .e-grid,
+  .e-chart {
+    margin: 10px;
+  }
+
+  .e-tab .e-tab-header .e-indicator {
+    display: none;
+  }
+
+  .e-heart-rate-card .e-card-header {
+    margin-top: 10px;
+  }
+
+  .e-meals-card {
+    width: 30%;
+    height: 90%;
+    margin: 0 10px;
+    display: inline-block;
+  }
+
+  .e-nutrition-text {
+    margin-top: 20px;
+  }
+
+  .e-nutrition-container {
+    margin-left: 24px;
+    margin-top: 32px;
+  }
+
+  .e-diet-chart-panel .e-panel-header {
+    height: auto !important;
+  }
+
+  .e-nutrition-value {
+    font-size: 24px;
+  }
+
+  .e-diet-chart-panel-container {
+    margin: 30px 0;
+  }
+
+  .e-diet-chart-panel {
+    margin: 0 12px;
+    width: 97% !important;
+    height: auto !important;
+  }
+
+  .e-meals-panel {
+    margin: 0;
+  }
+
+  .e-meals-panel .e-panel-header {
+    margin-left: 10px;
+  }
+
+  .e-fasting-label-container div {
+    margin: 0 18%;
+  }
+
+  .e-fasting-value-container div {
+    margin: 0 10%;
+  }
+
+  .e-fasting-button-container button {
+    margin: 0 5%;
+  }
+
+  .e-fast-time-btn,
+  .e-fast-end-btn {
+    width: 40%;
+  }
+
+  .e-fasting-label-container {
+    font-size: 16px;
+  }
+
+  .e-fasting-value-container {
+    font-size: 25px;
+  }
+
+  .e-water-consumed-text {
+    width: 17%;
+  }
+
+  .e-water-consumed-value {
+    font-size: 32px;
+  }
+
+  .e-water-consumed-expect {
+    font-size: 20px;
+  }
+
+  .e-fasting-panel,
+  .e-water-panel,
+  .e-fasting-chart-panel {
+    width: 97% !important;
+    margin: 0 12px !important;
+  }
+}
+
+@media only screen and (max-width: 700px) {
+
+  .e-heart-rate-card,
+  .e-steps-card,
+  .e-calories-card,
+  .e-sleep-card {
+    width: 43%;
+  }
+
+  .e-meals-card {
+    width: 50%;
+  }
+
+  .e-diet-chart-panel,
+  .e-workout-panel,
+  .e-activity-panel,
+  .e-my-activities-panel,
+  .e-profile-panel,
+  .e-diet-profile-panel,
+  .e-fasting-profile-panel {
+    width: 95% !important;
+    margin: 0 10px !important;
+  }
+
+  .e-fasting-label-container div {
+    margin: 0 12%;
+  }
+
+  .e-fasting-value-container div {
+    margin: 0 3%;
+  }
+
+  .e-fasting-label-container {
+    font-size: 14px;
+  }
+
+  .e-fasting-value-container {
+    font-size: 18px;
+  }
+
+  .e-fasting-button-container button {
+    margin: 0 5%;
+  }
+
+  .e-fast-time-btn,
+  .e-fast-end-btn {
+    width: 40%;
+  }
+
+  .e-water-consumed-text {
+    width: 25%;
+  }
+
+  .e-fasting-panel,
+  .e-water-panel,
+  .e-fasting-chart-panel {
+    width: 95% !important;
+    margin: 0 12px !important;
+  }
+
+}

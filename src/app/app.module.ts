@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TabModule } from '@syncfusion/ej2-angular-navigations';
-import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
-import { ChartAllModule, AccumulationChartAllModule } from '@syncfusion/ej2-angular-charts';
+import { DatePickerModule, DateTimePickerAllModule } from '@syncfusion/ej2-angular-calendars';
+import { ChartAllModule, AccumulationChartAllModule, SparklineAllModule } from '@syncfusion/ej2-angular-charts';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
 import { ProgressBarAllModule } from '@syncfusion/ej2-angular-progressbar';
@@ -35,7 +35,9 @@ import { ProfileComponent } from './profile/profile.component';
     AccumulationChartAllModule,
     ButtonAllModule,
     DialogAllModule,
-    CircularGaugeAllModule
+    CircularGaugeAllModule,
+    SparklineAllModule,
+    DateTimePickerAllModule
   ],
   providers: [],
   bootstrap: [AppComponent]

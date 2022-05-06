@@ -4,12 +4,11 @@ import { TabComponent } from '@syncfusion/ej2-angular-navigations';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { ChartComponent } from '@syncfusion/ej2-angular-charts';
-import { DatePickerComponent } from '@syncfusion/ej2-angular-calendars';
+import { DatePickerComponent, DateTimePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { DashboardLayoutComponent } from '@syncfusion/ej2-angular-layouts';
 import { AnimationSettingsModel, ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popups';
-import { CircularGaugeComponent, ILoadedEventArgs, GaugeTheme } from '@syncfusion/ej2-angular-circulargauge';
-import { Slider, SliderChangeEventArgs } from '@syncfusion/ej2-inputs';
+import { CircularGaugeComponent } from '@syncfusion/ej2-angular-circulargauge';
 import { LinearGaugeComponent } from '@syncfusion/ej2-angular-lineargauge';
 
 @Component({
@@ -20,7 +19,7 @@ import { LinearGaugeComponent } from '@syncfusion/ej2-angular-lineargauge';
 export class AppComponent {
   public title = 'fitness-app';
   public isDevice = Browser.isDevice;
-  public mediaQuery: string = 'max-width: 1200px';
+  public mediaQuery: string = 'max-width: 820px';
   public today: Date = new Date();
   public maxDate: Date = new Date();
   public cellSpacing: number[] = [10, 20];
@@ -64,7 +63,44 @@ export class AppComponent {
 
   public lunchMenu = [{ item: 'Plain Rice', cal: 173 }, { item: 'Roti', cal: 97 }, { item: 'Moong Dal', cal: 342 }, { item: 'Mixed Vegetables', cal: 82 }, { item: 'Curd Rice', cal: 176 }, { item: 'Chicken Curry', cal: 359 }];
 
-  @ViewChild('tab')
+  public todayActivities = [{ activity: 'Morning Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '7:00 AM' },
+  { activity: 'Water taken', amount: '2 Glasses', percentage: '6%', time: '7:40 AM' },
+  { activity: 'Breakfast', amount: 'Toast Bread', percentage: '20%', time: '9:00 AM' },
+  { activity: 'Water taken', amount: '1 Glasses', percentage: '3%', time: '9:40 AM' },
+  { activity: 'Lunch', amount: 'Pizza', percentage: '20%', time: '1:00 PM' },
+  { activity: 'Lunch Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '1:30 PM' }];
+
+  // Fasting Dashboard
+  public fastColumns = this.isDevice ? 1 : 5;
+  // Fasting Panel
+  public fastSizeX = this.isDevice ? 1 : 2;
+  public fastSizeY = this.isDevice ? 1 : 2;
+  // Water Panel
+  public waterRow = this.isDevice ? 1 : 0;
+  public waterCol = this.isDevice ? 0 : 2;
+  public waterSizeX = this.isDevice ? 1 : 2;
+  public waterSizeY = this.isDevice ? 1 : 2;
+  // Weight Panel
+  public weightSizeX = this.isDevice ? 1 : 4;
+
+
+  // Meals Panel
+  public mealsSizeX = this.isDevice ? 1 : 4;
+  // Diet Panel
+  public dietSizeX = this.isDevice ? 1 : 4;
+  // Diet Dashboard
+  public dietColumns = this.isDevice ? 1 : 5;
+
+  // Activity Dashboard
+  public activityColumns = this.isDevice ? 1 : 5;
+  // Activity Panel
+  public activitySizeX = this.isDevice ? 1 : 4;
+  // Chart Panel
+  public chartSizeX = this.isDevice ? 1 : 4;
+  // Grid Panel
+  public gridSizeX = this.isDevice ? 1 : 4;
+
+  @ViewChild('fitnesstab')
   public tabInstance: TabComponent;
 
   @ViewChild('default_dashboard')
@@ -76,13 +112,16 @@ export class AppComponent {
   @ViewChild('fasting_dashboard')
   public fastingDashBoardInstance: DashboardLayoutComponent;
 
-  @ViewChild('ddlelement')
+  @ViewChild('chartdropdown')
   public dropDownInstance: DropDownListComponent;
 
-  @ViewChild('chart')
+  @ViewChild('activitychart')
   public chartInstance: ChartComponent;
 
-  @ViewChild('grid')
+  @ViewChild('weightchart')
+  public weightChartInstance: ChartComponent;
+
+  @ViewChild('workoutgrid')
   public gridInstance: GridComponent;
 
   @ViewChild('datepicker')
@@ -94,10 +133,22 @@ export class AppComponent {
   @ViewChild('AddMenuDialog')
   public menuDialog: DialogComponent;
 
-  public dlgButtons: ButtonPropsModel[] = [{ click: this.dlgBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-flat' } }, { click: this.dlgBtnClick.bind(this), buttonModel: { content: 'ADD MENU', isPrimary: true } }];
+  @ViewChild('FastingDialog')
+  public fastingDialog: DialogComponent;
+
+  @ViewChild('StartFastDatePicker')
+  public fastingStartDateInstance: DateTimePickerComponent;
+
+  @ViewChild('EndFastDatePicker')
+  public fastingEndDateInstance: DateTimePickerComponent;
+
+  public dlgButtons: ButtonPropsModel[] = [{ click: this.menuCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-menu-cancel' } }, { click: this.menuDlgBtnClick.bind(this), buttonModel: { content: 'ADD MENU', cssClass: 'e-menu-add' } }];
+  public fastingDlgButtons: ButtonPropsModel[] = [{ click: this.fastingCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-fasting-cancel' } }, { click: this.fastingDlgBtnClick.bind(this), buttonModel: { content: 'START FASTING', cssClass: 'e-start-fast' } }];
   public header: string = 'Add Menu';
+  public fastingDialogeader: string = 'Fasting';
   public showCloseIcon: Boolean = true;
   public Dialogwidth: string = '700px';
+  public fastingDialogwidth: string = '400px';
   public height: string = '300px';
   public animationSettings: AnimationSettingsModel = { effect: 'Zoom' };
   public target: string = 'body';
@@ -109,8 +160,9 @@ export class AppComponent {
   public progressThickness: number = 25;
   public labelStyle = { textAlignment: 'Center', text: this.heartRate + ' BPM', color: '#FFFFFF' };
   public progressColor = '#3881f5';
+  public segmentCount: number = this.isDevice ? 30 : 50;
   public trackColor = '#FFFFFF';
-
+  public activityChartHeight = '100%';
   public Axes: Object[] = [
     {
       minimum: 0,
@@ -182,7 +234,10 @@ export class AppComponent {
     width: '60%', height: '20%',
     shapeHeight: 20, shapeWidth: 20
   };
-  public pieChartHeight = this.isDevice ? '300px' : '400px';
+  public pieChartWidth = '80%';
+  public pieChartHeight = this.isDevice ? '100%' : '80%';
+  public pieChartRadius = this.isDevice ? '100%' : '80%';
+  public center = this.isDevice ? { x: '50%', y: '50%' } : { x: '50%', y: '40%' };
   //Initializing DataLabel
   public dataLabel: Object = {
     visible: true,
@@ -214,13 +269,16 @@ export class AppComponent {
   public width: string = Browser.isDevice ? '100%' : '60%';
   public chartWidth: string = Browser.isDevice ? '90%' : '100%';
   public datePickerWidth: string = Browser.isDevice ? '120px' : '200px';
+  public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();
+  public lineData: Object[];
   public primaryXAxis: Object = {
     valueType: 'DateTime',
     labelFormat: 'MMM dd',
     intervalType: 'Days',
     interval: 1,
     edgeLabelPlacement: 'Shift',
+    labelIntersectAction: 'Hide',
     labelStyle: {
       size: '16px', color: '#56648A',
       fontFamily: 'Inter', fontWeight: '500'
@@ -232,7 +290,7 @@ export class AppComponent {
   public primaryYAxis: Object = {
     labelFormat: '{value}%',
     maximum: 100,
-    interval: 20,
+    interval: 50,
     labelStyle: {
       size: '16px', color: '#56648A',
       fontFamily: 'Inter', fontWeight: '500'
@@ -268,6 +326,26 @@ export class AppComponent {
       dashArray: "10,5"
     }
   };
+  public wchinaData: object[] = [
+    { x: -5, xval: '2005', yval: 5 },
+    { x: -4, xval: '2006', yval: 4 },
+    { x: -3, xval: '2007', yval: 3 },
+    { x: -2, xval: '2008', yval: 2 },
+    { x: -1, xval: '2009', yval: 1 },
+    { x: -2, xval: '2010', yval: 2 },
+    { x: -3, xval: '2011', yval: 3 },
+    { x: -4, xval: '2012', yval: 4 },
+    { x: -5, xval: '2013', yval: 5 },
+    { x: -5, xval: '2014', yval: 5 },
+    { x: -4, xval: '2015', yval: 4 },
+    { x: -3, xval: '2016', yval: 3 },
+    { x: -2, xval: '2017', yval: 2 },
+    { x: -1, xval: '2018', yval: 1 },
+    { x: -2, xval: '2019', yval: 2 },
+    { x: -3, xval: '2020', yval: 3 },
+    { x: -4, xval: '2021', yval: 4 },
+    { x: -5, xval: '2022', yval: 5 },
+  ];
   public gridData: Object[] = this.getData();
   public legendSettings = { position: 'Top' };
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5" };
@@ -277,9 +355,9 @@ export class AppComponent {
   public weightChartTooltip = { enable: true };
   public dropDownData: string[] = ['Weekly', 'Monthly'];
 
-  @ViewChild('circulargauge')
+  @ViewChild('fastingGaugeId')
   public circulargauge: CircularGaugeComponent;
-
+  public circularGaugeRadius = this.isDevice ? '100%' : '80%';
   public lineStyle: Object = {
     width: 0
   };
@@ -288,15 +366,7 @@ export class AppComponent {
     position: 'Inside', useRangeColor: true,
     font: { size: '0px', color: 'white', fontFamily: 'Roboto', fontStyle: 'Regular' }
   };
-  public ranges: Object[] = [
-    {
-      start: 0, end: 100,
-      radius: '90%',
-      startWidth: 30, endWidth: 30,
-      color: '#CDD9E0',
-      roundedCornerRadius: 20
-    },
-  ];
+
   public pointerRadialGradient: Object = {
     startValue: '0%',
     endValue: '100%',
@@ -304,45 +374,37 @@ export class AppComponent {
       { color: '#FB5F64', offset: '0%', opacity: 0.9 },
       { color: '#FC9662', offset: '70%', opacity: 0.9 }]
   };
-  public innerPointerRadialGradient: Object = {
-    startValue: '0%',
-    endValue: '100%',
-    colorStop: [
-      { color: '#FFFFFF', opacity: 0.35 },
-      { color: '#FFFFFF', opacity: 0.35 }]
-  };
-  public pointers: Object[] = [
+  public ranges: Object[] = [
     {
-      roundedCornerRadius: 20,
-      value: 0,
-      type: 'RangeBar',
-      radius: '90%',
-      linearGradient: this.pointerRadialGradient,
-      border: {
-        color: 'grey',
-        width: 0
-      },
-      animation: {
-        enable: false
-      },
-      pointerWidth: 30
+      start: 0,
+      end: 100,
+      radius: '100%',
+      startWidth: 30,
+      endWidth: 30,
+      color: '#C0C0C0',
+      roundedCornerRadius: 15,
     },
     {
+      start: 0,
+      end: 100,
+      radius: '100%',
+      startWidth: 30,
+      endWidth: 30,
+      color: '#E0E0E0',
+      roundedCornerRadius: 15,
+      linearGradient: this.pointerRadialGradient,
+    },
+    {
+      start: 2,
+      end: 98,
+      radius: '94%',
+      startWidth: 5,
+      endWidth: 5,
       roundedCornerRadius: 5,
-      value: 0,
-      offset: 90,
-      type: 'RangeBar',
-      radius: '80%',
-      pointerWidth: 4,
-      linearGradient: this.innerPointerRadialGradient,
-      border: {
-        color: 'grey',
-        width: 0
-      },
-      animation: {
-        enable: false
-      },
-    }];
+      color: '#FFFFFF',
+      opacity: 0.35
+    },
+  ];
   public titleStyle: Object = { size: '18px' };
   public majorTicks: Object = {
     height: 0,
@@ -356,12 +418,15 @@ export class AppComponent {
   public pointerCap: Object = {
     radius: 7, color: '#757575'
   };
-  public sliderValue = '14 : 24 : 00';
+  public sliderValue = "Completed";
 
   // Set the date we're counting down to
-  public countDownDate: any = new Date();
-  public countStartDate: any = new Date();
-  public diff = this.countDownDate.getTime() - this.countStartDate.getTime();
+  public countStartDate: any = new Date().getHours() >= 17 ? new Date(new Date().setHours(18, 0, 0, 0)) : new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(18, 0, 0, 0));
+  public countDownDate: any = new Date().getHours() >= 17 ? new Date(new Date().setHours(this.countStartDate.getHours() + 16, 0, 0, 0)) : new Date(new Date(new Date().setDate(this.countStartDate.getDate())).setHours(this.countStartDate.getHours() + 16, 0, 0, 0));
+  public diff = 16;
+
+  public minimumDate = new Date();
+  public maximumDate = new Date(new Date().setHours(this.minimumDate.getHours() + 24));
 
   // Update the count down every 1 second
   public x = setInterval(this.intervalFn.bind(this), 1000);
@@ -369,9 +434,9 @@ export class AppComponent {
   intervalFn() {
     let now: any = new Date();
     let isToday = this.countStartDate.toDateString() == now.toDateString();
-    this.fastStartTime = (isToday ? 'Today ' : 'Yesterday ') + this.countStartDate.toLocaleTimeString('en-US');
+    this.fastStartTime = (isToday ? 'Today ' : 'Yesterday ') + this.countStartDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     isToday = this.countDownDate.toDateString() == now.toDateString();
-    this.fastEndTime = (isToday ? 'Today ' : 'Tomorrow ') + this.countDownDate.toLocaleTimeString('en-US');
+    this.fastEndTime = (isToday ? 'Today ' : 'Tomorrow ') + this.countDownDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     let percent = Math.round(((now - this.countStartDate) / (this.countDownDate - this.countStartDate)) * 100);
     percent = percent > 100 ? 100 : percent;
     let left = this.countDownDate.getTime() - now.getTime();
@@ -384,50 +449,106 @@ export class AppComponent {
     let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((distance % (1000 * 60)) / 1000);
     this.sliderValue = hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
-    if (distance > this.diff) {
+    if (distance > (this.countDownDate.getTime() - this.countStartDate.getTime()) || distance < 0) {
       clearInterval(this.x);
-      this.sliderValue = "Completed";
+      this.endFasting();
+    } else if (this.circulargauge) {
+      this.circulargauge.axes[0].ranges[1].end = percent;
+      this.circulargauge.axes[0].annotations[1].angle = Math.round((percent / 100) * 340) + 10;
+      if (percent > 80) {
+        this.circulargauge.axes[0].annotations[1].content = '<div class="e-gauge-percent-img icon-Calories"></div>';
+      } else {
+        this.circulargauge.axes[0].annotations[1].content = '';
+      }
+      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
+        this.sliderValue.toString() + '</div><div class="e-fast-left">Left ' + leftHours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'h ' + leftMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'm</div>';
     }
-    this.circulargauge.axes[0].annotations[1].angle = Math.round((percent / 100) * 340) + 10;
-    this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
-      this.sliderValue.toString() + '</div><div class="e-fast-left">Left ' + leftHours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'h ' + leftMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'm</div>';
-    this.circulargauge.axes[0].pointers[0].value = percent;
   }
 
   endFasting() {
     clearInterval(this.x);
     this.sliderValue = "Completed";
-    this.circulargauge.axes[0].annotations[1].angle = 350;
-    this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (100%)</div><div class="e-fast-completed">' +
-      this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
-    this.circulargauge.axes[0].pointers[0].value = 100;
+    if (this.circulargauge) {
+      this.circulargauge.axes[0].ranges[1].end = 100;
+      this.circulargauge.axes[0].annotations[1].angle = 350;
+      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (100%)</div><div class="e-fast-completed">' +
+        this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
+    }
   }
 
   modifyFasting() {
-    this.countStartDate = new Date();
-    this.countDownDate = new Date(new Date().setMinutes(new Date().getMinutes() + 10));
-    this.diff = this.countDownDate.getTime() - this.countStartDate.getTime();
-    this.consumedWaterCount = 0;
-    this.consumedWaterAmount = 0;
-    this.gauge.axes[0].pointers[0].value = 0;
-    this.x = setInterval(this.intervalFn.bind(this), 1000);
+    this.fastingDialog.show();
   }
 
-  public annotaions: Object = [{
+  fastingDlgBtnClick(args) {
+    this.countStartDate = this.fastingStartDateInstance.value;
+    this.countDownDate = this.fastingEndDateInstance.value;
+    this.diff = Math.floor(((this.countDownDate - this.countStartDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    this.consumedWaterCount = 0;
+    this.consumedWaterAmount = 0;
+    this.x = setInterval(this.intervalFn.bind(this), 1000);
+    this.fastingDialog.hide();
+  }
+
+  fastingCancelBtnClick() {
+    this.fastingDialog.hide();
+  }
+
+  onFastDateChange() {
+    this.diff = Math.floor((((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  }
+
+  public annotaions: Object = this.isDevice ? [{
     angle: 0,
     zIndex: '1',
     radius: '0%'
   },
   {
     zIndex: '1',
-    radius: '78%',
+    radius: '91%',
+    angle: 350,
     content: '<div class="e-gauge-percent-img icon-Calories"></div>'
+  },
+  {
+    zIndex: '1',
+    radius: '91%',
+    angle: 60,
+    content: '<div class="e-gauge-status-img icon-Diet"></div>'
+  },
+  {
+    zIndex: '1',
+    radius: '91%',
+    angle: 280,
+    content: '<div class="e-gauge-status-img icon-Thunder"></div>'
+  }] : [{
+    angle: 0,
+    zIndex: '1',
+    radius: '0%'
+  },
+  {
+    zIndex: '1',
+    radius: '93%',
+    angle: 350,
+    content: '<div class="e-gauge-percent-img icon-Calories"></div>'
+  },
+  {
+    zIndex: '1',
+    radius: '93%',
+    angle: 60,
+    content: '<div class="e-gauge-status-img icon-Diet"></div>'
+  },
+  {
+    zIndex: '1',
+    radius: '93%',
+    angle: 280,
+    content: '<div class="e-gauge-status-img icon-Thunder"></div>'
   }];
 
-  @ViewChild('gauge')
+  @ViewChild('waterGaugeId')
   public gauge: LinearGaugeComponent;
   public gaugeOrientation = this.isDevice ? 'Vertical' : 'Horizontal';
   public gaugeHeight = this.isDevice ? '100%' : '200px';
+  public gaugeWidth = '100%';
 
   public waterGaugeAxes: Object[] = [
     {
@@ -455,9 +576,9 @@ export class AppComponent {
       pointers: [
         {
           value: 0,
-          height: 40,
-          width: 40,
-          roundedCornerRadius: 25,
+          height: 60,
+          width: 60,
+          roundedCornerRadius: 40,
           type: 'Bar',
           color: '#61a9f7',
         },
@@ -534,12 +655,11 @@ export class AppComponent {
   ];
 
   public waterGaugeContainer: Object = {
-    width: 50,
-    roundedCornerRadius: 30,
+    width: 70,
+    roundedCornerRadius: 50,
     type: 'RoundedRectangle',
     backgroundColor: '#3993F5',
   };
-
 
   minusClick() {
     this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
@@ -585,7 +705,11 @@ export class AppComponent {
     return index;
   }
 
-  dlgBtnClick(args) {
+  menuDlgBtnClick(args) {
+    this.menuDialog.hide();
+  }
+
+  menuCancelBtnClick() {
     this.menuDialog.hide();
   }
 
@@ -606,43 +730,43 @@ export class AppComponent {
   }
 
   addBtnClick(args) {
-    // this.menuDialog.show();
-    if (args.target.ej2_instances[0].element.classList.contains('e-breakfast-add-btn')) {
-      this.currentBreakFastMenu = [];
-      this.currentBreakFastCalories = 0;
-      this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-      this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
-      this.consumedCalories += this.currentBreakFastCalories;
-      this.isBreakFastMenuAdded = true;
-    } else if (args.target.ej2_instances[0].element.classList.contains('e-snack1-add-btn')) {
-      this.currentSnack1Menu = [];
-      this.currentSnack1Calories = 0;
-      this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-      this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
-      this.consumedCalories += this.currentSnack1Calories;
-      this.isSnack1MenuAdded = true;
-    } else if (args.target.ej2_instances[0].element.classList.contains('e-lunch-add-btn')) {
-      this.currentLunchMenu = [];
-      this.currentLunchCalories = 0;
-      this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-      this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
-      this.consumedCalories += this.currentLunchCalories;
-      this.isLunchMenuAdded = true;
-    } else if (args.target.ej2_instances[0].element.classList.contains('e-snack2-add-btn')) {
-      this.currentSnack2Menu = [];
-      this.currentSnack2Calories = 0;
-      this.currentSnack2Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-      this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
-      this.consumedCalories += this.currentSnack2Calories;
-      this.isSnack2MenuAdded = true;
-    } else if (args.target.ej2_instances[0].element.classList.contains('e-dinner-add-btn')) {
-      this.currentDinnerMenu = [];
-      this.currentDinnerCalories = 0;
-      this.currentDinnerMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-      this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
-      this.consumedCalories += this.currentDinnerCalories;
-      this.isDinnerMenuAdded = true;
-    }
+    this.menuDialog.show();
+    // if (args.target.ej2_instances[0].element.classList.contains('e-breakfast-add-btn')) {
+    //   this.currentBreakFastMenu = [];
+    //   this.currentBreakFastCalories = 0;
+    //   this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    //   this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
+    //   this.consumedCalories += this.currentBreakFastCalories;
+    //   this.isBreakFastMenuAdded = true;
+    // } else if (args.target.ej2_instances[0].element.classList.contains('e-snack1-add-btn')) {
+    //   this.currentSnack1Menu = [];
+    //   this.currentSnack1Calories = 0;
+    //   this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    //   this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
+    //   this.consumedCalories += this.currentSnack1Calories;
+    //   this.isSnack1MenuAdded = true;
+    // } else if (args.target.ej2_instances[0].element.classList.contains('e-lunch-add-btn')) {
+    //   this.currentLunchMenu = [];
+    //   this.currentLunchCalories = 0;
+    //   this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    //   this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
+    //   this.consumedCalories += this.currentLunchCalories;
+    //   this.isLunchMenuAdded = true;
+    // } else if (args.target.ej2_instances[0].element.classList.contains('e-snack2-add-btn')) {
+    //   this.currentSnack2Menu = [];
+    //   this.currentSnack2Calories = 0;
+    //   this.currentSnack2Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    //   this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
+    //   this.consumedCalories += this.currentSnack2Calories;
+    //   this.isSnack2MenuAdded = true;
+    // } else if (args.target.ej2_instances[0].element.classList.contains('e-dinner-add-btn')) {
+    //   this.currentDinnerMenu = [];
+    //   this.currentDinnerCalories = 0;
+    //   this.currentDinnerMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    //   this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
+    //   this.consumedCalories += this.currentDinnerCalories;
+    //   this.isDinnerMenuAdded = true;
+    // }
   }
 
   updateMenu() {
@@ -713,8 +837,8 @@ export class AppComponent {
   }
 
   onDropDownChange(args) {
-    this.chartInstance.series[0].dataSource = this.getChartData();
-    this.chartInstance.refresh();
+    this.chartDietData = this.getChartData();
+    this.chartData = this.getChartData();
   }
 
   onDateChange(args) {
@@ -748,10 +872,11 @@ export class AppComponent {
     if (this.gridInstance) {
       this.gridInstance.dataSource = this.gridData;
     }
+    this.chartDietData = this.getChartData();
     this.chartData = this.getChartData();
     if (this.chartInstance) {
-      this.chartInstance.series[0].dataSource = this.chartData;
-      // this.chartInstance.series[1].dataSource = this.data;
+      this.chartInstance.series[0].dataSource = this.chartInstance.series[2].dataSource = this.chartDietData;
+      this.chartInstance.series[1].dataSource = this.chartInstance.series[3].dataSource = this.chartData;
       this.chartInstance.refresh();
     }
   }
@@ -772,6 +897,9 @@ export class AppComponent {
       sampleData.push(data);
       if (i == 0) {
         this.todaysWorkoutPercent = data['y'];
+      }
+      if (sampleData.length == Math.round(count / 2)) {
+        this.lineData = [{ x: data['x'], y: 0 }, { x: data['x'], y: data['y'] }];
       }
     }
     return sampleData;

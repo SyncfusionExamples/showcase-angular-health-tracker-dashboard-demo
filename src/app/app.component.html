@@ -5,16 +5,17 @@
   <div class="e-tab-title">GOFIT</div>
 </div>
 <div *ngIf="isDevice" class="separator-div"></div>
-<ejs-tab id="tab-element" #tab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
-  (selecting)="tabSelecting($event)" [selectedItem]='0'>
+<ejs-tab id="fitness-tab" #fitnesstab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
+  (selecting)="tabSelecting($event)" [selectedItem]="0">
   <e-tabitems>
     <e-tabitem [header]='headerText[0]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container">
-          <ejs-dashboardlayout id='default_dashboard' columns="5" #default_dashboard [cellSpacing]='cellSpacing'
-            [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery' (change)="resize($event)">
-            <div id="activity-panel-id" class="e-panel e-my-activities-panel" data-row="0" data-col="0" data-sizeX="4"
-              data-sizeY="1">
+          <ejs-dashboardlayout id='default_dashboard' [columns]="activityColumns" #default_dashboard
+            [cellSpacing]='cellSpacing' [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery'
+            (change)="resize($event)">
+            <div id="activity-panel-id" class="e-panel e-my-activities-panel" data-row="0" data-col="0"
+              [data-sizeX]="activitySizeX" data-sizeY="1">
               <div class="e-panel-container">
                 <div class="e-panel-header">
                   <div style="float: left; margin-top: 5px;">My Activities</div>
@@ -23,7 +24,7 @@
                       (change)="onDateChange($event)"></ejs-datepicker>
                   </div>
                 </div>
-                <div style="margin: 50px 0;">
+                <div class="e-panel-content e-activity-card-container">
                   <div tabindex="0" class="e-card e-heart-rate-card">
                     <div class="e-card-header" style="width: 100%">
                       <div class="e-card-header-image icon-Heart e-card-corner"></div>
@@ -35,15 +36,20 @@
                       </div>
                     </div>
                     <div class="e-card-content">
-                      <ejs-progressbar #linear id='linear' type='Linear' maximum='120' minimum='0' [value]='heartRate'
-                        width='100%' height='80' [animation]='animation' showProgressValue="true"
-                        [trackThickness]='trackThickness' [progressThickness]='progressThickness'
-                        [labelStyle]="labelStyle" [progressColor]="progressColor" [trackColor]="trackColor">
+                      <!-- <ejs-sparkline id="wchin" height="50px" width="150px" lineWidth=2 valueType="Category"
+                        fill="#3C78EF" type="WinLoss" negativePointColor="red" [dataSource]="wchinaData" xName="xval"
+                        yName="yval"></ejs-sparkline> -->
+                      <div class="e-bpm-value">80 BPM</div>
+                      <ejs-progressbar #heartrateProgress id='heartrateProgress' class="e-heartrate-progress"
+                        type='Linear' maximum='120' minimum='0' [value]='heartRate' width='100%' height='100%'
+                        [animation]='animation' [trackThickness]='trackThickness'
+                        [progressThickness]='progressThickness' [segmentCount]='segmentCount' [labelStyle]="labelStyle"
+                        [progressColor]="progressColor" [trackColor]="trackColor">
                       </ejs-progressbar>
                       <!-- <ejs-lineargauge id="lineargauge" #lineargauge style="display:block;" [container]="Container"
-                      [axes]="Axes" orientation='Horizontal' [annotations]='Annotation' width="100%" height="80px"
-                      theme="Tailwind">
-                    </ejs-lineargauge> -->
+                        [axes]="Axes" orientation='Horizontal' [annotations]='Annotation' width="100%" height="80px"
+                        theme="Tailwind">
+                      </ejs-lineargauge> -->
                     </div>
                   </div>
                   <div tabindex="0" class="e-card e-steps-card">
@@ -85,59 +91,74 @@
                 </div>
               </div>
             </div>
-            <div id="activity-chart-panel-id" class="e-panel e-activity-panel" data-row="1" data-col="0" data-sizeX="4"
-              data-sizeY="1">
+            <div id="activity-chart-panel-id" class="e-panel e-activity-panel" data-row="1" data-col="0"
+              [data-sizeX]="chartSizeX" data-sizeY="1">
               <div class="e-panel-container">
                 <div class="e-panel-header">
                   <div style="float: left;">Activity Statistics</div>
                   <div>
-                    <ejs-dropdownlist #ddlelement id='ddlelement' class="e-chart-dropdown" [dataSource]='dropDownData'
-                      index="0" (change)="onDropDownChange($event)" style="float: right;"></ejs-dropdownlist>
+                    <ejs-dropdownlist #chartdropdown id='chartdropdown' class="e-chart-dropdown"
+                      [dataSource]='dropDownData' index="0" (change)="onDropDownChange($event)" style="float: right;">
+                    </ejs-dropdownlist>
                   </div>
                 </div>
-                <div>
-                  <ejs-chart #chart [chartArea]='chartArea' [width]='chartWidth' [primaryXAxis]='primaryXAxis'
-                    [primaryYAxis]='primaryYAxis' height="300px" [legendSettings]="legendSettings" theme="Tailwind"
-                    [tooltip]='tooltip' [marker]="marker" [crosshair]="crosshair">
+                <div class="e-panel-content">
+                  <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' [width]='chartWidth'
+                    [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
+                    [legendSettings]="legendSettings" theme="Tailwind" [tooltip]='tooltip' [marker]="marker">
                     <e-series-collection>
-                      <e-series [dataSource]='chartData' type='SplineArea' fill="#F547A8" xName='x' yName='y'
-                        name='Workout' opacity=0.1 legendShape='Circle'></e-series>
-                      <e-series [dataSource]='chartData' type='Spline' fill="#F547A8" xName='x' yName='y' width="3">
+                      <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
+                        xName='x' yName='y' enableTooltip="false">
+                      </e-series>
+                      <e-series [dataSource]='chartData' type='SplineArea' fill='url(#gradient-activity-chart)'
+                        xName='x' yName='y' enableTooltip="false">
+                      </e-series>
+                      <e-series [dataSource]='chartDietData' legendShape='Circle' type='Spline' fill="#2084FE" xName='x'
+                        yName='y' name='Diet' width="4">
+                      </e-series>
+                      <e-series [dataSource]='chartData' legendShape='Circle' type='Spline' fill="#F547A8" xName='x'
+                        yName='y' name='Workout' width="4">
+                      </e-series>
+                      <e-series [dataSource]="lineData" type="Line" xName="x" yName="y" fill="#EE4769" width="1"
+                        dashArray="10,5" enableTooltip="false">
                       </e-series>
                     </e-series-collection>
                   </ejs-chart>
                 </div>
               </div>
             </div>
-            <div id="workout-panel-id" class="e-panel e-workout-panel" data-row="2" data-col="0" data-sizeX="4"
-              data-sizeY="1">
+            <div id="workout-panel-id" class="e-panel e-workout-panel" data-row="2" data-col="0"
+              [data-sizeX]="gridSizeX" data-sizeY="1">
               <div class="e-panel-container">
                 <div class="e-panel-header" style="margin-bottom: 5px;">
                   <div>Recent Workout</div>
                 </div>
-                <ejs-grid #grid [dataSource]='gridData' gridLines="None" rowHeight="60"
-                  (queryCellInfo)='customiseCell($event)' gridLines="None">
-                  <e-columns>
-                    <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
-                    <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
-                      format="###.# km">
-                    </e-column>
-                    <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left' width="200"
-                      format='### mins'>
-                    </e-column>
-                    <e-column field='Date' headerText='Date & Time' textAlign='Left' width="200"
-                      format="MMM dd,yyyy hh:mm a">
-                    </e-column>
-                    <e-column field='Completion' headerText='Completion' textAlign='Left' width="200" format="###'%'">
-                    </e-column>
-                  </e-columns>
-                </ejs-grid>
+                <div style="height: 100%;">
+                  <ejs-grid #workoutgrid [dataSource]='gridData' gridLines="None" rowHeight="60"
+                    (queryCellInfo)='customiseCell($event)' gridLines="None" height="100%">
+                    <e-columns>
+                      <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
+                      <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
+                        format="###.# km">
+                      </e-column>
+                      <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left' width="200"
+                        format='### mins'>
+                      </e-column>
+                      <e-column field='Date' headerText='Date & Time' textAlign='Left' width="200"
+                        format="MMM dd,yyyy hh:mm a">
+                      </e-column>
+                      <e-column field='Completion' headerText='Completion' textAlign='Left' width="200" format="###'%'">
+                      </e-column>
+                    </e-columns>
+                  </ejs-grid>
+                </div>
               </div>
             </div>
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="4" data-sizeX="1"
               data-sizeY="3">
               <div class="e-panel-container" style="width: 90%; margin: 20px;">
-                <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+                <app-profile [today]="today" [activities]="todayActivities" (notify)="onProfileDateChange($event)">
+                </app-profile>
               </div>
             </div>
           </ejs-dashboardlayout>
@@ -147,7 +168,7 @@
     <e-tabitem [header]='headerText[1]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container e-diet-dashboardlayout-container">
-          <ejs-dashboardlayout id='diet_dashboard' columns="5" #diet_dashboard [cellSpacing]='cellSpacing'
+          <ejs-dashboardlayout id='diet_dashboard' [columns]="dietColumns" #diet_dashboard [cellSpacing]='cellSpacing'
             [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery' (change)="resize($event)">
             <div id="meals-panel-id" class="e-panel e-meals-panel" data-row="0" data-col="0" data-sizeX="4"
               data-sizeY="1">
@@ -155,7 +176,7 @@
                 <div class="e-panel-header">
                   <div style="float: left; margin-top: 5px;">5 Course Meals</div>
                 </div>
-                <div class="e-meals-card-container">
+                <div class="e-meals-card-container e-panel-content">
                   <div tabindex="0" class="e-card e-meals-card">
                     <div class="e-card-header">
                       <div class="e-card-header-img-container e-breakfast-card-container">
@@ -260,7 +281,7 @@
                       </ng-template>
                     </div>
                   </div>
-                  <div tabindex="0" class="e-card e-meals-card">
+                  <div tabindex="0" class="e-card e-meals-card e-dinner-card">
                     <div class="e-card-header">
                       <div class="e-card-header-img-container e-dinner-card-container">
                         <div class="e-card-header-image icon-Dinner"></div>
@@ -307,21 +328,23 @@
                     </div>
                   </div>
                 </div>
-                <div class="e-diet-chart-panel-container">
+                <div class="e-diet-chart-panel-container e-panel-content">
                   <div class="e-chart-parent-div">
                     <div class="e-pie-chart-container">
                       <ejs-accumulationchart id="piecontainer" #piecontainer [legendSettings]="pieLegendSettings"
-                        [tooltip]="pieTooltip" theme="Tailwind" [height]="pieChartHeight">
+                        [tooltip]="pieTooltip" theme="Tailwind" [height]="pieChartHeight" [width]="pieChartWidth"
+                        [center]='center'>
                         <e-accumulation-series-collection>
                           <e-accumulation-series name='Project' [dataSource]='pieData' pointColorMapping='fill'
                             xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="50%"
-                            radius="100%" [dataLabel]="dataLabel" explode=true explodeOffset='2%' explodeAll=true>
+                            [radius]="pieChartRadius" [dataLabel]="dataLabel" explode=true explodeOffset='2%'
+                            explodeAll=true>
                           </e-accumulation-series>
                         </e-accumulation-series-collection>
                       </ejs-accumulationchart>
                     </div>
                     <div class="e-nutrition-container">
-                      <table *ngIf="isDevice; else dietElseBlock">
+                      <table *ngIf="isDevice; else dietElseBlock" class="e-nutrition-table">
                         <tr>
                           <td>
                             <div class="e-nutrition-text">
@@ -372,7 +395,7 @@
                         </tr>
                       </table>
                       <ng-template #dietElseBlock>
-                        <table>
+                        <table class="e-nutrition-table">
                           <tr>
                             <td>
                               <div class="e-nutrition-text">
@@ -429,7 +452,8 @@
             <div id="diet-profile-panel-id" class="e-panel e-diet-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
               <div class="e-panel-container" style="width: 90%; margin: 20px;">
-                <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+                <app-profile [today]="today" [activities]="todayActivities" (notify)="onProfileDateChange($event)">
+                </app-profile>
               </div>
             </div>
           </ejs-dashboardlayout>
@@ -440,21 +464,22 @@
       <ng-template #content>
         <div class="e-fasting-header">Fasting</div>
         <div class="e-dashboardlayout-container e-fasting-dashboardlayout-container">
-          <ejs-dashboardlayout id='fasting_dashboard' columns="5" #fasting_dashboard [cellSpacing]='cellSpacing'
-            [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery' (change)="resize($event)">
+          <ejs-dashboardlayout id='fasting_dashboard' [columns]="fastColumns" #fasting_dashboard
+            [cellSpacing]='cellSpacing' [allowDragging]="false" (created)="dashBoardCreated()" [mediaQuery]='mediaQuery'
+            (change)="resize($event)">
             <div id="fasting-panel-id" class="e-panel e-fasting-panel" data-row="0" data-col="0" data-sizeX="2"
               data-sizeY="2">
               <div class="e-panel-container">
                 <div class="e-panel-header">
                   <div style="float: left; margin-top: 5px;">Fasting</div>
                 </div>
-                <div>
-                  <ejs-circulargauge style='display:block;' class="e-fasting-gauge" theme="Tailwind"
-                    id='range-container' #circulargauge height="400px" width="100%">
+                <div class="e-panel-content">
+                  <ejs-circulargauge style='display:block;' class="e-fasting-gauge" theme="Tailwind" id='fastingGaugeId'
+                    #fastingGaugeId width="100%" height="60%" centerX='50%' centerY='50%'>
                     <e-axes>
-                      <e-axis minimum=0 radius='100%' maximum=100 startAngle=5 endAngle=355 [majorTicks]='majorTicks'
-                        [labelStyle]='gaugeLabelStyle' [lineStyle]='lineStyle' [minorTicks]='minorTicks'
-                        [ranges]='ranges' [pointers]='pointers' [annotations]='annotaions'>
+                      <e-axis minimum=0 [radius]='circularGaugeRadius' maximum=100 startAngle=5 endAngle=355
+                        [majorTicks]='majorTicks' [labelStyle]='gaugeLabelStyle' [lineStyle]='lineStyle'
+                        [minorTicks]='minorTicks' [ranges]='ranges' [pointers]='pointers' [annotations]='annotaions'>
                       </e-axis>
                     </e-axes>
                   </ejs-circulargauge>
@@ -481,10 +506,10 @@
                 <div class="e-panel-header">
                   <div style="float: left; margin-top: 5px;">Water</div>
                 </div>
-                <div>
-                  <ejs-lineargauge id="gauge" #gauge style="display:block;" [container]="waterGaugeContainer"
-                    [axes]="waterGaugeAxes" width="100%" [height]="gaugeHeight" [orientation]="gaugeOrientation"
-                    [annotations]="waterGaugeAnnotation">
+                <div class="e-panel-content">
+                  <ejs-lineargauge id="waterGaugeId" #waterGaugeId class="e-water-gauge" style="display:block;"
+                    [container]="waterGaugeContainer" [axes]="waterGaugeAxes" [width]="gaugeWidth"
+                    [height]="gaugeHeight" [orientation]="gaugeOrientation" [annotations]="waterGaugeAnnotation">
                   </ejs-lineargauge>
                   <div class="e-water-label-container">
                     <div class="e-water-minus icon-minus" (click)="minusClick()"></div>
@@ -506,18 +531,18 @@
               <div class="e-panel-container">
                 <div class="e-panel-header">
                   <div style="float: left;">Weight Journey</div>
-                  <div>
+                  <!-- <div>
                     <ejs-dropdownlist #ddlelement id='ddlelement' class="e-chart-dropdown" [dataSource]='dropDownData'
                       index="0" (change)="onDropDownChange($event)" style="float: right;"></ejs-dropdownlist>
-                  </div>
+                  </div> -->
                 </div>
-                <div>
-                  <ejs-chart #chart [chartArea]='chartArea' [width]='chartWidth'
-                    [primaryXAxis]='weightChartPrimaryXAxis' [primaryYAxis]='weightChartPrimaryYAxis' height="300px"
-                    theme="Tailwind" [tooltip]='weightChartTooltip'>
+                <div class="e-panel-content">
+                  <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' [width]='chartWidth'
+                    [primaryXAxis]='weightChartPrimaryXAxis' [primaryYAxis]='weightChartPrimaryYAxis'
+                    [height]="activityChartHeight" theme="Tailwind" [tooltip]='weightChartTooltip'>
                     <e-series-collection>
-                      <e-series [dataSource]='weightChartData' type='SplineArea' fill="#8983F1" xName='x' yName='y'
-                        opacity=0.1 [marker]="weightChartMarker"></e-series>
+                      <e-series [dataSource]='weightChartData' type='SplineArea' fill='url(#gradient-chart)' xName='x'
+                        yName='y' [marker]="weightChartMarker"></e-series>
                       <e-series [dataSource]='weightChartData' type='Spline' fill="#8983F1" xName='x' yName='y'
                         width="3">
                       </e-series>
@@ -529,7 +554,8 @@
             <div id="fasting-profile-panel-id" class="e-panel e-fasting-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
               <div class="e-panel-container" style="width: 90%; margin: 20px;">
-                <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+                <app-profile [today]="today" [activities]="todayActivities" (notify)="onProfileDateChange($event)">
+                </app-profile>
               </div>
             </div>
           </ejs-dashboardlayout>
@@ -544,7 +570,8 @@
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
               <div class="e-panel-container" style="width: 90%; height: 90%; margin: 20px;">
-                <app-profile [today]="today" (notify)="onProfileDateChange($event)"></app-profile>
+                <app-profile [today]="today" [activities]="todayActivities" (notify)="onProfileDateChange($event)">
+                </app-profile>
               </div>
             </div>
           </ejs-dashboardlayout>
@@ -557,7 +584,34 @@
 <ejs-dialog id="add-menu-dialog" #AddMenuDialog [header]='header' [visible]='hidden'
   [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='Dialogwidth'
   [buttons]='dlgButtons'>
-  <ng-template #content></ng-template>
+  <ng-template #content>
+    <div class="e-select-menu-label">Select Menu</div>
+    <div>
+      <div>Quantity</div>
+      <div>Total kcal</div>
+      <div>Recommended kcal</div>
+    </div>
+  </ng-template>
+</ejs-dialog>
+
+<ejs-dialog id="fasting-dialog" #FastingDialog [header]='fastingDialogeader' [visible]='hidden'
+  [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='fastingDialogwidth'
+  [buttons]='fastingDlgButtons'>
+  <ng-template #content>
+    <div class="e-fast-start-label">Start Time</div>
+    <div class="e-fast-start-date">
+      <ejs-datetimepicker id="fast-start-date" #StartFastDatePicker [value]='countStartDate' [min]='countStartDate'
+        [max]='maximumDate' (change)="onFastDateChange()"></ejs-datetimepicker>
+    </div>
+    <div class="e-fast-end-label">End Time</div>
+    <div class="e-fast-end-date">
+      <ejs-datetimepicker id="fast-end-date" #EndFastDatePicker [value]='countDownDate' [min]='today'
+        [max]='maximumDate' (change)="onFastDateChange()">
+      </ejs-datetimepicker>
+    </div>
+    <div class="e-fast-total-label">Total Hours</div>
+    <div class="e-fast-total-value">{{ diff }}h</div>
+  </ng-template>
 </ejs-dialog>
 
 <router-outlet></router-outlet>

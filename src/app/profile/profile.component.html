@@ -1,159 +1,72 @@
 <div>
-  <div tabindex="0" class="e-card e-profile-card" style="width: 100%; text-align: center;">
-    <div>
+  <div class="e-card e-custom-card">
+    <div class="e-card-header">
       <div class="e-profile-editor">
         <div></div>
         <div></div>
         <div></div>
       </div>
-      <div class="e-profile-pic-container">
-        <div class="e-profile-pic">
-          <p class="e-profile-pic-text">JW</p>
-        </div>
+      <div class="e-avatar e-avatar-circle">
+        <img src="./assets/Profile/02.png" alt="JW" />
       </div>
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">John Watson</div>
-          <div class="e-card-header-sub-title">24 Years, Australia</div>
-        </div>
-      </div>
-      <div class="e-card-content">
-        <table class="e-profile-details">
-          <tr>
-            <td>
-              <div class="profile-row">Weight</div>
-            </td>
-            <td>
-              <div class="profile-row">Height</div>
-            </td>
-            <td>
-              <div class="profile-row">Goal</div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="profile-value">65 kg</div>
-            </td>
-            <td>
-              <div class="profile-value">163 cm</div>
-            </td>
-            <td>
-              <div class="profile-value">65 kg</div>
-            </td>
-          </tr>
-        </table>
+      &nbsp;
+    </div>
+    <div class="e-card-header">
+      <div class="e-card-header-caption center">
+        <div class="e-card-header-title">John Watson</div>
+        <div class="e-card-header-sub-title">24 Years, Australia</div>
       </div>
     </div>
-  </div>
-</div>
-<div>
-  <div class="e-journal" style="float: left;">Journals</div>
-  <div class="e-journal-date" style="float: right;">
-    <ejs-datepicker #profiledate [value]='today' [max]="maxDate" width="200px" (change)="notify.emit($event)">
-    </ejs-datepicker>
-  </div>
-</div>
-<div class="profile-diet-card-container">
-  <div>
-    <div tabindex="0" class="e-card e-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Morning Walk
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">30m | 3.4km | 12%</div>
-            <div class="e-card-header-sub-title" style="float: right;">07:00 AM</div>
-          </div>
-        </div>
-      </div>
+    <div class="e-card-content">
+      <table class="e-profile-details">
+        <tr>
+          <td>
+            <div class="profile-row">Weight</div>
+          </td>
+          <td>
+            <div class="profile-row">Height</div>
+          </td>
+          <td>
+            <div class="profile-row">Goal</div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="profile-value">65 kg</div>
+          </td>
+          <td>
+            <div class="profile-value">163 cm</div>
+          </td>
+          <td>
+            <div class="profile-value">65 kg</div>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
   <div>
-    <div tabindex="0" class="e-card e-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Water taken
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">2 Glasses | 6%</div>
-            <div class="e-card-header-sub-title" style="float: right;">07:40 AM</div>
-          </div>
-        </div>
-      </div>
+    <div class="e-journal" style="float: left;">Journals</div>
+    <div class="e-journal-date" style="float: right;">
+      <ejs-datepicker #profiledate [value]='today' [max]="maxDate" width="100%" (change)="notify.emit($event)">
+      </ejs-datepicker>
     </div>
   </div>
-  <div>
-    <div tabindex="0" class="e-card e-diet-card">
+  <div class="profile-diet-card-container">
+    <div tabindex="0" class="e-card e-diet-card" *ngFor="let activity of activities">
       <div class="e-card-header" style="width: 100%">
         <div class="e-card-header-caption">
           <div class="e-card-header-title">
-            Breakfast
+            {{ activity.activity }}
           </div>
           <div>
-            <div class="e-card-header-sub-title" style="float: left;">Toast Bread, Peanut Butter | 20%</div>
-            <div class="e-card-header-sub-title" style="float: right;">09:00 AM</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div tabindex="0" class="e-card e-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Water taken
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">1 Glasses | 3%</div>
-            <div class="e-card-header-sub-title" style="float: right;">09:40 AM</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div tabindex="0" class="e-card e-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Snack
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">Orange Juice, Cake | 12%</div>
-            <div class="e-card-header-sub-title" style="float: right;">11:00 AM</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div tabindex="0" class="e-card e-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Lunch
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">Pizza | 20%</div>
-            <div class="e-card-header-sub-title" style="float: right;">01:00 PM</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div tabindex="0" class="e-card e-diet-card e-last-diet-card">
-      <div class="e-card-header" style="width: 100%">
-        <div class="e-card-header-caption">
-          <div class="e-card-header-title">
-            Lunch Walk
-          </div>
-          <div>
-            <div class="e-card-header-sub-title" style="float: left;">30m | 3.4km | 12%</div>
-            <div class="e-card-header-sub-title" style="float: right;">01:30 PM</div>
+            <div class="e-card-header-sub-title" style="float: left;">
+              {{ activity.amount ?  (activity.amount + ' |') : '' }}
+              {{ activity.duration ?  (activity.duration + ' |') : '' }}
+              {{ activity.distance ?  (activity.distance + ' |') : '' }}
+              <span
+                [ngClass]="activity.distance ? 'e-activity-highlight' : 'e-meals-highlight'">{{ activity.percentage ?  activity.percentage : '' }}</span>
+            </div>
+            <div class="e-card-header-sub-title" style="float: right;">{{ activity.time }}</div>
           </div>
         </div>
       </div>

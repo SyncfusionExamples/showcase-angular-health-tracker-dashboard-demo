@@ -32,6 +32,10 @@
   float: right;
 }
 
+.e-profile-editor:hover {
+  cursor: pointer;
+}
+
 .e-profile-editor {
   margin-right: 10px;
   margin-top: 25px;
@@ -55,7 +59,7 @@
   line-height: 125% !important;
   text-align: center !important;
   color: #303343 !important;
-  margin: 0 10% !important;
+  margin: 4px 10% 20px 10% !important;
 }
 
 .e-profile-card {
@@ -99,6 +103,14 @@
   line-height: 125%;
   color: #303343;
   margin-top: 25px;
+}
+
+.profile-diet-card-container {
+  display: block;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  padding: 32px 10px
 }
 
 @media only screen and (max-width: 1200px) {

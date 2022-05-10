@@ -2,13 +2,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { TabModule } from '@syncfusion/ej2-angular-navigations';
 import { DatePickerModule, DateTimePickerAllModule, TimePickerAllModule } from '@syncfusion/ej2-angular-calendars';
-import { ChartAllModule, AccumulationChartAllModule, SparklineAllModule } from '@syncfusion/ej2-angular-charts';
+import { ChartAllModule, AccumulationChartAllModule } from '@syncfusion/ej2-angular-charts';
 import { GridModule } from '@syncfusion/ej2-angular-grids';
 import { DashboardLayoutModule } from '@syncfusion/ej2-angular-layouts';
 import { ProgressBarAllModule } from '@syncfusion/ej2-angular-progressbar';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { LinearGaugeAllModule } from '@syncfusion/ej2-angular-lineargauge';
-import { ButtonAllModule } from '@syncfusion/ej2-angular-buttons';
+import { ButtonAllModule, RadioButtonAllModule  } from '@syncfusion/ej2-angular-buttons';
 import { DialogAllModule } from '@syncfusion/ej2-angular-popups';
 import { CircularGaugeAllModule } from '@syncfusion/ej2-angular-circulargauge';
 import { TextBoxAllModule, SliderAllModule } from '@syncfusion/ej2-angular-inputs';
@@ -37,11 +37,11 @@ import { ProfileComponent } from './profile/profile.component';
     ButtonAllModule,
     DialogAllModule,
     CircularGaugeAllModule,
-    SparklineAllModule,
     DateTimePickerAllModule,
     TimePickerAllModule,
     TextBoxAllModule,
-    SliderAllModule
+    SliderAllModule,
+    RadioButtonAllModule
   ],
   providers: [],
   bootstrap: [AppComponent]

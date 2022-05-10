@@ -6,7 +6,7 @@
 </div>
 <div *ngIf="isDevice" class="separator-div"></div>
 <ejs-tab id="fitness-tab" #fitnesstab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
-  (selecting)="tabSelecting($event)" [selectedItem]="1">
+  (selecting)="tabSelecting($event)" (selected)="tabSelected($event)" [selectedItem]="0">
   <e-tabitems>
     <e-tabitem [header]='headerText[0]'>
       <ng-template #content>
@@ -100,7 +100,8 @@
                   <div class="e-panel-content">
                     <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' [width]='chartWidth'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
-                      [legendSettings]="legendSettings" theme="Tailwind" [tooltip]='tooltip' [marker]="marker">
+                      [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [marker]="marker"
+                      [background]="chartBackGround">
                       <e-series-collection>
                         <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
                           xName='x' yName='y' enableTooltip="false">
@@ -132,7 +133,7 @@
                   </div>
                   <div style="height: 100%;">
                     <ejs-grid #workoutgrid [dataSource]='gridData' gridLines="None" rowHeight="60"
-                      (queryCellInfo)='customiseCell($event)' gridLines="None" height="100%">
+                      (queryCellInfo)='customiseCell($event)' width="100%" gridLines="None" height="100%">
                       <e-columns>
                         <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
                         <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
@@ -340,8 +341,8 @@
                     <div class="e-chart-parent-div">
                       <div class="e-pie-chart-container">
                         <ejs-accumulationchart id="piecontainer" #piecontainer [legendSettings]="pieLegendSettings"
-                          [tooltip]="pieTooltip" theme="Tailwind" [height]="pieChartHeight" [width]="pieChartWidth"
-                          [center]='center'>
+                          [tooltip]="pieTooltip" [theme]="theme" [height]="pieChartHeight" [width]="pieChartWidth"
+                          [center]='center' [background]="chartBackGround">
                           <e-accumulation-series-collection>
                             <e-accumulation-series name='Project' [dataSource]='pieData' pointColorMapping='fill'
                               xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="50%"
@@ -488,7 +489,7 @@
                       <div class="e-fasting-panel-header-text">Fasting</div>
                     </div>
                     <div class="e-panel-content">
-                      <ejs-circulargauge style='display:block;' class="e-fasting-gauge" theme="Tailwind"
+                      <ejs-circulargauge style='display:block;' class="e-fasting-gauge" [theme]="theme"
                         id='fastingGaugeId' #fastingGaugeId width="100%" height="300px" centerX='50%' centerY='50%'>
                         <e-axes>
                           <e-axis minimum=0 [radius]='circularGaugeRadius' maximum=100 startAngle=5 endAngle=355
@@ -527,7 +528,7 @@
                       <ejs-lineargauge id="waterGaugeId" #waterGaugeId class="e-water-gauge" style="display:block;"
                         [container]="waterGaugeContainer" [axes]="waterGaugeAxes" [width]="gaugeWidth"
                         [height]="gaugeHeight" [orientation]="gaugeOrientation" [annotations]="waterGaugeAnnotation"
-                        centerX='10%' centerY='50%'>
+                        centerX='10%' centerY='50%' [theme]="theme">
                       </ejs-lineargauge>
                       <div class="e-water-label-container">
                         <div class="e-water-minus icon-minus" (click)="minusClick()"></div>
@@ -557,7 +558,7 @@
                   <div class="e-panel-content">
                     <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' [width]='chartWidth'
                       [primaryXAxis]='weightChartPrimaryXAxis' [primaryYAxis]='weightChartPrimaryYAxis'
-                      [height]="activityChartHeight" theme="Tailwind" [tooltip]='weightChartTooltip'>
+                      [height]="activityChartHeight" [theme]="theme" [tooltip]='weightChartTooltip'>
                       <e-series-collection>
                         <e-series [dataSource]='weightChartData' type='SplineArea' fill='url(#gradient-chart)' xName='x'
                           yName='y' [marker]="weightChartMarker"></e-series>
@@ -710,20 +711,20 @@
             <div class="e-profile-label">Weight</div>
             <div class="e-profile-value">
               <ejs-textbox width="80%" [value]="profileStats.weight + ' ' + profileStats.weightMes"></ejs-textbox>
-              <div class="e-weight-change-btn" (click)="changeWeight()"><span>CHANGE</span><span
+              <div ejs-button class="e-weight-change-btn" (click)="changeWeight()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span></div>
             </div>
             <div class="e-profile-label">Set your Goal</div>
             <div class="e-profile-value">
-              <ejs-textbox width="80%" [value]="profileStats.goal + ' ' + profileStats.weightMes"></ejs-textbox>
-              <div class="e-goal-change-btn" (click)="changeGoal()"><span>CHANGE</span><span
+              <ejs-textbox width="80%" [value]="profileStats.goal + ' ' + profileStats.goalMes"></ejs-textbox>
+              <div ejs-button class="e-goal-change-btn" (click)="changeGoal()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span>
               </div>
             </div>
             <div class="e-profile-label">Height</div>
             <div class="e-profile-value">
               <ejs-textbox width="80%" [value]="profileStats.height + ' ' + profileStats.heightMes"></ejs-textbox>
-              <div class="e-height-change-btn" (click)="changeHeight()"><span>CHANGE</span><span
+              <div ejs-button class="e-height-change-btn" (click)="changeHeight()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span></div>
             </div>
             <div class="e-profile-label">Location</div>
@@ -736,24 +737,33 @@
               <ejs-textbox width="100%" [value]="profileStats.email" type="email" (input)="onEmailChange($event)">
               </ejs-textbox>
             </div>
+            <div class="e-profile-label">Theme</div>
+            <div class="e-profile-value e-radio-container">
+              <ejs-radiobutton #radiolight class="e-light-radio" label="Light" name="dashboard-theme" value="Light"
+                checked="true" (change)="changeHandler($event)"></ejs-radiobutton>
+              <ejs-radiobutton #radiodark cssClass="e-dark-radio" label="Dark" name="dashboard-theme" value="Dark"
+                (change)="changeHandler($event)"></ejs-radiobutton>
+            </div>
           </div>
         </div>
       </div>
       <div class="e-modify-container col-md-6 col-sm-12">
         <div class="e-modify-title">{{ modifyHeaderTitle }}</div>
         <div class='e-modify-btn-group e-btn-group e-outline'>
-          <button ejs-button class="e-active">{{ modifyBtnGroup[0] }}</button>
-          <button ejs-button>{{ modifyBtnGroup[1] }}</button>
+          <input type="radio" [id]="modifyBtnGroup[0]" name="modifyunit" [value]="modifyBtnGroup[0]" checked="true" (change)="handleChange($event)"/>
+          <label class="e-btn" [for]="modifyBtnGroup[0]">{{ modifyBtnGroup[0] }}</label>
+          <input type="radio" [id]="modifyBtnGroup[1]" name="modifyunit" [value]="modifyBtnGroup[1]" (change)="handleChange($event)"/>
+          <label class="e-btn" [for]="modifyBtnGroup[1]">{{ modifyBtnGroup[1] }}</label>
         </div>
         <div class="e-weight-gauge-container">
-          <ejs-circulargauge #weightgauge id='weightgauge' style='display:block;' theme="Tailwind" width="100%"
-            height="300px" [centerX]='weightGaugeCenterX' centerY='50%'>
+          <ejs-circulargauge #weightgauge id='weightgauge' style='display:block;' [theme]="theme" width="100%"
+            height="300px" [centerX]='weightGaugeCenterX' [centerY]='weightGaugeCenterY'>
             <e-axes>
               <e-axis [lineStyle]='weightGaugeLineStyle' [majorTicks]='weightGaugeMajorTicks'
                 [minorTicks]='weightGaugeMinorTicks' [radius]='weightGaugeRadius' [labelStyle]='weightGaugeLabelStyle'
                 [minimum]='weightGaugeMinimum' [maximum]="weightGaugeMaximum" [startAngle]='weightGaugeStartAngle'
                 [endAngle]='weightGaugeEndangle' [ranges]='weightGaugeRanges' [pointers]='weightGaugePointers'
-                [annotations]='weightGaugeAnnotaions' background="#FFF7EC">
+                [annotations]='weightGaugeAnnotaions' [background]="weightGaugeBackground">
               </e-axis>
             </e-axes>
           </ejs-circulargauge>
@@ -772,7 +782,7 @@
           <div class="e-base-container">
             <ejs-lineargauge id="heightgauge" #heightgauge style="display:block;" orientation="Vertical"
               [container]="heightGaugeContainer" [axes]="heightGaugeAxes" [annotations]='heightGaugeAnnotation'
-              width="200px" height="400px">
+              width="200px" height="400px" [theme]="theme">
             </ejs-lineargauge>
             <div class="e-height-img-container"><img id="height-svg" src="./assets/Profile/Height.svg" alt="Height" />
             </div>

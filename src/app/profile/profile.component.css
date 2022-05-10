@@ -70,22 +70,6 @@
   border-radius: 20px !important;
 }
 
-.e-custom-card .e-card-header-title {
-  font-weight: 600 !important;
-  font-size: 18px !important;
-  line-height: 125% !important;
-  text-align: center !important;
-  color: #303343 !important;
-}
-
-.e-custom-card .e-card-header-sub-title {
-  font-weight: 500 !important;
-  font-size: 10px !important;
-  line-height: 125% !important;
-  text-align: center !important;
-  color: #56648A !important;
-}
-
 .e-custom-card .e-card-content {
   padding: 0 0 12px 0;
 }

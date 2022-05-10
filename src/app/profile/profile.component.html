@@ -1,7 +1,7 @@
 <div>
   <div class="e-card e-custom-card">
     <div class="e-card-header">
-      <div class="e-profile-editor">
+      <div class="e-profile-editor" (click)="onProfileEdit.emit($event)">
         <div></div>
         <div></div>
         <div></div>
@@ -13,8 +13,8 @@
     </div>
     <div class="e-card-header">
       <div class="e-card-header-caption center">
-        <div class="e-card-header-title">John Watson</div>
-        <div class="e-card-header-sub-title">24 Years, Australia</div>
+        <div class="e-card-header-title">{{ profileStats.name }}</div>
+        <div class="e-card-header-sub-title">{{ profileStats.age }} Years, {{ profileStats.location }}</div>
       </div>
     </div>
     <div class="e-card-content">
@@ -32,13 +32,13 @@
         </tr>
         <tr>
           <td>
-            <div class="profile-value">65 kg</div>
+            <div class="profile-value">{{ profileStats.weight + ' ' + profileStats.weightMes }}</div>
           </td>
           <td>
-            <div class="profile-value">163 cm</div>
+            <div class="profile-value">{{ profileStats.height + ' ' + profileStats.heightMes }}</div>
           </td>
           <td>
-            <div class="profile-value">65 kg</div>
+            <div class="profile-value">{{ profileStats.goal + ' ' + profileStats.weightMes }}</div>
           </td>
         </tr>
       </table>

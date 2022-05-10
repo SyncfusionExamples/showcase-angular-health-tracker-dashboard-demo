@@ -6,7 +6,6 @@ import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { ChartComponent } from '@syncfusion/ej2-angular-charts';
 import { DatePickerComponent, DateTimePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
-import { DashboardLayoutComponent } from '@syncfusion/ej2-angular-layouts';
 import { AnimationSettingsModel, ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { CircularGaugeComponent } from '@syncfusion/ej2-angular-circulargauge';
 import { LinearGaugeComponent } from '@syncfusion/ej2-angular-lineargauge';
@@ -56,6 +55,16 @@ export class AppComponent {
   public consumedWaterCount = 0;
   public consumedWaterAmount = 0;
   public expectedWaterAmount = 2400;
+  public currentMenuHeader;
+  public currentMenu;
+  public currentTotalCal = 0;
+  public currentRecom = 0;
+  public currentQuantity = 1;
+  public modifyHeaderTitle = "Change Your Weight";
+  public modifyBtnGroup = ['KG', 'LB'];
+  public currentAddedMenu;
+  public isGoalEdit = false;
+  public changeTimeBtnText = "CHANGE TIME";
 
   public breakfastMenu = [{ item: 'Banana', cal: 117 }, { item: 'Bread', cal: 136 }, { item: 'Boiled Egg', cal: 86 }, { item: 'Wheat Chapathi', cal: 146 }, { item: 'Dosa', cal: 302 }, { item: 'Tea', cal: 73 }, { item: 'Coffee', cal: 135 }, { item: 'Milk', cal: 167 }];
   public bfNutrition = [{}];
@@ -70,47 +79,10 @@ export class AppComponent {
   { activity: 'Lunch', amount: 'Pizza', percentage: '20%', time: '1:00 PM' },
   { activity: 'Lunch Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '1:30 PM' }];
 
-  // Fasting Dashboard
-  public fastColumns = this.isDevice ? 1 : 5;
-  // Fasting Panel
-  public fastSizeX = this.isDevice ? 1 : 2;
-  public fastSizeY = this.isDevice ? 1 : 2;
-  // Water Panel
-  public waterRow = this.isDevice ? 1 : 0;
-  public waterCol = this.isDevice ? 0 : 2;
-  public waterSizeX = this.isDevice ? 1 : 2;
-  public waterSizeY = this.isDevice ? 1 : 2;
-  // Weight Panel
-  public weightSizeX = this.isDevice ? 1 : 4;
-
-
-  // Meals Panel
-  public mealsSizeX = this.isDevice ? 1 : 4;
-  // Diet Panel
-  public dietSizeX = this.isDevice ? 1 : 4;
-  // Diet Dashboard
-  public dietColumns = this.isDevice ? 1 : 5;
-
-  // Activity Dashboard
-  public activityColumns = this.isDevice ? 1 : 5;
-  // Activity Panel
-  public activitySizeX = this.isDevice ? 1 : 4;
-  // Chart Panel
-  public chartSizeX = this.isDevice ? 1 : 4;
-  // Grid Panel
-  public gridSizeX = this.isDevice ? 1 : 4;
+  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 65, email: 'john.watson@gmail.com', weightMes: 'kg', heightMes: 'cm' };
 
   @ViewChild('fitnesstab')
   public tabInstance: TabComponent;
-
-  @ViewChild('default_dashboard')
-  public dashBoardInstance: DashboardLayoutComponent;
-
-  @ViewChild('diet_dashboard')
-  public dietDashBoardInstance: DashboardLayoutComponent;
-
-  @ViewChild('fasting_dashboard')
-  public fastingDashBoardInstance: DashboardLayoutComponent;
 
   @ViewChild('chartdropdown')
   public dropDownInstance: DropDownListComponent;
@@ -142,14 +114,18 @@ export class AppComponent {
   @ViewChild('EndFastDatePicker')
   public fastingEndDateInstance: DateTimePickerComponent;
 
+  @ViewChild('ProfileEditDialog')
+  public editDialog: DialogComponent;
+
   public dlgButtons: ButtonPropsModel[] = [{ click: this.menuCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-menu-cancel' } }, { click: this.menuDlgBtnClick.bind(this), buttonModel: { content: 'ADD MENU', cssClass: 'e-menu-add' } }];
   public fastingDlgButtons: ButtonPropsModel[] = [{ click: this.fastingCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-fasting-cancel' } }, { click: this.fastingDlgBtnClick.bind(this), buttonModel: { content: 'START FASTING', cssClass: 'e-start-fast' } }];
-  public header: string = 'Add Menu';
   public fastingDialogeader: string = 'Fasting';
   public showCloseIcon: Boolean = true;
-  public Dialogwidth: string = '700px';
-  public fastingDialogwidth: string = '400px';
-  public height: string = '300px';
+  public Dialogwidth: string = this.isDevice ? '100%' : '700px';
+  public fastingDialogwidth: string = this.isDevice ? '100%' : '400px';
+  public editDialogWidth = this.isDevice ? '100%' : '50%'
+  public height: string = this.isDevice ? '100%' : 'auto';
+  public dlgPosition = { X: 'center', Y: 'center' };
   public animationSettings: AnimationSettingsModel = { effect: 'Zoom' };
   public target: string = 'body';
   public hidden: Boolean = false;
@@ -162,7 +138,7 @@ export class AppComponent {
   public progressColor = '#3881f5';
   public segmentCount: number = this.isDevice ? 30 : 50;
   public trackColor = '#FFFFFF';
-  public activityChartHeight = '100%';
+  public activityChartHeight = '55%';
   public Axes: Object[] = [
     {
       minimum: 0,
@@ -227,18 +203,16 @@ export class AppComponent {
   { x: 'CARBOHYDRATES', y: 22, text: '22%', fill: '#CB4967' }, { x: 'CALCIUM', y: 8, text: '8%', fill: '#E25641' },
   { x: 'SODIUM', y: 24, text: '24%', fill: '#FC892C' }, { x: 'IRON', y: 12, text: '12%', fill: '#FFC147' }];
   public piePalette = ['#4DD291', '#901C53', '#CB4967', '#E25641', '#FC892C', '#FFC147'];
-  //Initializing Legend
   public pieLegendSettings: Object = {
     visible: false,
     position: 'Right',
     width: '60%', height: '20%',
     shapeHeight: 20, shapeWidth: 20
   };
-  public pieChartWidth = '80%';
+  public pieChartWidth = '100%';
   public pieChartHeight = this.isDevice ? '100%' : '80%';
-  public pieChartRadius = this.isDevice ? '100%' : '80%';
-  public center = this.isDevice ? { x: '50%', y: '50%' } : { x: '50%', y: '40%' };
-  //Initializing DataLabel
+  public pieChartRadius = this.isDevice ? '90%' : '80%';
+  public center = this.isDevice ? { x: '50%', y: '50%' } : { x: '50%', y: '50%' };
   public dataLabel: Object = {
     visible: true,
     name: 'text',
@@ -248,7 +222,6 @@ export class AppComponent {
       color: '#ffffff'
     }
   };
-  // custom code end
   public startAngle: number = 325;
   public endAngle: number = 325;
   public pieTooltip: Object = { enable: true };
@@ -268,7 +241,7 @@ export class AppComponent {
   public headerPlacement = Browser.isDevice ? 'Bottom' : 'Top';
   public width: string = Browser.isDevice ? '100%' : '60%';
   public chartWidth: string = Browser.isDevice ? '90%' : '100%';
-  public datePickerWidth: string = Browser.isDevice ? '120px' : '200px';
+  public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();
   public lineData: Object[];
@@ -326,26 +299,6 @@ export class AppComponent {
       dashArray: "10,5"
     }
   };
-  public wchinaData: object[] = [
-    { x: -5, xval: '2005', yval: 5 },
-    { x: -4, xval: '2006', yval: 4 },
-    { x: -3, xval: '2007', yval: 3 },
-    { x: -2, xval: '2008', yval: 2 },
-    { x: -1, xval: '2009', yval: 1 },
-    { x: -2, xval: '2010', yval: 2 },
-    { x: -3, xval: '2011', yval: 3 },
-    { x: -4, xval: '2012', yval: 4 },
-    { x: -5, xval: '2013', yval: 5 },
-    { x: -5, xval: '2014', yval: 5 },
-    { x: -4, xval: '2015', yval: 4 },
-    { x: -3, xval: '2016', yval: 3 },
-    { x: -2, xval: '2017', yval: 2 },
-    { x: -1, xval: '2018', yval: 1 },
-    { x: -2, xval: '2019', yval: 2 },
-    { x: -3, xval: '2020', yval: 3 },
-    { x: -4, xval: '2021', yval: 4 },
-    { x: -5, xval: '2022', yval: 5 },
-  ];
   public gridData: Object[] = this.getData();
   public legendSettings = { position: 'Top' };
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5" };
@@ -357,7 +310,7 @@ export class AppComponent {
 
   @ViewChild('fastingGaugeId')
   public circulargauge: CircularGaugeComponent;
-  public circularGaugeRadius = this.isDevice ? '100%' : '80%';
+  public circularGaugeRadius = this.isDevice ? '100%' : '100%';
   public lineStyle: Object = {
     width: 0
   };
@@ -431,73 +384,6 @@ export class AppComponent {
   // Update the count down every 1 second
   public x = setInterval(this.intervalFn.bind(this), 1000);
 
-  intervalFn() {
-    let now: any = new Date();
-    let isToday = this.countStartDate.toDateString() == now.toDateString();
-    this.fastStartTime = (isToday ? 'Today ' : 'Yesterday ') + this.countStartDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-    isToday = this.countDownDate.toDateString() == now.toDateString();
-    this.fastEndTime = (isToday ? 'Today ' : 'Tomorrow ') + this.countDownDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
-    let percent = Math.round(((now - this.countStartDate) / (this.countDownDate - this.countStartDate)) * 100);
-    percent = percent > 100 ? 100 : percent;
-    let left = this.countDownDate.getTime() - now.getTime();
-    let leftHours = Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    leftHours = leftHours < 0 ? 0 : leftHours;
-    let leftMinutes = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
-    leftMinutes = leftMinutes < 0 ? 0 : leftMinutes;
-    let distance = now.getTime() - this.countStartDate.getTime();
-    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    this.sliderValue = hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
-    if (distance > (this.countDownDate.getTime() - this.countStartDate.getTime()) || distance < 0) {
-      clearInterval(this.x);
-      this.endFasting();
-    } else if (this.circulargauge) {
-      this.circulargauge.axes[0].ranges[1].end = percent;
-      this.circulargauge.axes[0].annotations[1].angle = Math.round((percent / 100) * 340) + 10;
-      if (percent > 80) {
-        this.circulargauge.axes[0].annotations[1].content = '<div class="e-gauge-percent-img icon-Calories"></div>';
-      } else {
-        this.circulargauge.axes[0].annotations[1].content = '';
-      }
-      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
-        this.sliderValue.toString() + '</div><div class="e-fast-left">Left ' + leftHours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'h ' + leftMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'm</div>';
-    }
-  }
-
-  endFasting() {
-    clearInterval(this.x);
-    this.sliderValue = "Completed";
-    if (this.circulargauge) {
-      this.circulargauge.axes[0].ranges[1].end = 100;
-      this.circulargauge.axes[0].annotations[1].angle = 350;
-      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (100%)</div><div class="e-fast-completed">' +
-        this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
-    }
-  }
-
-  modifyFasting() {
-    this.fastingDialog.show();
-  }
-
-  fastingDlgBtnClick(args) {
-    this.countStartDate = this.fastingStartDateInstance.value;
-    this.countDownDate = this.fastingEndDateInstance.value;
-    this.diff = Math.floor(((this.countDownDate - this.countStartDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    this.consumedWaterCount = 0;
-    this.consumedWaterAmount = 0;
-    this.x = setInterval(this.intervalFn.bind(this), 1000);
-    this.fastingDialog.hide();
-  }
-
-  fastingCancelBtnClick() {
-    this.fastingDialog.hide();
-  }
-
-  onFastDateChange() {
-    this.diff = Math.floor((((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  }
-
   public annotaions: Object = this.isDevice ? [{
     angle: 0,
     zIndex: '1',
@@ -527,19 +413,19 @@ export class AppComponent {
   },
   {
     zIndex: '1',
-    radius: '93%',
+    radius: '90%',
     angle: 350,
     content: '<div class="e-gauge-percent-img icon-Calories"></div>'
   },
   {
     zIndex: '1',
-    radius: '93%',
+    radius: '90%',
     angle: 60,
     content: '<div class="e-gauge-status-img icon-Diet"></div>'
   },
   {
     zIndex: '1',
-    radius: '93%',
+    radius: '90%',
     angle: 280,
     content: '<div class="e-gauge-status-img icon-Thunder"></div>'
   }];
@@ -547,7 +433,7 @@ export class AppComponent {
   @ViewChild('waterGaugeId')
   public gauge: LinearGaugeComponent;
   public gaugeOrientation = this.isDevice ? 'Vertical' : 'Horizontal';
-  public gaugeHeight = this.isDevice ? '100%' : '200px';
+  public gaugeHeight = this.isDevice ? '100%' : '250px';
   public gaugeWidth = '100%';
 
   public waterGaugeAxes: Object[] = [
@@ -661,6 +547,216 @@ export class AppComponent {
     backgroundColor: '#3993F5',
   };
 
+  @ViewChild('weightgauge')
+  public weightGauge: CircularGaugeComponent;
+  public rangeLinearGradient: object = {
+    startValue: '0%',
+    endValue: '100%',
+    colorStop: [
+      { color: '#4075F2', offset: '0%' },
+      { color: '#FB9906', offset: '35%' },
+      { color: '#F9623A', offset: '70%' },
+      { color: '#C24287', offset: '100%' },
+    ]
+  };
+  public weightGaugeMinorTicks: Object = {
+    width: 0
+  };
+  public weightGaugeMajorTicks: Object = {
+    interval: 10, height: 5, offset: 20, position: 'Inside'
+  };
+  public ticks: Object = {
+    width: 0
+  };
+  public weightGaugeLineStyle: Object = {
+    width: 0
+  };
+  public weightGaugeCenterX = this.isDevice ? '27%' : '37%';
+  public weightGaugeCenterY = '50%';
+  public weightGaugeStartAngle: Object = 210;
+  public weightGaugeEndangle: Object = 150;
+  public weightGaugeMinimum: Object = 0;
+  public weightGaugeMaximum: Object = 120;
+  public weightGaugeRadius: Object = '80%';
+  public weightGaugeLabelStyle: Object = {
+    font: {
+      fontFamily: 'Roboto',
+      size: '0px',
+      fontWeight: 'Regular'
+    },
+    offset: 10
+  };
+  public weightGaugePointers: Object[] = [{
+    animation: { enable: false }, value: this.profileStats.weight, radius: '85%', color: '#F43F5E',
+    pointerWidth: 12,
+    cap: { radius: 12, color: '#F0D9BC' }
+  }];
+  public weightGaugeRanges: Object[] = [{
+    start: 0, end: 120, startWidth: 18, endWidth: 18, color: '#F43F5E',
+    linearGradient: this.rangeLinearGradient,
+    roundedCornerRadius: 10
+  }];
+
+  public weightGaugeAnnotaions: Object = [{
+    content: '<div class="e-weight-gauge-annotation">' +
+      this.profileStats.weight + this.profileStats.weightMes + '</div>',
+    radius: '85%', angle: 180, zIndex: '1'
+  }];
+  public mintype = 'MinRange';
+
+  @ViewChild('heightgauge')
+  public heightGauge: LinearGaugeComponent;
+  public orientation = 'Vertical';
+  public heightGaugeContainer: Object = {
+    width: 80,
+    border: {
+      width: 2,
+      color: '#E1E9ED',
+    },
+  };
+
+  public heightGaugePointerLinearGradient: object = {
+    startValue: '0%',
+    endValue: '100%',
+    colorStop: [
+      { color: '#B2CFE0', offset: '0%', opacity: 0.5 },
+    ],
+  };
+
+  public heightGaugeAxes: Object = [
+    {
+      minimum: 0,
+      maximum: 200,
+      line: {
+        offset: -80,
+      },
+      opposedPosition: true,
+      majorTicks: {
+        interval: 20,
+      },
+      minorTicks: {
+        interval: 5,
+      },
+      labelStyle: {
+        font: {
+          color: '#000000',
+        },
+      },
+      pointers: [
+        {
+          type: 'Bar',
+          value: this.profileStats.height,
+          width: 80,
+          linearGradient: this.heightGaugePointerLinearGradient,
+        },
+      ],
+    },
+  ];
+
+  public heightGaugeAnnotation: Object[] = [{
+    content: '<div class="e-height-gauge-annotation">' + this.profileStats.height + this.profileStats.heightMes + '</div>',
+    axisIndex: 0,
+    axisValue: this.profileStats.height,
+    x: -50,
+    y: 0, zIndex: '1'
+  }
+  ];
+
+  intervalFn() {
+    let now: any = new Date();
+    let isToday = this.countStartDate.toDateString() == now.toDateString();
+    this.fastStartTime = (isToday ? 'Today ' : 'Yesterday ') + this.countStartDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    isToday = this.countDownDate.toDateString() == now.toDateString();
+    this.fastEndTime = (isToday ? 'Today ' : 'Tomorrow ') + this.countDownDate.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+    let percent = Math.round(((now - this.countStartDate) / (this.countDownDate - this.countStartDate)) * 100);
+    percent = percent > 100 ? 100 : percent;
+    let left = this.countDownDate.getTime() - now.getTime();
+    let leftHours = Math.floor((left % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    leftHours = leftHours < 0 ? 0 : leftHours;
+    let leftMinutes = Math.floor((left % (1000 * 60 * 60)) / (1000 * 60));
+    leftMinutes = leftMinutes < 0 ? 0 : leftMinutes;
+    let distance = now.getTime() - this.countStartDate.getTime();
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    this.sliderValue = hours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + minutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + " : " + seconds.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false });
+    if (distance > (this.countDownDate.getTime() - this.countStartDate.getTime()) || distance < 0) {
+      clearInterval(this.x);
+      this.endFasting();
+    } else if (this.circulargauge) {
+      this.circulargauge.axes[0].ranges[1].end = percent;
+      this.circulargauge.axes[0].annotations[1].angle = Math.round((percent / 100) * 340) + 10;
+      if (percent > 80) {
+        this.circulargauge.axes[0].annotations[1].content = '<div class="e-gauge-percent-img icon-Calories"></div>';
+      } else {
+        this.circulargauge.axes[0].annotations[1].content = '';
+      }
+      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
+        this.sliderValue.toString() + '</div><div class="e-fast-left">Left ' + leftHours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'h ' + leftMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'm</div>';
+    }
+  }
+
+  endFasting() {
+    clearInterval(this.x);
+    this.sliderValue = "Completed";
+    this.annotaions[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (100%)</div><div class="e-fast-completed">' +
+      this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
+    if (this.circulargauge) {
+      this.circulargauge.axes[0].ranges[1].end = 0;
+      this.circulargauge.axes[0].annotations[1].angle = 0;
+      this.circulargauge.axes[0].annotations[0].content = this.annotaions[0].content;
+    }
+    this.changeTimeBtnText = "START FASTING";
+    if (!document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
+      document.querySelector('.e-fast-time-btn').classList.add('e-fast-reset');
+    }
+    if (!document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
+      document.querySelector('.e-fast-end-btn').classList.add('e-fast-reset');
+    }
+  }
+
+  modifyFasting() {
+    this.fastingDialog.show();
+  }
+
+  fastingDlgBtnClick(args) {
+    this.countStartDate = this.fastingStartDateInstance.value;
+    this.countDownDate = this.fastingEndDateInstance.value;
+    this.diff = Math.floor(((this.countDownDate - this.countStartDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    this.consumedWaterCount = 0;
+    this.consumedWaterAmount = 0;
+    this.x = setInterval(this.intervalFn.bind(this), 1000);
+    this.fastingDialog.hide();
+    this.changeTimeBtnText = "CHANGE TIME";
+    if (document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
+      document.querySelector('.e-fast-time-btn').classList.remove('e-fast-reset');
+    }
+    if (document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
+      document.querySelector('.e-fast-end-btn').classList.remove('e-fast-reset');
+    }
+  }
+
+  fastingCancelBtnClick() {
+    this.fastingDialog.hide();
+  }
+
+  onFastDateChange() {
+    this.diff = Math.floor((((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  }
+
+  sliderChange(args) {
+    this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' +
+      args.value + 'kg</div>';
+    this.weightGauge.axes[0].pointers[0].value = args.value;
+  }
+
+  sliderHeightChange(args) {
+    this.heightGauge.annotations[0].axisValue = args.value;
+    this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + args.value + this.profileStats.heightMes + '</div>';
+    this.heightGauge.axes[0].pointers[0].value = args.value;
+    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (args.value * 1.5) + 'px';
+  }
+
   minusClick() {
     this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
     this.consumedWaterAmount = this.consumedWaterCount * 150;
@@ -687,8 +783,6 @@ export class AppComponent {
     this.gauge.axes[0].pointers[0].value = percent;
   }
 
-  updateAnnotationContent
-
   closestIndex(num) {
     let counts = [5, 40, 70, 95];
     var curr = counts[0],
@@ -706,6 +800,52 @@ export class AppComponent {
   }
 
   menuDlgBtnClick(args) {
+    if (this.currentAddedMenu === 'Breakfast') {
+      this.currentBreakFastMenu = [];
+      this.currentBreakFastCalories = 0;
+      this.currentBreakFastMenu = this.currentMenu.filter(function (item) {
+        return item.isAdded;
+      });
+      this.currentBreakFastCalories = this.currentTotalCal;
+      this.consumedCalories += this.currentBreakFastCalories;
+      this.isBreakFastMenuAdded = true;
+    } else if (this.currentAddedMenu === 'Snack 1') {
+      this.currentSnack1Menu = [];
+      this.currentSnack1Calories = 0;
+      this.currentSnack1Menu = this.currentMenu.filter(function (item) {
+        return item.isAdded;
+      });
+      this.currentSnack1Calories = this.currentTotalCal;
+      this.consumedCalories += this.currentSnack1Calories;
+      this.isSnack1MenuAdded = true;
+    } else if (this.currentAddedMenu === 'Lunch') {
+      this.currentLunchMenu = [];
+      this.currentLunchCalories = 0;
+      this.currentLunchMenu = this.currentMenu.filter(function (item) {
+        return item.isAdded;
+      });
+      this.currentLunchCalories = this.currentTotalCal;
+      this.consumedCalories += this.currentLunchCalories;
+      this.isLunchMenuAdded = true;
+    } else if (this.currentAddedMenu === 'Snack 2') {
+      this.currentSnack2Menu = [];
+      this.currentSnack2Calories = 0;
+      this.currentSnack2Menu = this.currentMenu.filter(function (item) {
+        return item.isAdded;
+      });
+      this.currentSnack2Calories = this.currentTotalCal;
+      this.consumedCalories += this.currentSnack2Calories;
+      this.isSnack2MenuAdded = true;
+    } else if (this.currentAddedMenu === 'Dinner') {
+      this.currentDinnerMenu = [];
+      this.currentDinnerCalories = 0;
+      this.currentDinnerMenu = this.currentMenu.filter(function (item) {
+        return item.isAdded;
+      });
+      this.currentDinnerCalories = this.currentTotalCal;
+      this.consumedCalories += this.currentDinnerCalories;
+      this.isDinnerMenuAdded = true;
+    }
     this.menuDialog.hide();
   }
 
@@ -730,43 +870,33 @@ export class AppComponent {
   }
 
   addBtnClick(args) {
+    if (args.currentTarget.classList.contains('e-breakfast-add-btn')) {
+      this.currentMenuHeader = " Add Breakfast Menu";
+      this.currentMenu = this.breakfastMenu;
+      this.currentRecom = this.breakFastRecom;
+      this.currentAddedMenu = 'Breakfast';
+    } else if (args.currentTarget.classList.contains('e-snack1-add-btn') || args.currentTarget.classList.contains('e-snack2-add-btn')) {
+      this.currentMenuHeader = "Add Snack Menu";
+      this.currentMenu = this.snackMenu;
+      if (args.currentTarget.classList.contains('e-snack1-add-btn')) {
+        this.currentRecom = this.snack1Recom;
+        this.currentAddedMenu = 'Snack 1';
+      } else {
+        this.currentRecom = this.snack2Recom;
+        this.currentAddedMenu = 'Snack 2';
+      }
+    } else if (args.currentTarget.classList.contains('e-lunch-add-btn')) {
+      this.currentMenuHeader = "Add Lunch Menu";
+      this.currentMenu = this.lunchMenu;
+      this.currentRecom = this.lunchRecom;
+      this.currentAddedMenu = 'Lunch';
+    } else if (args.currentTarget.classList.contains('e-dinner-add-btn')) {
+      this.currentMenuHeader = "Add Dinner Menu";
+      this.currentMenu = this.lunchMenu;
+      this.currentRecom = this.dinnerRecom;
+      this.currentAddedMenu = 'Dinner';
+    }
     this.menuDialog.show();
-    // if (args.target.ej2_instances[0].element.classList.contains('e-breakfast-add-btn')) {
-    //   this.currentBreakFastMenu = [];
-    //   this.currentBreakFastCalories = 0;
-    //   this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    //   this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
-    //   this.consumedCalories += this.currentBreakFastCalories;
-    //   this.isBreakFastMenuAdded = true;
-    // } else if (args.target.ej2_instances[0].element.classList.contains('e-snack1-add-btn')) {
-    //   this.currentSnack1Menu = [];
-    //   this.currentSnack1Calories = 0;
-    //   this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    //   this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
-    //   this.consumedCalories += this.currentSnack1Calories;
-    //   this.isSnack1MenuAdded = true;
-    // } else if (args.target.ej2_instances[0].element.classList.contains('e-lunch-add-btn')) {
-    //   this.currentLunchMenu = [];
-    //   this.currentLunchCalories = 0;
-    //   this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    //   this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
-    //   this.consumedCalories += this.currentLunchCalories;
-    //   this.isLunchMenuAdded = true;
-    // } else if (args.target.ej2_instances[0].element.classList.contains('e-snack2-add-btn')) {
-    //   this.currentSnack2Menu = [];
-    //   this.currentSnack2Calories = 0;
-    //   this.currentSnack2Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    //   this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
-    //   this.consumedCalories += this.currentSnack2Calories;
-    //   this.isSnack2MenuAdded = true;
-    // } else if (args.target.ej2_instances[0].element.classList.contains('e-dinner-add-btn')) {
-    //   this.currentDinnerMenu = [];
-    //   this.currentDinnerCalories = 0;
-    //   this.currentDinnerMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    //   this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
-    //   this.consumedCalories += this.currentDinnerCalories;
-    //   this.isDinnerMenuAdded = true;
-    // }
   }
 
   updateMenu() {
@@ -803,30 +933,130 @@ export class AppComponent {
     this.isDinnerMenuAdded = true;
   }
 
-  resize() {
-    if (this.chartInstance) {
-      this.chartInstance.refresh();
+  quantityMinusClick() {
+    this.currentQuantity = this.currentQuantity > 0 ? (this.currentQuantity - 1) : 0;
+  }
+
+  quantityPlusClick() {
+    this.currentQuantity += 1;
+  }
+
+  ageMinusClick() {
+    this.profileStats.age = this.profileStats.age > 0 ? (this.profileStats.age - 1) : 0;
+  }
+
+  agePlusClick() {
+    this.profileStats.age += 1;
+  }
+
+  onMenuCardSelect(args) {
+    args.currentTarget.classList.toggle('e-card-select');
+    for (var i = 0; i < this.currentMenu.length; i++) {
+      if (this.currentMenu[i].item === args.currentTarget.innerText) {
+        if (args.currentTarget.classList.contains('e-card-select')) {
+          this.currentTotalCal += (this.currentMenu[i].cal * this.currentQuantity);
+          this.currentMenu[i].isAdded = true;
+          this.currentMenu[i].quantity = this.currentQuantity;
+        } else {
+          this.currentTotalCal -= (this.currentMenu[i].cal * this.currentMenu[i].quantity);
+          this.currentMenu[i].isAdded = false;
+          this.currentMenu[i].quantity = 0;
+        }
+      }
     }
-    if (this.gridInstance) {
-      this.gridInstance.refresh();
+  }
+
+  changeHeight() {
+    this.modifyHeaderTitle = "Change Your Height";
+    this.modifyBtnGroup = ['CM', 'FT'];
+    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
     }
+    if (!this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-weight-gauge-container').classList.add('e-hidden');
+    }
+    if (this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-height-gauge-container').classList.remove('e-hidden');
+    }
+  }
+
+  changeWeight() {
+    this.isGoalEdit = false;
+    this.modifyHeaderTitle = "Change Your Weight";
+    this.modifyBtnGroup = ['KG', 'LB'];
+    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
+    }
+    if (this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-weight-gauge-container').classList.remove('e-hidden');
+    }
+    if (!this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
+    }
+  }
+
+  changeGoal() {
+    this.isGoalEdit = true;
+    this.modifyHeaderTitle = "Change Your Weight";
+    this.modifyBtnGroup = ['KG', 'LB'];
+    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
+    }
+    if (this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-weight-gauge-container').classList.remove('e-hidden');
+    }
+    if (!this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
+    }
+  }
+
+  cancelWeight() {
+    this.isGoalEdit = false;
+    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
+    }
+  }
+
+  updateWeight() {
+    if (this.isGoalEdit) {
+      this.profileStats.goal = this.weightGauge.axes[0].pointers[0].value;
+    } else {
+      this.profileStats.weight = this.weightGauge.axes[0].pointers[0].value;
+    }
+    this.isGoalEdit = false;
+    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
+    }
+  }
+
+  cancelHeight() {
+    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
+    }
+  }
+
+  updateHeight() {
+    this.profileStats.height = this.heightGauge.axes[0].pointers[0].value;
+    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
+    }
+  }
+
+  onNameChange(args) {
+    this.profileStats.name = args.value;
+  }
+
+  onLocationChange(args) {
+    this.profileStats.location = args.value;
+  }
+
+  onEmailChange(args) {
+    this.profileStats.email = args.value;
   }
 
   tabSelecting(e) {
     if (e.isSwiped) {
       e.cancel = true;
-    }
-  }
-
-  dashBoardCreated() {
-    if (Browser.isDevice) {
-      if (this.tabInstance.selectedItem === 0) {
-        this.dashBoardInstance.removePanel('profile-panel-id');
-      } else if (this.tabInstance.selectedItem === 1) {
-        this.dietDashBoardInstance.removePanel('diet-profile-panel-id');
-      } else if (this.tabInstance.selectedItem === 2) {
-        this.fastingDashBoardInstance.removePanel('fasting-profile-panel-id');
-      }
     }
   }
 
@@ -860,6 +1090,14 @@ export class AppComponent {
       this.isSnack2MenuAdded = false;
       this.isDinnerMenuAdded = false;
     }
+  }
+
+  onProfileEdit() {
+    this.editDialog.show();
+  }
+
+  closeEditDialog() {
+    this.editDialog.hide();
   }
 
   updateComponents() {

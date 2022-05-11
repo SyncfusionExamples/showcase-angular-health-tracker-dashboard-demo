@@ -284,8 +284,8 @@ export class AppComponent {
   public palette = ['#F547A8'];
   public headerPlacement = this.isSmallDevice ? 'Bottom' : 'Top';
   public width: string = this.isDevice ? '100%' : '60%';
-  public chartWidth: string = this.isDevice ? '100%' : '98%';
-  public gridWidth: string = this.isDevice ? '100%' : '97%';
+  public chartWidth: string = '100%';
+  public gridWidth: string = '100%';
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();

@@ -1,16 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
-
 @font-face {
   font-family: 'icomoon';
   src: url('assets/fonts/icomoon.eot?hvguwa');
@@ -633,8 +620,11 @@ body {
 
 .e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-text,
 .e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-icon {
-  color: #ff0200 !important;
-  font-weight: bolder;
+  color: #F15223 !important;
+}
+
+.e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-text {
+  font-weight: 700;
 }
 
 .e-tab .e-tab-header .e-tab-icon::before {
@@ -642,7 +632,7 @@ body {
 }
 
 .e-tab .e-tab-header .e-indicator {
-  background: #ff0200 !important;
+  background: #F15223 !important;
 }
 
 .e-card .e-card-header .e-card-header-image {
@@ -717,7 +707,10 @@ body {
   overflow: auto;
 }
 
-.e-my-activities-panel,
+.e-my-activities-panel {
+  margin-top: 36px;
+}
+
 .e-workout-panel,
 .e-activity-panel {
   margin-top: 24px;
@@ -735,6 +728,7 @@ body {
 
 .e-my-activities-date {
   float: right;
+  padding-right: 0;
 }
 
 .e-workout-panel .e-panel-header,
@@ -775,16 +769,13 @@ body {
 
 .e-chart-dropdown {
   float: right;
-  padding: 0 10px;
+  padding: 0 24px;
 }
 
 .e-grid,
 .e-chart {
   width: 100%;
-}
-
-.e-grid {
-  padding: 10px;
+  margin: 24px;
 }
 
 .e-activity-chart,
@@ -929,7 +920,7 @@ body {
 }
 
 .e-tab .e-tab-header {
-  padding: 5px 0px 5px 20px;
+  padding: 5px 0 0 20px;
   top: 0 !important;
   position: sticky !important;
   z-index: 10000 !important;
@@ -1258,7 +1249,7 @@ body {
 .e-diet-profile-panel .e-panel-container,
 .e-fasting-profile-panel .e-panel-container {
   width: 100%;
-  padding: 20px;
+  padding: 24px;
 }
 
 .e-fasting-header {
@@ -1756,13 +1747,13 @@ body.e-dark .e-tab-header-mobile-icon-container {
 }
 
 body.e-dark .e-custom-card,
-body.e-dark .e-diet-card {
+body.e-dark .e-diet-card,
+body.e-dark .e-grid .e-row.e-altrow {
   background-color: #313246 !important;
   border: none !important;
   box-shadow: none !important;
 }
 
-body.e-dark .e-grid .e-row.e-altrow,
 body.e-dark .e-grid .e-headercell,
 body.e-dark .e-weight-change-btn,
 body.e-dark .e-goal-change-btn,
@@ -1865,7 +1856,7 @@ body.e-dark .e-tab .e-tab-header .e-toolbar-item .e-tab-wrap:hover .e-tab-icon {
 }
 
 body.e-dark .e-tab .e-tab-header .e-toolbar-item.e-active .e-tab-icon {
-  color: #ff0200 !important;
+  color: #F15223 !important;
 }
 
 body.e-dark .e-fast-start-date .e-datetime-wrapper,
@@ -1879,7 +1870,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-sleep-card,
   .e-steps-card,
   .e-calories-card {
-    border-radius: 22px !important;
+    border-radius: 30px !important;
   }
 
   .e-diet-panel-header-text,
@@ -1917,17 +1908,28 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-dashboardlayout-container {
     height: calc(100vh - 150px) !important;
+    padding: 0;
   }
 
   .e-heart-rate-card,
   .e-steps-card,
   .e-calories-card,
   .e-sleep-card {
-    width: 46%;
-    height: 155px !important;
+    width: 49%;
+    height: 200px !important;
     font-size: 20px !important;
+    margin-bottom: 3%;
+    margin-right: 0 !important;
+  }
+
+  .e-steps-card,
+  .e-sleep-card {
     margin-left: 2%;
-    margin-bottom: 5%;
+  }
+
+  .e-calories-card,
+  .e-sleep-card {
+    margin-bottom: 0;
   }
 
   .e-activity-actual {
@@ -2001,7 +2003,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-diet-card {
-    background: #FFFFFF !important;
+    background: #FAFAFC;
     border: 1px solid #F1F1F8 !important;
     box-sizing: border-box !important;
     border-radius: 16px !important;
@@ -2096,6 +2098,13 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     margin-top: 24px !important;
   }
 
+  .e-profile-panel .e-panel-container,
+  .e-activity-profile-panel .e-panel-container,
+  .e-diet-profile-panel .e-panel-container,
+  .e-fasting-profile-panel .e-panel-container {
+    padding: 20px;
+  }
+
   .e-current-menu-container .e-menu-card {
     min-width: 80px;
   }
@@ -2139,7 +2148,32 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-workout-panel .e-panel-header,
   .e-activity-panel .e-panel-header {
-    padding-left: 20px !important;
+    padding-left: 10px !important;
+  }
+
+  .e-chart-dropdown {
+    padding: 0 10px;
+  }
+
+  .e-grid,
+  .e-chart {
+    margin: 10px;
+  }
+
+  .e-my-activities-date {
+    padding-right: 2px;
+  }
+
+  .e-profile-panel {
+    padding: 0;
+  }
+
+  .e-profile-panel {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin-top: 0 !important;
   }
 }
 
@@ -2150,9 +2184,10 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-calories-card,
   .e-sleep-card {
     width: 48%;
-    height: 220px;
+    height: 155px !important;
     min-width: 144px;
     margin-left: 0 !important;
+    border-radius: 22px !important;
   }
 
   .e-heart-rate-card {
@@ -2190,5 +2225,13 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-water-consumed-text {
     width: 25%;
+  }
+
+  .e-grid {
+    width: 95% !important;
+  }
+
+  .e-chart {
+    width: 99% !important;
   }
 }

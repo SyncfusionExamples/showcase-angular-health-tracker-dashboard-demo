@@ -137,17 +137,18 @@
                     <ejs-grid #workoutgrid [dataSource]='gridData' gridLines="None" rowHeight="60"
                       (queryCellInfo)='customiseCell($event)' [width]="gridWidth" gridLines="None" height="100%">
                       <e-columns>
-                        <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
+                        <e-column field='Workout' headerText='Workout' textAlign='Left' [width]="gridColumnWidth">
+                        </e-column>
                         <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
                           format="###.# km">
                         </e-column>
-                        <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left' width="200"
-                          format='### mins'>
+                        <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left'
+                          [width]="gridColumnWidth" format='### mins'>
                         </e-column>
-                        <e-column field='Date' headerText='Date & Time' textAlign='Left' width="200"
+                        <e-column field='Date' headerText='Date & Time' textAlign='Left' [width]="gridColumnWidth"
                           format="MMM dd,yyyy hh:mm a">
                         </e-column>
-                        <e-column field='Completion' headerText='Completion' textAlign='Left' width="200"
+                        <e-column field='Completion' headerText='Completion' textAlign='Left' [width]="gridColumnWidth"
                           format="###'%'">
                         </e-column>
                       </e-columns>
@@ -588,7 +589,7 @@
     <e-tabitem *ngIf="isSmallDevice" [header]='headerText[3]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-profile-dashboardlayout-container">
-          <div class="col-md-12">
+          <div class="col-md-12 e-profile-panel">
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
               <div class="e-panel-container">

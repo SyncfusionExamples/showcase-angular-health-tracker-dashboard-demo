@@ -55,8 +55,8 @@ export class AppComponent {
   public burnedCalories = 0;
   public fastStartTime;
   public fastEndTime;
-  public consumedWaterCount = 2;
-  public consumedWaterAmount = 300;
+  public consumedWaterCount = 4;
+  public consumedWaterAmount = 600;
   public expectedWaterAmount = 2400;
   public currentMenuHeader;
   public currentMenu;
@@ -284,8 +284,9 @@ export class AppComponent {
   public palette = ['#F547A8'];
   public headerPlacement = this.isSmallDevice ? 'Bottom' : 'Top';
   public width: string = this.isDevice ? '100%' : '60%';
-  public chartWidth: string = '100%';
-  public gridWidth: string = '100%';
+  public chartWidth: string = this.isDevice ? '98%' : '97%';
+  public gridWidth: string = this.isDevice ? '97%' : '96.5%';
+  public gridColumnWidth = this.isDevice ? 150 : 200;
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();

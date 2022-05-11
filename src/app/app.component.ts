@@ -3,12 +3,14 @@ import { Browser } from '@syncfusion/ej2-base';
 import { TabComponent } from '@syncfusion/ej2-angular-navigations';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
-import { ChartComponent } from '@syncfusion/ej2-angular-charts';
+import { AccumulationChartComponent, ChartComponent } from '@syncfusion/ej2-angular-charts';
 import { DatePickerComponent, DateTimePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { AnimationSettingsModel, ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { CircularGaugeComponent } from '@syncfusion/ej2-angular-circulargauge';
 import { LinearGaugeComponent } from '@syncfusion/ej2-angular-lineargauge';
+import { RadioButtonComponent } from '@syncfusion/ej2-angular-buttons';
+import { SliderComponent } from '@syncfusion/ej2-angular-inputs';
 
 @Component({
   selector: 'app-root',
@@ -52,8 +54,8 @@ export class AppComponent {
   public burnedCalories = 0;
   public fastStartTime;
   public fastEndTime;
-  public consumedWaterCount = 0;
-  public consumedWaterAmount = 0;
+  public consumedWaterCount = 2;
+  public consumedWaterAmount = 300;
   public expectedWaterAmount = 2400;
   public currentMenuHeader;
   public currentMenu;
@@ -62,9 +64,14 @@ export class AppComponent {
   public currentQuantity = 1;
   public modifyHeaderTitle = "Change Your Weight";
   public modifyBtnGroup = ['KG', 'LB'];
+  public currentWtUnit = 'KG';
+  public currentHtUnit = 'CM';
   public currentAddedMenu;
   public isGoalEdit = false;
   public changeTimeBtnText = "CHANGE TIME";
+  public currrentTheme = 'Light';
+  public theme = 'Tailwind';
+  public chartBackGround = '#FFFFFF';
 
   public breakfastMenu = [{ item: 'Banana', cal: 117 }, { item: 'Bread', cal: 136 }, { item: 'Boiled Egg', cal: 86 }, { item: 'Wheat Chapathi', cal: 146 }, { item: 'Dosa', cal: 302 }, { item: 'Tea', cal: 73 }, { item: 'Coffee', cal: 135 }, { item: 'Milk', cal: 167 }];
   public bfNutrition = [{}];
@@ -79,7 +86,7 @@ export class AppComponent {
   { activity: 'Lunch', amount: 'Pizza', percentage: '20%', time: '1:00 PM' },
   { activity: 'Lunch Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '1:30 PM' }];
 
-  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 65, email: 'john.watson@gmail.com', weightMes: 'kg', heightMes: 'cm' };
+  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 65, email: 'john.watson@gmail.com', weightMes: 'kg', goalMes: 'kg', heightMes: 'cm' };
 
   @ViewChild('fitnesstab')
   public tabInstance: TabComponent;
@@ -92,6 +99,9 @@ export class AppComponent {
 
   @ViewChild('weightchart')
   public weightChartInstance: ChartComponent;
+
+  @ViewChild('piecontainer')
+  public nutritionChartInstance: AccumulationChartComponent;
 
   @ViewChild('workoutgrid')
   public gridInstance: GridComponent;
@@ -117,13 +127,25 @@ export class AppComponent {
   @ViewChild('ProfileEditDialog')
   public editDialog: DialogComponent;
 
+  @ViewChild('radiolight')
+  public lightThemeRadio: RadioButtonComponent;
+
+  @ViewChild('radiodark')
+  public darkThemeRadio: RadioButtonComponent;
+
+  @ViewChild('weightrange')
+  public weightSlider: SliderComponent;
+
+  @ViewChild('heightrange')
+  public heightSlider: SliderComponent;
+
   public dlgButtons: ButtonPropsModel[] = [{ click: this.menuCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-menu-cancel' } }, { click: this.menuDlgBtnClick.bind(this), buttonModel: { content: 'ADD MENU', cssClass: 'e-menu-add' } }];
   public fastingDlgButtons: ButtonPropsModel[] = [{ click: this.fastingCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-fasting-cancel' } }, { click: this.fastingDlgBtnClick.bind(this), buttonModel: { content: 'START FASTING', cssClass: 'e-start-fast' } }];
   public fastingDialogeader: string = 'Fasting';
   public showCloseIcon: Boolean = true;
   public Dialogwidth: string = this.isDevice ? '100%' : '700px';
   public fastingDialogwidth: string = this.isDevice ? '100%' : '400px';
-  public editDialogWidth = this.isDevice ? '100%' : '50%'
+  public editDialogWidth = this.isDevice ? '100%' : '1000px'
   public height: string = this.isDevice ? '100%' : 'auto';
   public dlgPosition = { X: 'center', Y: 'center' };
   public animationSettings: AnimationSettingsModel = { effect: 'Zoom' };
@@ -461,7 +483,7 @@ export class AppComponent {
       opposedPosition: true,
       pointers: [
         {
-          value: 0,
+          value: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100),
           height: 60,
           width: 60,
           roundedCornerRadius: 40,
@@ -571,13 +593,14 @@ export class AppComponent {
   public weightGaugeLineStyle: Object = {
     width: 0
   };
-  public weightGaugeCenterX = this.isDevice ? '27%' : '37%';
-  public weightGaugeCenterY = '50%';
+  public weightGaugeCenterX = this.isDevice ? '30%' : '38%';
+  public weightGaugeCenterY = this.isDevice ? '50%' : '50%';
+  public weightGaugeBackground = '#FFF7EC';
   public weightGaugeStartAngle: Object = 210;
   public weightGaugeEndangle: Object = 150;
   public weightGaugeMinimum: Object = 0;
   public weightGaugeMaximum: Object = 120;
-  public weightGaugeRadius: Object = '80%';
+  public weightGaugeRadius: Object = '85%';
   public weightGaugeLabelStyle: Object = {
     font: {
       fontFamily: 'Roboto',
@@ -592,7 +615,7 @@ export class AppComponent {
     cap: { radius: 12, color: '#F0D9BC' }
   }];
   public weightGaugeRanges: Object[] = [{
-    start: 0, end: 120, startWidth: 18, endWidth: 18, color: '#F43F5E',
+    start: 0, end: this.profileStats.weight, startWidth: 18, endWidth: 18, color: '#F43F5E',
     linearGradient: this.rangeLinearGradient,
     roundedCornerRadius: 10
   }];
@@ -707,10 +730,10 @@ export class AppComponent {
       this.circulargauge.axes[0].annotations[0].content = this.annotaions[0].content;
     }
     this.changeTimeBtnText = "START FASTING";
-    if (!document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
+    if (document.querySelector('.e-fast-time-btn') && !document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
       document.querySelector('.e-fast-time-btn').classList.add('e-fast-reset');
     }
-    if (!document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
+    if (document.querySelector('.e-fast-end-btn') && !document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
       document.querySelector('.e-fast-end-btn').classList.add('e-fast-reset');
     }
   }
@@ -725,13 +748,14 @@ export class AppComponent {
     this.diff = Math.floor(((this.countDownDate - this.countStartDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     this.consumedWaterCount = 0;
     this.consumedWaterAmount = 0;
+    clearInterval(this.x);
     this.x = setInterval(this.intervalFn.bind(this), 1000);
     this.fastingDialog.hide();
     this.changeTimeBtnText = "CHANGE TIME";
-    if (document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
+    if (document.querySelector('.e-fast-time-btn') && document.querySelector('.e-fast-time-btn').classList.contains('e-fast-reset')) {
       document.querySelector('.e-fast-time-btn').classList.remove('e-fast-reset');
     }
-    if (document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
+    if (document.querySelector('.e-fast-end-btn') && document.querySelector('.e-fast-end-btn').classList.contains('e-fast-reset')) {
       document.querySelector('.e-fast-end-btn').classList.remove('e-fast-reset');
     }
   }
@@ -746,15 +770,16 @@ export class AppComponent {
 
   sliderChange(args) {
     this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' +
-      args.value + 'kg</div>';
+      args.value + this.currentWtUnit + '</div>';
+    this.weightGauge.axes[0].ranges[0].end = args.value;
     this.weightGauge.axes[0].pointers[0].value = args.value;
   }
 
   sliderHeightChange(args) {
     this.heightGauge.annotations[0].axisValue = args.value;
-    this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + args.value + this.profileStats.heightMes + '</div>';
+    this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + args.value + this.currentHtUnit + '</div>';
     this.heightGauge.axes[0].pointers[0].value = args.value;
-    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (args.value * 1.5) + 'px';
+    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (args.value * (this.currentHtUnit.toUpperCase() === 'CM' ? 1.5 : 40)) + 'px';
   }
 
   minusClick() {
@@ -967,79 +992,73 @@ export class AppComponent {
   }
 
   changeHeight() {
+    this.currentHtUnit = this.profileStats.heightMes;
     this.modifyHeaderTitle = "Change Your Height";
     this.modifyBtnGroup = ['CM', 'FT'];
-    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-modify-container') && this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
     }
-    if (!this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-weight-gauge-container') && !this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-weight-gauge-container').classList.add('e-hidden');
     }
-    if (this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-height-gauge-container') && this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.remove('e-hidden');
     }
   }
 
   changeWeight() {
+    this.currentWtUnit = this.profileStats.weightMes;
     this.isGoalEdit = false;
+    this.showWeight();
+  }
+
+  showWeight() {
     this.modifyHeaderTitle = "Change Your Weight";
     this.modifyBtnGroup = ['KG', 'LB'];
-    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-modify-container') && this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
     }
-    if (this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-weight-gauge-container') && this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-weight-gauge-container').classList.remove('e-hidden');
     }
-    if (!this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-height-gauge-container') && !this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
     }
   }
 
   changeGoal() {
+    this.currentWtUnit = this.profileStats.goalMes;
     this.isGoalEdit = true;
-    this.modifyHeaderTitle = "Change Your Weight";
-    this.modifyBtnGroup = ['KG', 'LB'];
-    if (this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-modify-container').classList.remove('e-hidden');
-    }
-    if (this.editDialog.element.querySelector('.e-weight-gauge-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-weight-gauge-container').classList.remove('e-hidden');
-    }
-    if (!this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
-    }
+    this.showWeight();
   }
 
   cancelWeight() {
     this.isGoalEdit = false;
-    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
-    }
+    this.cancelHeight();
   }
 
   updateWeight() {
     if (this.isGoalEdit) {
+      this.profileStats.goalMes = this.currentWtUnit;
       this.profileStats.goal = this.weightGauge.axes[0].pointers[0].value;
     } else {
+      this.profileStats.weightMes = this.currentWtUnit;
       this.profileStats.weight = this.weightGauge.axes[0].pointers[0].value;
     }
     this.isGoalEdit = false;
-    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
-    }
+    this.cancelHeight();
   }
 
   cancelHeight() {
-    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
+    if (this.editDialog.element.querySelector('.e-modify-container') && !this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
     }
   }
 
   updateHeight() {
+    this.profileStats.heightMes = this.currentHtUnit;
     this.profileStats.height = this.heightGauge.axes[0].pointers[0].value;
-    if (!this.editDialog.element.querySelector('.e-modify-container').classList.contains('e-hidden')) {
-      this.editDialog.element.querySelector('.e-modify-container').classList.add('e-hidden');
-    }
+    this.cancelHeight();
   }
 
   onNameChange(args) {
@@ -1057,6 +1076,18 @@ export class AppComponent {
   tabSelecting(e) {
     if (e.isSwiped) {
       e.cancel = true;
+    }
+  }
+
+  tabSelected(e) {
+    if (this.chartInstance) {
+      this.chartInstance.refresh();
+    }
+    if (this.weightChartInstance) {
+      this.weightChartInstance.refresh();
+    }
+    if (this.nutritionChartInstance) {
+      this.nutritionChartInstance.refresh();
     }
   }
 
@@ -1098,6 +1129,81 @@ export class AppComponent {
 
   closeEditDialog() {
     this.editDialog.hide();
+  }
+
+  changeHandler(args) {
+    this.currrentTheme = args.value;
+    let findlink = document.getElementById("appcssid");
+    if (this.currrentTheme === 'Light') {
+      (findlink as any).href = "./assets/styles.css";
+      if (document.body.classList.contains('e-dark')) {
+        document.body.classList.remove('e-dark');
+      }
+      this.theme = 'Tailwind';
+      this.chartBackGround = '#FFFFFF';
+      if (this.chartInstance) {
+        this.chartInstance.theme = 'Tailwind';
+        this.chartInstance.refresh();
+      }
+      if (this.weightChartInstance) {
+        this.weightChartInstance.theme = 'Tailwind';
+        this.weightChartInstance.refresh();
+      }
+      if (this.nutritionChartInstance) {
+        this.nutritionChartInstance.theme = 'Tailwind';
+        this.nutritionChartInstance.refresh();
+      }
+      this.weightGaugeBackground = '#FFF7EC';
+      this.heightGauge.axes[0].labelStyle.font.color = '#000000';
+    } else if (this.currrentTheme === 'Dark') {
+      (findlink as any).href = "./assets/styles-dark.css";
+      if (!document.body.classList.contains('e-dark')) {
+        document.body.classList.add('e-dark');
+      }
+      this.theme = 'TailwindDark';
+      this.chartBackGround = '#26273B';
+      if (this.chartInstance) {
+        this.chartInstance.theme = 'TailwindDark';
+        this.chartInstance.refresh();
+      }
+      if (this.weightChartInstance) {
+        this.weightChartInstance.theme = 'TailwindDark';
+        this.weightChartInstance.refresh();
+      }
+      if (this.nutritionChartInstance) {
+        this.nutritionChartInstance.theme = 'TailwindDark';
+        this.nutritionChartInstance.refresh();
+      }
+      this.weightGaugeBackground = '#414255';
+      this.heightGauge.axes[0].labelStyle.font.color = '#FFFFFF';
+    }
+  }
+
+  handleChange(args) {
+    let unit = args.currentTarget.value;
+    if (['KG', 'LB'].includes(unit) && this.currentWtUnit !== unit) {
+      this.currentWtUnit = unit;
+      this.weightGauge.axes[0].maximum = unit === 'KG' ? 100 : 250;
+      this.weightSlider.max = unit === 'KG' ? 100 : 250;
+      let value = unit === 'KG' ? Math.round(this.weightSlider.value as number / 2.205) : Math.round(this.weightSlider.value as number * 2.205);
+      this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' +
+        value + this.currentWtUnit + '</div>';
+      this.weightGauge.axes[0].ranges[0].end = value;
+      this.weightGauge.axes[0].pointers[0].value = value;
+      this.weightSlider.value = value;
+    } else if (['CM', 'FT'].includes(unit) && this.currentHtUnit !== unit) {
+      this.currentHtUnit = unit;
+      this.heightGauge.axes[0].maximum = unit === 'CM' ? 200 : 8;
+      this.heightSlider.max = unit === 'CM' ? 200 : 8;
+      let value = Number(Math.round(((unit === 'CM' ? (this.heightSlider.value as number * 30.48) : (this.heightSlider.value as number / 30.48) * 100) / 100)).toFixed(2));
+      this.heightGauge.annotations[0].axisValue = value;
+      this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + value + this.currentHtUnit + '</div>';
+      this.heightGauge.axes[0].pointers[0].value = value;
+      this.heightGauge.axes[0].majorTicks.interval = unit === 'CM' ? 20 : 1;
+      this.heightGauge.axes[0].minorTicks.interval = unit === 'CM' ? 5 : 0.1;
+      (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (value * (unit === 'CM' ? 1.5 : 25)) + 'px';
+      this.heightSlider.value = value;
+    }
   }
 
   updateComponents() {

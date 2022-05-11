@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, HostListener } from '@angular/core';
 import { Browser } from '@syncfusion/ej2-base';
 import { TabComponent } from '@syncfusion/ej2-angular-navigations';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
@@ -20,7 +20,8 @@ import { SliderComponent } from '@syncfusion/ej2-angular-inputs';
 export class AppComponent {
   public title = 'fitness-app';
   public isDevice = Browser.isDevice;
-  public mediaQuery: string = 'max-width: 820px';
+  public isSmallDevice = false;
+  public innerWidth: any;
   public today: Date = new Date();
   public maxDate: Date = new Date();
   public cellSpacing: number[] = [10, 20];
@@ -138,6 +139,27 @@ export class AppComponent {
 
   @ViewChild('heightrange')
   public heightSlider: SliderComponent;
+  ngOnInit() {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 820) {
+      this.isSmallDevice = true;
+    }
+  }
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 820) {
+      // if (!this.isSmallDevice) {
+      document.location.reload();
+      // }
+      this.isSmallDevice = true;
+    } else {
+      if (this.isSmallDevice) {
+        document.location.reload();
+      }
+      this.isSmallDevice = false;
+    }
+  }
 
   public dlgButtons: ButtonPropsModel[] = [{ click: this.menuCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-menu-cancel' } }, { click: this.menuDlgBtnClick.bind(this), buttonModel: { content: 'ADD MENU', cssClass: 'e-menu-add' } }];
   public fastingDlgButtons: ButtonPropsModel[] = [{ click: this.fastingCancelBtnClick.bind(this), buttonModel: { content: 'CANCEL', cssClass: 'e-fasting-cancel' } }, { click: this.fastingDlgBtnClick.bind(this), buttonModel: { content: 'START FASTING', cssClass: 'e-start-fast' } }];
@@ -260,10 +282,10 @@ export class AppComponent {
     }
   };
   public palette = ['#F547A8'];
-  public headerPlacement = this.isDevice ? 'Bottom' : 'Top';
+  public headerPlacement = this.isSmallDevice ? 'Bottom' : 'Top';
   public width: string = this.isDevice ? '100%' : '60%';
   public chartWidth: string = this.isDevice ? '100%' : '98%';
-  public gridWidth: string = this.isDevice ? '95%' : '97%';
+  public gridWidth: string = this.isDevice ? '100%' : '97%';
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();
@@ -295,7 +317,7 @@ export class AppComponent {
       dashArray: "10,5"
     }
   };
-  public weightChartWidth: string = Browser.isDevice ? '90%' : '100%';
+  public weightChartWidth: string = this.isDevice ? '90%' : '100%';
   public weightChartData: Object[] = this.getWeightChartData();
   public weightChartPrimaryXAxis: Object = {
     valueType: 'DateTime',

@@ -1,10 +1,10 @@
-<div *ngIf="isDevice" class="e-tab-header-mobile-icon-container">
+<div *ngIf="isSmallDevice" class="e-tab-header-mobile-icon-container">
   <div class="e-tab-header-icon-div">
     <span class="e-tab-header-icon icon-Logo"></span>
   </div>
   <div class="e-tab-title">GOFIT</div>
 </div>
-<div *ngIf="isDevice" class="separator-div"></div>
+<div *ngIf="isSmallDevice" class="separator-div"></div>
 <ejs-tab id="fitness-tab" #fitnesstab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
   (selecting)="tabSelecting($event)" (selected)="tabSelected($event)" [selectedItem]="0">
   <e-tabitems>
@@ -91,7 +91,7 @@
                   <div class="e-panel-header col-md-12 col-sm-12 col-xs-12 col-lg-12">
                     <div class="col-md-5 col-sm-6 col-xs-8 col-lg-4 e-activity-chart-header-text">Activity Statistics
                     </div>
-                    <div class="e-chart-dropdown col-md-3 col-sm-5 col-xs-3 col-lg-3">
+                    <div class="e-chart-dropdown col-md-3 col-sm-4 col-xs-4 col-lg-3">
                       <ejs-dropdownlist #chartdropdown id='chartdropdown' [dataSource]='dropDownData' index="0"
                         (change)="onDropDownChange($event)">
                       </ejs-dropdownlist>
@@ -155,10 +155,10 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 hidden-xs hidden-sm">
+          <div *ngIf="!isSmallDevice" class="col-md-3">
             <div id="activity-profile-panel-id" class="e-panel e-activity-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
-              <div class="e-panel-container" style="width: 90%; margin: 20px;">
+              <div class="e-panel-container">
                 <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
@@ -353,7 +353,7 @@
                         </ejs-accumulationchart>
                       </div>
                       <div class="e-nutrition-container">
-                        <table *ngIf="isDevice; else dietElseBlock" class="e-nutrition-table">
+                        <table *ngIf="isSmallDevice; else dietElseBlock" class="e-nutrition-table">
                           <tr>
                             <td>
                               <div class="e-nutrition-text">
@@ -460,10 +460,10 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 hidden-xs hidden-sm">
+          <div *ngIf="!isSmallDevice" class="col-md-3">
             <div id="diet-profile-panel-id" class="e-panel e-diet-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
-              <div class="e-panel-container" style="width: 90%; margin: 20px;">
+              <div class="e-panel-container">
                 <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
@@ -570,10 +570,10 @@
               </div>
             </div>
           </div>
-          <div class="col-md-3 hidden-xs hidden-sm">
+          <div *ngIf="!isSmallDevice" class="col-md-3">
             <div id="fasting-profile-panel-id" class="e-panel e-fasting-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
-              <div class="e-panel-container" style="width: 90%; margin: 20px;">
+              <div class="e-panel-container">
                 <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
@@ -583,13 +583,13 @@
         </div>
       </ng-template>
     </e-tabitem>
-    <e-tabitem *ngIf="isDevice" [header]='headerText[3]'>
+    <e-tabitem *ngIf="isSmallDevice" [header]='headerText[3]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-profile-dashboardlayout-container">
           <div class="col-md-12">
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
-              <div class="e-panel-container" style="width: 90%; height: 90%; margin: 20px;">
+              <div class="e-panel-container">
                 <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>

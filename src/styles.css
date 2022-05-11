@@ -679,11 +679,16 @@ body {
 }
 
 .e-activity-actual {
+  white-space: nowrap;
   font-weight: 600;
   font-size: 36px;
   line-height: 125%;
   color: #FFFFFF;
   text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+}
+
+.e-activity-actual .e-activity-actual-unit {
+  font-size: 20px;
 }
 
 .e-activity-goal {
@@ -1870,6 +1875,13 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
 @media only screen and (max-width: 820px) {
 
+  .e-heart-rate-card,
+  .e-sleep-card,
+  .e-steps-card,
+  .e-calories-card {
+    border-radius: 22px !important;
+  }
+
   .e-diet-panel-header-text,
   .e-consumed,
   .e-burned,
@@ -1912,6 +1924,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-calories-card,
   .e-sleep-card {
     width: 46%;
+    height: 155px !important;
     font-size: 20px !important;
     margin-left: 2%;
     margin-bottom: 5%;
@@ -1999,8 +2012,14 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     display: none;
   }
 
-  .e-heart-rate-card .e-card-header {
-    margin-top: 10px;
+  .e-activity-card-container .e-card-header {
+    height: 45%;
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+  }
+
+  .e-activity-card-container .e-card-content {
+    height: 55%;
   }
 
   .e-meals-card {

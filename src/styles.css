@@ -1,3 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+
 @font-face {
   font-family: 'icomoon';
   src: url('assets/fonts/icomoon.eot?hvguwa');
@@ -284,13 +297,14 @@ body {
 }
 
 .e-dashboardlayout-container {
+  padding: 0 5px;
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100vh - 75px) !important;
 }
 
 .e-fasting-dashboardlayout-container {
-  height: calc(100vh - 110px) !important;
+  height: calc(100vh - 125px) !important;
 }
 
 .e-fasting-gauge-container {
@@ -298,7 +312,11 @@ body {
 }
 
 .e-water-panel-container,
-.e-fasting-panel-container {
+.e-fasting-panel-container,
+.e-dashboard-content,
+.e-control-wrapper.e-slider-container.e-vertical,
+.e-activity-chart-header-text,
+.e-meals-panel .e-panel-header {
   padding: 0 !important;
 }
 
@@ -311,7 +329,6 @@ body {
 .e-tab-header-icon-div {
   float: left !important;
   margin-top: 15px;
-  margin-left: 10px;
 }
 
 .e-profile-edit-icon-container {
@@ -353,10 +370,6 @@ body {
 .e-control-wrapper.e-slider-container .e-slider .e-range {
   background-color: #F15223;
   height: 8px;
-}
-
-.e-control-wrapper.e-slider-container.e-vertical {
-  padding: 0 !important;
 }
 
 .e-control-wrapper.e-slider-container.e-horizontal .e-slider-track {
@@ -707,6 +720,7 @@ body {
 
 .e-my-activities-header {
   padding: 0 !important;
+  margin-top: 4px;
 }
 
 .e-my-activities-panel .e-panel-header {
@@ -720,7 +734,9 @@ body {
 
 .e-workout-panel .e-panel-header,
 .e-activity-panel .e-panel-header {
-  margin-left: 24px;
+  width: 100%;
+  border-radius: 24px;
+  padding-left: 24px !important;
   padding-top: 24px !important;
 }
 
@@ -756,14 +772,10 @@ body {
   float: right;
 }
 
-.e-activity-chart-header-text {
-  padding: 0 !important;
-}
-
 .e-grid,
 .e-chart {
   margin: 20px;
-  width: 98%;
+  width: 100%;
 }
 
 .e-activity-chart,
@@ -877,7 +889,7 @@ body {
 
 .e-workout-panel .e-panel-container,
 .e-activity-panel .e-panel-container {
-  width: 97%;
+  width: 100%;
 }
 
 .e-my-activities-panel .e-panel-container {
@@ -908,6 +920,7 @@ body {
 }
 
 .e-tab .e-tab-header {
+  padding: 5px 0px 5px 20px;
   top: 0 !important;
   position: sticky !important;
   z-index: 10000 !important;
@@ -1163,10 +1176,6 @@ body {
   margin-top: 20px;
 }
 
-.e-meals-panel .e-panel-header {
-  padding: 0 !important;
-}
-
 .e-meals-card-container {
   display: -webkit-inline-box;
   margin-top: 20px;
@@ -1239,7 +1248,7 @@ body {
   font-size: 24px;
   line-height: 125%;
   color: #303343;
-  margin: 20px 0 0 40px;
+  margin: 20px 0 0 20px;
 }
 
 .e-fasting-gauge {
@@ -1881,8 +1890,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     display: block;
   }
 
-  .e-dashboardlayout-container,
-  .e-dashboardlayout-container.e-diet-dashboardlayout-container {
+  .e-dashboardlayout-container {
     height: calc(100vh - 150px) !important;
   }
 
@@ -1935,6 +1943,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-tab-header-mobile-icon-container {
+    padding-left: 20px;
     height: 60px;
     top: 0 !important;
     position: sticky !important;
@@ -1973,9 +1982,12 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     height: auto !important;
   }
 
-  .e-grid,
-  .e-chart {
+  .e-grid {
     margin: 10px;
+  }
+
+  .e-chart {
+    margin: 0;
   }
 
   .e-tab .e-tab-header .e-indicator {
@@ -1989,7 +2001,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-meals-card {
     width: 30%;
     height: 40%;
-    margin: 0 10px;
+    margin-right: 10px;
     display: inline-block;
   }
 
@@ -2048,7 +2060,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-water-panel,
   .e-fasting-chart-panel {
-    width: 97% !important;
     margin-top: 24px !important;
     margin-left: 0 !important;
   }
@@ -2059,11 +2070,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-diet-profile-panel {
     height: auto !important;
     margin-top: 24px !important;
-  }
-
-  .e-profile-dashboardlayout-container {
-    width: 93%;
-    margin: 0 30px;
   }
 
   .e-current-menu-container .e-menu-card {
@@ -2085,6 +2091,27 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-profile-container {
     margin-top: 10px;
   }
+
+  .e-workout-panel {
+    margin-top: 20px !important;
+  }
+
+  .e-workout-panel .e-panel-container,
+  .e-activity-panel .e-panel-container {
+    width: 100%;
+  }
+
+  .e-fasting-dashboardlayout-container {
+    height: calc(100vh - 200px) !important;
+  }
+
+  .e-tab .e-tab-header {
+    padding: 5px 0;
+  }
+
+  .e-activity-chart svg {
+    border-radius: 24px;
+  }
 }
 
 @media only screen and (max-width: 700px) {
@@ -2093,7 +2120,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-steps-card,
   .e-calories-card,
   .e-sleep-card {
-    width: 47%;
+    width: 48%;
     height: 220px;
     min-width: 144px;
     margin-left: 0 !important;
@@ -2135,13 +2162,4 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-water-consumed-text {
     width: 25%;
   }
-
-  .e-workout-panel {
-    margin-top: 20px !important;
-  }
-
-  .e-profile-dashboardlayout-container {
-    width: 85%;
-  }
-
 }

@@ -11,7 +11,7 @@
     <e-tabitem [header]='headerText[0]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-activity-dashboardlayout-container">
-          <div class="col-md-9">
+          <div class="col-md-9 e-dashboard-content">
             <div class="col-md-12">
               <div id="activity-panel-id" class="e-panel e-my-activities-panel" data-row="0" data-col="0"
                 [data-sizeX]="activitySizeX" data-sizeY="1">
@@ -97,11 +97,11 @@
                       </ejs-dropdownlist>
                     </div>
                   </div>
-                  <div class="e-panel-content">
+                  <div class="e-chart-panel-content">
                     <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' [width]='chartWidth'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
                       [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [marker]="marker"
-                      [background]="chartBackGround">
+                      [background]="chartBackGround" (legendClick)="legendClick($event)">
                       <e-series-collection>
                         <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
                           xName='x' yName='y' enableTooltip="false">
@@ -131,9 +131,9 @@
                   <div class="e-panel-header" style="margin-bottom: 5px;">
                     <div>Recent Workout</div>
                   </div>
-                  <div style="height: 100%;">
+                  <div>
                     <ejs-grid #workoutgrid [dataSource]='gridData' gridLines="None" rowHeight="60"
-                      (queryCellInfo)='customiseCell($event)' width="100%" gridLines="None" height="100%">
+                      (queryCellInfo)='customiseCell($event)' [width]="gridWidth" gridLines="None" height="100%">
                       <e-columns>
                         <e-column field='Workout' headerText='Workout' textAlign='Left' width="200"></e-column>
                         <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
@@ -171,7 +171,7 @@
     <e-tabitem [header]='headerText[1]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container e-diet-dashboardlayout-container">
-          <div class="col-md-9">
+          <div class="col-md-9 e-dashboard-content">
             <div class="col-md-12">
               <div id="meals-panel-id" class="e-panel e-meals-panel" data-row="0" data-col="0" data-sizeX="4"
                 data-sizeY="1">
@@ -461,14 +461,12 @@
             </div>
           </div>
           <div class="col-md-3 hidden-xs hidden-sm">
-            <div class="col-md-12">
-              <div id="diet-profile-panel-id" class="e-panel e-diet-profile-panel" data-row="0" data-col="4"
-                data-sizeX="1" data-sizeY="3">
-                <div class="e-panel-container" style="width: 90%; margin: 20px;">
-                  <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
-                    (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
-                  </app-profile>
-                </div>
+            <div id="diet-profile-panel-id" class="e-panel e-diet-profile-panel" data-row="0" data-col="4"
+              data-sizeX="1" data-sizeY="3">
+              <div class="e-panel-container" style="width: 90%; margin: 20px;">
+                <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
+                  (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
+                </app-profile>
               </div>
             </div>
           </div>
@@ -479,7 +477,7 @@
       <ng-template #content>
         <div class="e-fasting-header">Fasting</div>
         <div class="e-dashboardlayout-container e-fasting-dashboardlayout-container">
-          <div class="col-md-9 e-fasting-gauge-container">
+          <div class="col-md-9 e-fasting-gauge-container  e-dashboard-content">
             <div class="col-md-12">
               <div class="col-md-5 e-fasting-panel-container">
                 <div id="fasting-panel-id" class="e-panel e-fasting-panel" data-row="0" data-col="0" data-sizeX="2"
@@ -556,7 +554,7 @@
                     <div class="e-weight-chart-header-text">Weight Journey</div>
                   </div>
                   <div class="e-panel-content">
-                    <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' [width]='chartWidth'
+                    <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' width='98%'
                       [primaryXAxis]='weightChartPrimaryXAxis' [primaryYAxis]='weightChartPrimaryYAxis'
                       [height]="activityChartHeight" [theme]="theme" [tooltip]='weightChartTooltip'>
                       <e-series-collection>
@@ -588,8 +586,7 @@
     <e-tabitem *ngIf="isDevice" [header]='headerText[3]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-profile-dashboardlayout-container">
-          <ejs-dashboardlayout id='profile_dashboard' columns="1" #profile_dashboard [cellSpacing]='cellSpacing'
-            [allowDragging]="false">
+          <div class="col-md-12">
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
               <div class="e-panel-container" style="width: 90%; height: 90%; margin: 20px;">
@@ -598,7 +595,7 @@
                 </app-profile>
               </div>
             </div>
-          </ejs-dashboardlayout>
+          </div>
         </div>
       </ng-template>
     </e-tabitem>
@@ -658,13 +655,13 @@
   <ng-template #content>
     <div class="e-fast-start-label">Start Time</div>
     <div class="e-fast-start-date">
-      <ejs-datetimepicker id="fast-start-date" #StartFastDatePicker [value]='countStartDate' [min]='countStartDate'
-        (change)="onFastDateChange()"></ejs-datetimepicker>
+      <ejs-datetimepicker id="fast-start-date" #StartFastDatePicker [value]='countStartDate' [min]='minimumDate'
+        [max]='maximumDate' (change)="onFastDateChange()"></ejs-datetimepicker>
     </div>
     <div class="e-fast-end-label">End Time</div>
     <div class="e-fast-end-date">
-      <ejs-datetimepicker id="fast-end-date" #EndFastDatePicker [value]='countDownDate' [min]='today'
-        (change)="onFastDateChange()">
+      <ejs-datetimepicker id="fast-end-date" #EndFastDatePicker [value]='countDownDate' [min]='minimumDate'
+        [max]='maximumDate' (change)="onFastDateChange()">
       </ejs-datetimepicker>
     </div>
     <div class="e-fast-total-label">Total Hours</div>
@@ -673,7 +670,7 @@
 </ejs-dialog>
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
-  [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth'>
+  [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' height="80%">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">
@@ -750,9 +747,11 @@
       <div class="e-modify-container col-md-6 col-sm-12">
         <div class="e-modify-title">{{ modifyHeaderTitle }}</div>
         <div class='e-modify-btn-group e-btn-group e-outline'>
-          <input type="radio" [id]="modifyBtnGroup[0]" name="modifyunit" [value]="modifyBtnGroup[0]" checked="true" (change)="handleChange($event)"/>
+          <input type="radio" [id]="modifyBtnGroup[0]" name="modifyunit" [value]="modifyBtnGroup[0]" checked="true"
+            (change)="handleChange($event)" />
           <label class="e-btn" [for]="modifyBtnGroup[0]">{{ modifyBtnGroup[0] }}</label>
-          <input type="radio" [id]="modifyBtnGroup[1]" name="modifyunit" [value]="modifyBtnGroup[1]" (change)="handleChange($event)"/>
+          <input type="radio" [id]="modifyBtnGroup[1]" name="modifyunit" [value]="modifyBtnGroup[1]"
+            (change)="handleChange($event)" />
           <label class="e-btn" [for]="modifyBtnGroup[1]">{{ modifyBtnGroup[1] }}</label>
         </div>
         <div class="e-weight-gauge-container">

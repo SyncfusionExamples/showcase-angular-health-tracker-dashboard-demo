@@ -260,9 +260,10 @@ export class AppComponent {
     }
   };
   public palette = ['#F547A8'];
-  public headerPlacement = Browser.isDevice ? 'Bottom' : 'Top';
-  public width: string = Browser.isDevice ? '100%' : '60%';
-  public chartWidth: string = Browser.isDevice ? '90%' : '100%';
+  public headerPlacement = this.isDevice ? 'Bottom' : 'Top';
+  public width: string = this.isDevice ? '100%' : '60%';
+  public chartWidth: string = this.isDevice ? '100%' : '98%';
+  public gridWidth: string = this.isDevice ? '95%' : '97%';
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();
@@ -400,8 +401,8 @@ export class AppComponent {
   public countDownDate: any = new Date().getHours() >= 17 ? new Date(new Date().setHours(this.countStartDate.getHours() + 16, 0, 0, 0)) : new Date(new Date(new Date().setDate(this.countStartDate.getDate())).setHours(this.countStartDate.getHours() + 16, 0, 0, 0));
   public diff = 16;
 
-  public minimumDate = new Date();
-  public maximumDate = new Date(new Date().setHours(this.minimumDate.getHours() + 24));
+  public minimumDate = new Date(new Date().setHours(0, 0, 0));
+  public maximumDate = new Date(new Date().setHours(this.minimumDate.getHours() + 24, 0, 0));
 
   // Update the count down every 1 second
   public x = setInterval(this.intervalFn.bind(this), 1000);
@@ -727,6 +728,7 @@ export class AppComponent {
     if (this.circulargauge) {
       this.circulargauge.axes[0].ranges[1].end = 0;
       this.circulargauge.axes[0].annotations[1].angle = 0;
+      this.circulargauge.axes[0].annotations[1].content = '';
       this.circulargauge.axes[0].annotations[0].content = this.annotaions[0].content;
     }
     this.changeTimeBtnText = "START FASTING";
@@ -1203,6 +1205,15 @@ export class AppComponent {
       this.heightGauge.axes[0].minorTicks.interval = unit === 'CM' ? 5 : 0.1;
       (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (value * (unit === 'CM' ? 1.5 : 25)) + 'px';
       this.heightSlider.value = value;
+    }
+  }
+
+  legendClick(args) {
+    if (args.legendText === 'Diet') {
+      this.chartInstance.series[0].visible = !this.chartInstance.series[0].visible;
+    } else if (args.legendText === 'Workout') {
+      this.chartInstance.series[1].visible = !this.chartInstance.series[1].visible;
+      this.chartInstance.series[4].visible = !this.chartInstance.series[4].visible;
     }
   }
 

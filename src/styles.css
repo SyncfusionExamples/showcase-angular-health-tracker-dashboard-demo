@@ -1,3 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind-dark.css';
+
 @font-face {
   font-family: 'icomoon';
   src: url('assets/fonts/icomoon.eot?hvguwa');
@@ -290,12 +304,8 @@ body {
   height: calc(100vh - 75px) !important;
 }
 
-.e-fasting-dashboardlayout-container {
-  height: calc(100vh - 125px) !important;
-}
-
 .e-fasting-gauge-container {
-  margin-top: 20px;
+  margin-top: 40px;
 }
 
 .e-water-panel-container,
@@ -330,7 +340,7 @@ body {
 
 .e-profile-edit-dialog .e-dlg-header-content {
   background: #FFFFFF;
-  border: 1px solid #E1E9ED;
+  border-bottom: 1px solid #E1E9ED;
 }
 
 .e-control-wrapper.e-slider-container .e-slider .e-handle,
@@ -372,6 +382,7 @@ body {
 
 .e-base-container {
   display: flex;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -816,6 +827,10 @@ body {
   text-transform: none !important;
 }
 
+.e-dialog .e-dlg-header-content {
+  border-radius: 0 !important;
+}
+
 .e-panel-header {
   font-weight: 700 !important;
   font-size: 24px !important;
@@ -981,20 +996,28 @@ body {
 }
 
 .e-diet-panel-header-text {
-  margin-top: 20px;
+  padding-left: 24px;
+  padding-right: 0;
+  margin-top: 24px;
 }
 
 .e-consumed,
 .e-burned {
-  margin-top: 20px;
+  margin-top: 24px;
+  padding: 0 !important;
+}
+
+.col-sm-12.e-consumed,
+.col-sm-12.e-burned {
+  padding-left: 24px !important;
 }
 
 .e-consumed-wrapper-value {
   font-weight: 600;
   font-size: 32px;
-  line-height: 125%;
   color: #303343;
   padding: 0 !important;
+  white-space: nowrap;
 }
 
 .e-consumed-wrapper-text {
@@ -1084,14 +1107,20 @@ body {
 .e-meals-card {
   width: 19.2%;
   min-width: 170px;
-  height: 100%;
-  min-height: 265px;
+  height: 320px;
   margin-right: 1%;
   background: #FFFFFF;
   border: 1px solid #E1E9ED;
   box-sizing: border-box;
   border-radius: 24px;
   box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0);
+}
+
+.e-meals-card,
+.e-meals-card:active,
+.e-meals-card:hover,
+.e-meals-card:focus {
+  background: #FFFFFF;
 }
 
 .e-meals-card .e-card-header {
@@ -1166,19 +1195,14 @@ body {
   height: auto !important;
 }
 
-.e-diet-chart-panel .e-panel-container {
-  margin-top: 10px;
-  margin-left: 10px;
-}
-
 .e-meals-panel {
   background: #fdfdff !important;
-  margin-top: 20px;
+  margin-top: 36px;
 }
 
 .e-meals-card-container {
   display: -webkit-inline-box;
-  margin-top: 20px;
+  margin-top: 32px;
   overflow: auto;
   width: 100%;
   padding-left: 0 !important;
@@ -1257,7 +1281,7 @@ body {
   font-size: 24px;
   line-height: 125%;
   color: #303343;
-  margin: 20px 0 0 20px;
+  margin: 0 0 20px 20px;
 }
 
 .e-fasting-gauge {
@@ -1542,14 +1566,17 @@ body {
 }
 
 .e-fasting-dialog .e-footer-content {
-  margin-top: 100px;
   background-color: #FFFFFF;
+}
+
+.e-fasting-dialog .e-dlg-content {
+  padding-bottom: 100px;
 }
 
 .e-fasting-dialog .e-dlg-header-content,
 .e-add-menu-dialog .e-dlg-header-content {
   background-color: #FFFFFF;
-  border: 1px solid #E1E9ED;
+  border-bottom: 1px solid #E1E9ED;
 }
 
 .e-add-menu-dialog .e-footer-content {
@@ -1705,15 +1732,20 @@ body {
   color: #56648A !important;
 }
 
+.e-activity-chart svg {
+  margin-top: 5px;
+}
+
 body.e-dark .e-activity-panel,
 body.e-dark .e-workout-panel,
-body.e-dark .e-profile-panel,
 body.e-dark .e-diet-chart-panel,
 body.e-dark .e-activity-profile-panel,
 body.e-dark .e-diet-profile-panel,
 body.e-dark .e-fasting-profile-panel,
 body.e-dark .e-panel-header,
 body.e-dark .e-meals-card,
+body.e-dark .e-meals-card:active,
+body.e-dark .e-meals-card:hover,
 body.e-dark .e-quantity-value {
   background-color: #26273b !important;
   border: none !important;
@@ -1793,20 +1825,26 @@ body.e-dark .profile-value,
 body.e-dark .e-journal,
 body.e-dark .e-diet-card .e-card-header-title,
 body.e-dark .e-fasting-header,
-body.e-dark .e-fast-total-value {
+body.e-dark .e-fast-total-value,
+body.e-dark .e-tab-title {
   color: #F4F5F7 !important;
 }
 
-body.e-dark .e-profile-edit-dialog .e-dlg-header-content,
 body.e-dark .e-profile-edit-dialog .e-dlg-content,
-body.e-dark .e-fasting-dialog .e-dlg-header-content,
-body.e-dark .e-add-menu-dialog .e-dlg-header-content,
 body.e-dark .e-add-menu-dialog .e-dlg-content,
+body.e-dark .e-fasting-dialog .e-dlg-content,
 body.e-dark .e-add-menu-dialog .e-footer-content,
-body.e-dark .e-fasting-dialog,
-body.e-dark .e-fasting-dialog .e-dlg-header-content {
+body.e-dark .e-fasting-dialog .e-footer-content {
   background-color: #1b1c30 !important;
   border: none !important;
+}
+
+body.e-dark .e-profile-edit-dialog .e-dlg-header-content,
+body.e-dark .e-fasting-dialog .e-dlg-header-content,
+body.e-dark .e-add-menu-dialog .e-dlg-header-content,
+body.e-dark .e-fasting-dialog .e-dlg-header-content {
+  background-color: #1b1c30 !important;
+  border-bottom: 1px solid #4b5563 !important;
 }
 
 body.e-dark .e-age-edit {
@@ -1875,9 +1913,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-diet-panel-header-text,
   .e-consumed,
-  .e-burned,
-  .e-consumed-wrapper-value,
-  .e-consumed-wrapper-text {
+  .e-burned {
     width: 100%;
   }
 
@@ -1888,7 +1924,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-consumed-wrapper-value {
     font-size: 28px;
-    margin-top: 2px;
     padding: 0 !important;
   }
 
@@ -1907,7 +1942,11 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-dashboardlayout-container {
-    height: calc(100vh - 150px) !important;
+    height: calc(100vh - 130px) !important;
+    padding: 0 0 20px 0;
+  }
+
+  .e-profile-dashboardlayout-container {
     padding: 0;
   }
 
@@ -1964,6 +2003,12 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     z-index: 10000 !important;
     background: #FFFFFF !important;
     margin-bottom: 0px !important;
+    box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.08);
+    padding: 5px 0;
+  }
+
+  body.e-dark .e-tab .e-tab-header {
+    box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.2);
   }
 
   .e-tab-header-icon-container {
@@ -2026,7 +2071,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-meals-card {
     width: 30%;
-    height: 40%;
     margin-right: 10px;
     display: inline-block;
   }
@@ -2134,14 +2178,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     width: 100%;
   }
 
-  .e-fasting-dashboardlayout-container {
-    height: calc(100vh - 200px) !important;
-  }
-
-  .e-tab .e-tab-header {
-    padding: 5px 0;
-  }
-
   .e-activity-chart svg {
     border-radius: 24px;
   }
@@ -2165,15 +2201,15 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-profile-panel {
-    padding: 0;
-  }
-
-  .e-profile-panel {
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
     margin-top: 0 !important;
+  }
+
+  body.e-dark .separator-div {
+    background: #4b5563;
   }
 }
 

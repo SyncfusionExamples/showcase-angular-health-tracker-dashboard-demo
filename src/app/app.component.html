@@ -12,7 +12,7 @@
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-activity-dashboardlayout-container">
           <div class="col-md-9 e-dashboard-content">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="activity-panel-id" class="e-panel e-my-activities-panel" data-row="0" data-col="0"
                 [data-sizeX]="activitySizeX" data-sizeY="1">
                 <div class="e-panel-container">
@@ -86,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="activity-chart-panel-id" class="e-panel e-activity-panel" data-row="1" data-col="0"
                 [data-sizeX]="chartSizeX" data-sizeY="1">
                 <div class="e-panel-container">
@@ -103,7 +103,7 @@
                     <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' [width]='chartWidth'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
                       [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [marker]="marker"
-                      [background]="chartBackGround" (legendClick)="legendClick($event)">
+                      [background]="chartBackGround" [crosshair]="crosshair" (legendClick)="legendClick($event)">
                       <e-series-collection>
                         <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
                           xName='x' yName='y' enableTooltip="false">
@@ -117,16 +117,13 @@
                         <e-series [dataSource]='chartData' legendShape='Circle' type='Spline' fill="#F547A8" xName='x'
                           yName='y' name='Workout' width="4">
                         </e-series>
-                        <e-series [dataSource]="lineData" type="Line" xName="x" yName="y" fill="#EE4769" width="1"
-                          dashArray="10,5" enableTooltip="false">
-                        </e-series>
                       </e-series-collection>
                     </ejs-chart>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="workout-panel-id" class="e-panel e-workout-panel" data-row="2" data-col="0"
                 [data-sizeX]="gridSizeX" data-sizeY="1">
                 <div class="e-panel-container">
@@ -139,8 +136,8 @@
                       <e-columns>
                         <e-column field='Workout' headerText='Workout' textAlign='Left' [width]="gridColumnWidth">
                         </e-column>
-                        <e-column field='Distance' headerText='Distance (kms)' textAlign='Left' width="200"
-                          format="###.# km">
+                        <e-column field='Distance' headerText='Distance (kms)' textAlign='Left'
+                          [width]="gridColumnWidth" format="###.# km">
                         </e-column>
                         <e-column field='Duration' headerText='Duration (minutes)' textAlign='Left'
                           [width]="gridColumnWidth" format='### mins'>
@@ -175,12 +172,12 @@
       <ng-template #content>
         <div class="e-dashboardlayout-container e-diet-dashboardlayout-container">
           <div class="col-md-9 e-dashboard-content">
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="meals-panel-id" class="e-panel e-meals-panel" data-row="0" data-col="0" data-sizeX="4"
                 data-sizeY="1">
                 <div class="e-panel-container">
                   <div class="e-panel-header">
-                    <div style="float: left; margin-top: 5px;">5 Course Meals</div>
+                    <div style="float: left;">5 Course Meals</div>
                   </div>
                   <div class="e-meals-card-container e-panel-content">
                     <div tabindex="0" class="e-card e-meals-card">
@@ -319,22 +316,22 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="diet-chart-panel-id" class="e-panel e-diet-chart-panel" data-row="1" data-col="0" data-sizeX="4"
                 data-sizeY="1">
                 <div class="e-panel-container">
                   <div class="e-panel-header">
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-diet-panel-header-text">Calorie Diet</div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-consumed">
-                      <div class="e-consumed-wrapper-text col-lg-3 col-md-5 col-sm-12 col-xs-12">Consumed Calories</div>
-                      <div class="e-consumed-wrapper-value col-lg-6 col-md-6 col-sm-12 col-xs-12 text-md-center">
+                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-12 col-xs-3">Consumed Calories</div>
+                      <div class="e-consumed-wrapper-value col-lg-6 col-md-8 col-sm-12 col-xs-6 text-md-center">
                         <span class="e-consumed-value text-md-center">{{ consumedCalories }}</span><span
                           class="e-card-cal-unit e-add-cal-unit text-md-center"> kcal</span>
                         <span class="e-card-cal-unit e-add-cal-unit text-md-center"> / 2400kcal</span></div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-burned">
-                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-12 col-xs-12">Burned Calories</div>
-                      <div class="e-consumed-wrapper-value col-lg-5 col-md-6 col-sm-12 col-xs-12 text-md-center">
+                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-12 col-xs-3">Burned Calories</div>
+                      <div class="e-consumed-wrapper-value col-lg-5 col-md-6 col-sm-12 col-xs-6 text-md-center">
                         {{ burnedCalories }}
                         <span class="e-card-cal-unit e-add-cal-unit text-md-center">kcal</span>
                       </div>
@@ -478,10 +475,10 @@
     </e-tabitem>
     <e-tabitem [header]='headerText[2]'>
       <ng-template #content>
-        <div class="e-fasting-header">Fasting</div>
         <div class="e-dashboardlayout-container e-fasting-dashboardlayout-container">
           <div class="col-md-9 e-fasting-gauge-container  e-dashboard-content">
-            <div class="col-md-12">
+            <div class="e-fasting-header">Fasting</div>
+            <div class="col-md-12 col-sm-12">
               <div class="col-md-5 e-fasting-panel-container">
                 <div id="fasting-panel-id" class="e-panel e-fasting-panel" data-row="0" data-col="0" data-sizeX="2"
                   data-sizeY="2">
@@ -549,7 +546,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12 col-sm-12">
               <div id="fasting-chart-panel-id" class="e-panel e-fasting-chart-panel" data-row="2" data-col="0"
                 data-sizeX="4" data-sizeY="1">
                 <div class="e-panel-container">
@@ -562,9 +559,9 @@
                       [height]="activityChartHeight" [theme]="theme" [tooltip]='weightChartTooltip'>
                       <e-series-collection>
                         <e-series [dataSource]='weightChartData' type='SplineArea' fill='url(#gradient-chart)' xName='x'
-                          yName='y' [marker]="weightChartMarker"></e-series>
+                          yName='y'></e-series>
                         <e-series [dataSource]='weightChartData' type='Spline' fill="#8983F1" xName='x' yName='y'
-                          width="3">
+                          width="3" [marker]="weightChartMarker">
                         </e-series>
                       </e-series-collection>
                     </ejs-chart>
@@ -589,7 +586,7 @@
     <e-tabitem *ngIf="isSmallDevice" [header]='headerText[3]'>
       <ng-template #content>
         <div class="e-dashboardlayout-container  e-profile-dashboardlayout-container">
-          <div class="col-md-12 e-profile-panel">
+          <div class="col-md-12 col-sm-12 e-profile-panel">
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
               <div class="e-panel-container">
@@ -654,7 +651,7 @@
 
 <ejs-dialog id="fasting-dialog" class="e-fasting-dialog" #FastingDialog [header]='fastingDialogeader' [visible]='hidden'
   [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='fastingDialogwidth'
-  [buttons]='fastingDlgButtons'>
+  [buttons]='fastingDlgButtons' [position]="dlgPosition">
   <ng-template #content>
     <div class="e-fast-start-label">Start Time</div>
     <div class="e-fast-start-date">
@@ -673,7 +670,8 @@
 </ejs-dialog>
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
-  [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' height="80%">
+  [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
+  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen($event)" [position]="editDlgPosition">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">
@@ -683,15 +681,15 @@
     </div>
   </ng-template>
   <ng-template #content>
-    <div class="e-edit-dialog-container col-md-12">
-      <div class="e-profile-container col-md-6">
+    <div class="e-edit-dialog-container col-md-12 col-sm-12">
+      <div class="e-profile-container col-md-6 col-sm-12">
         <div class="col-md-12 col-sm-12">
           <div class="e-profile-back" (click)="closeEditDialog()"><span class="icon-arrow-left"></span><span
               class="e-profile-back-text">Back to
               Dashboard</span></div>
           <div class="e-profile-title">Profile</div>
         </div>
-        <div class="e-profile-details col-md-12">
+        <div class="e-profile-details col-md-12 col-sm-12">
           <div class="col-md-3">
             <div class="e-profile-pic-container e-avatar e-avatar-circle">
               <img src="./assets/Profile/02.png" alt="JW" />
@@ -771,7 +769,8 @@
           </ejs-circulargauge>
           <div class="slider-container">
             <ejs-slider id="weightrange" #weightrange [value]="profileStats.weight" [type]="mintype" width="50%"
-              (change)="sliderChange($event)" min="0" max="120" cssClass="weight-slider-container"></ejs-slider>
+              (change)="sliderChange($event)" [min]="weightSliderMin" [max]="weightSliderMax"
+              cssClass="weight-slider-container"></ejs-slider>
           </div>
           <div class="e-add-weight">
             <button ejs-button cssClass='e-primary' (click)="updateWeight()">ADD WEIGHT</button>
@@ -790,8 +789,8 @@
             </div>
             <div class="slider-container" style="height: 350px; width: 100px;">
               <ejs-slider id="heightrange" #heightrange [value]="profileStats.height" [type]="mintype" width="100px"
-                height="300px" (change)="sliderHeightChange($event)" min="0" max="200" [orientation]="orientation"
-                cssClass="height-slider-container">
+                height="300px" (change)="sliderHeightChange($event)" [min]="heightSliderMin" [max]="heightSliderMax"
+                [orientation]="orientation" cssClass="height-slider-container">
               </ejs-slider>
             </div>
           </div>

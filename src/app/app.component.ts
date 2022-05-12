@@ -21,7 +21,7 @@ export class AppComponent {
   public title = 'fitness-app';
   public isDevice = Browser.isDevice;
   public isSmallDevice = false;
-  public innerWidth: any;
+  public innerWidth: any = window.innerWidth;
   public today: Date = new Date();
   public maxDate: Date = new Date();
   public cellSpacing: number[] = [10, 20];
@@ -73,6 +73,10 @@ export class AppComponent {
   public currrentTheme = 'Light';
   public theme = 'Tailwind';
   public chartBackGround = '#FFFFFF';
+  public weightSliderMin = 0;
+  public weightSliderMax = 120;
+  public heightSliderMin = 0;
+  public heightSliderMax = 200;
 
   public breakfastMenu = [{ item: 'Banana', cal: 117 }, { item: 'Bread', cal: 136 }, { item: 'Boiled Egg', cal: 86 }, { item: 'Wheat Chapathi', cal: 146 }, { item: 'Dosa', cal: 302 }, { item: 'Tea', cal: 73 }, { item: 'Coffee', cal: 135 }, { item: 'Milk', cal: 167 }];
   public bfNutrition = [{}];
@@ -147,17 +151,19 @@ export class AppComponent {
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth <= 820) {
-      // if (!this.isSmallDevice) {
-      document.location.reload();
-      // }
-      this.isSmallDevice = true;
-    } else {
-      if (this.isSmallDevice) {
-        document.location.reload();
+    if (this.innerWidth !== window.innerWidth) {
+      this.innerWidth = window.innerWidth;
+      if (this.innerWidth <= 820) {
+        // if (!this.isSmallDevice) {
+        // document.location.reload();
+        // }
+        this.isSmallDevice = true;
+      } else {
+        if (this.isSmallDevice) {
+          // document.location.reload();
+        }
+        this.isSmallDevice = false;
       }
-      this.isSmallDevice = false;
     }
   }
 
@@ -170,6 +176,7 @@ export class AppComponent {
   public editDialogWidth = this.isDevice ? '100%' : '1000px'
   public height: string = this.isDevice ? '100%' : 'auto';
   public dlgPosition = { X: 'center', Y: 'center' };
+  public editDlgPosition = this.isDevice ? { X: 'center', Y: 'top' } : { X: 'center', Y: 'center' };
   public animationSettings: AnimationSettingsModel = { effect: 'Zoom' };
   public target: string = 'body';
   public hidden: Boolean = false;
@@ -290,7 +297,6 @@ export class AppComponent {
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
   public chartData: Object[] = this.getChartData();
-  public lineData: Object[];
   public primaryXAxis: Object = {
     valueType: 'DateTime',
     labelFormat: 'MMM dd',
@@ -347,7 +353,7 @@ export class AppComponent {
   };
   public gridData: Object[] = this.getData();
   public legendSettings = { position: 'Top' };
-  public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5" };
+  public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5", line: { color: '#EE4769' } };
   public marker = { visible: true, height: 15, width: 15 };
   public weightChartMarker = { visible: true, height: 10, width: 10 };
   public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}' };
@@ -617,7 +623,7 @@ export class AppComponent {
   public weightGaugeLineStyle: Object = {
     width: 0
   };
-  public weightGaugeCenterX = this.isDevice ? '30%' : '38%';
+  public weightGaugeCenterX = this.isDevice ? (this.innerWidth < 450 ? '30%' : '60%') : '35%';
   public weightGaugeCenterY = this.isDevice ? '50%' : '50%';
   public weightGaugeBackground = '#FFF7EC';
   public weightGaugeStartAngle: Object = 210;
@@ -1231,12 +1237,20 @@ export class AppComponent {
     }
   }
 
+  dialogOpen(args) {
+    args.preventFocus = true;
+  }
+
+  dialogBeforeOpen(args) {
+    this.weightSlider.refresh();
+    this.heightSlider.refresh();
+  }
+
   legendClick(args) {
     if (args.legendText === 'Diet') {
       this.chartInstance.series[0].visible = !this.chartInstance.series[0].visible;
     } else if (args.legendText === 'Workout') {
       this.chartInstance.series[1].visible = !this.chartInstance.series[1].visible;
-      this.chartInstance.series[4].visible = !this.chartInstance.series[4].visible;
     }
   }
 
@@ -1275,9 +1289,6 @@ export class AppComponent {
       sampleData.push(data);
       if (i == 0) {
         this.todaysWorkoutPercent = data['y'];
-      }
-      if (sampleData.length == Math.round(count / 2)) {
-        this.lineData = [{ x: data['x'], y: 0 }, { x: data['x'], y: data['y'] }];
       }
     }
     return sampleData;

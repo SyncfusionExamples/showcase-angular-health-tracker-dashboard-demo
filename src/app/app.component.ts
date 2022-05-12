@@ -266,7 +266,7 @@ export class AppComponent {
     shapeHeight: 20, shapeWidth: 20
   };
   public pieChartWidth = '100%';
-  public pieChartHeight = this.isDevice ? '100%' : '80%';
+  public pieChartHeight = this.isDevice ? '80%' : '80%';
   public pieChartRadius = this.isDevice ? '90%' : '80%';
   public center = this.isDevice ? { x: '50%', y: '50%' } : { x: '50%', y: '50%' };
   public dataLabel: Object = {
@@ -629,6 +629,8 @@ export class AppComponent {
     width: 0
   };
   public weightGaugeCenterX = this.isDevice ? (this.innerWidth < 450 ? '30%' : '60%') : '35%';
+  public dateWidth: string = this.isDevice &&  this.innerWidth < 450 ? '100%' : '80%';
+  public timeWidth: string = this.isDevice && this.innerWidth < 450? '100%' : '160px';
   public weightGaugeCenterY = this.isDevice ? '50%' : '50%';
   public weightGaugeBackground = '#FFF7EC';
   public weightGaugeStartAngle: Object = 210;

@@ -1,16 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/@syncfusion/ej2-base/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind-dark.css';
-@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind-dark.css';
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
 
 @font-face {
   font-family: 'icomoon';
@@ -938,7 +938,6 @@ body {
   padding: 5px 0 0 20px;
   top: 0 !important;
   position: sticky !important;
-  z-index: 10000 !important;
   background: #FFFFFF !important;
 }
 
@@ -1367,9 +1366,23 @@ body {
 .e-start-fast,
 .e-menu-cancel,
 .e-fasting-cancel {
-  margin-right: 24px;
-  padding: 0 24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
+
+.e-dialog .e-footer-content {
+  padding: 18px;
+}
+
+.e-dialog .e-footer-content .e-btn {
+  margin-left: 18px;
+}
+
+.e-menu-cancel,
+.e-fasting-cancel {
+  margin-left: 0 !important;
+}
+
 
 .e-menu-add,
 .e-menu-add:focus,
@@ -1642,7 +1655,9 @@ body {
   margin-top: 32px;
 }
 
-.e-quantity-label {
+.e-quantity-label,
+.e-recommended-label,
+.e-total-label {
   font-weight: 600;
   font-size: 12px;
   line-height: 125%;
@@ -1650,7 +1665,13 @@ body {
   width: 26%;
 }
 
-.e-quantity-date-label {
+.e-recommended-label,
+.e-total-label {
+  max-width: 120px;
+}
+
+.e-quantity-date-label,
+.e-quantity-time-label {
   font-weight: 600;
   font-size: 12px;
   line-height: 125%;
@@ -1696,6 +1717,12 @@ body {
 
 .e-quantity-container {
   width: 26%;
+}
+
+.e-quantity-total-container,
+.e-quantity-recom-container {
+  width: 26%;
+  max-width: 120px;
 }
 
 .e-quantity-total {
@@ -1859,7 +1886,10 @@ body.e-dark .e-age-edit {
 
 body.e-dark .e-profile-label,
 body.e-dark .e-quantity-date-label,
+body.e-dark .e-quantity-time-label,
 body.e-dark .e-quantity-label,
+body.e-dark .e-recommended-label,
+body.e-dark .e-total-label
 body.e-dark .e-select-menu-label {
   color: #9E9FB1 !important;
 }
@@ -1933,10 +1963,15 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     padding: 0 !important;
   }
 
-  .e-pie-chart-container,
+  .e-pie-chart-container {
+    width: 100%;
+    height: 40%;
+  }
+
   .e-nutrition-container {
     width: 100%;
     height: 50%;
+    margin-top: 0px !important;
   }
 
   .e-diet-panel-header-text {
@@ -2006,7 +2041,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     top: initial !important;
     bottom: 0 !important;
     position: fixed !important;
-    z-index: 10000 !important;
     background: #FFFFFF !important;
     margin-bottom: 0px !important;
     box-shadow: 0px 14px 50px 8px rgba(166, 156, 255, 0.08);
@@ -2026,7 +2060,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     height: 60px;
     top: 0 !important;
     position: sticky !important;
-    z-index: 10000 !important;
     background: #FFFFFF !important;
   }
 
@@ -2163,11 +2196,15 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     overflow: auto;
   }
 
-  .e-quantity-label {
+  .e-quantity-label,
+  .e-recommended-label,
+  .e-total-label  {
     width: 30%;
   }
 
-  .e-quantity-container {
+  .e-quantity-container,
+  .e-quantity-total-container,
+  .e-quantity-recom-container {
     width: 30%;
   }
 
@@ -2275,5 +2312,31 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-chart {
     width: 99% !important;
+  }
+
+  .e-dialog .e-footer-content {
+    display: flex;
+  }
+
+  .e-menu-add,
+  .e-start-fast,
+  .e-menu-cancel,
+  .e-fasting-cancel {
+    width: 100%;
+  }
+
+  .e-quantity-date-label,
+  .e-quantity-date-value,
+  .e-quantity-time-value {
+    width: 47%;
+  }
+
+  .e-quantity-time-label,
+  .e-quantity-time-value {
+    margin-left: 18px;
+  }
+
+  .e-profile-edit-dialog {
+    max-height: fit-content !important;
   }
 }

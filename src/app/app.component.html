@@ -354,7 +354,7 @@
                         </ejs-accumulationchart>
                       </div>
                       <div class="e-nutrition-container">
-                        <table *ngIf="isSmallDevice; else dietElseBlock" class="e-nutrition-table">
+                        <table *ngIf="innerWidth < 450; else dietElseBlock" class="e-nutrition-table">
                           <tr>
                             <td>
                               <div class="e-nutrition-text">
@@ -605,7 +605,7 @@
 
 <ejs-dialog id="add-menu-dialog" class="e-add-menu-dialog" #AddMenuDialog [header]='currentMenuHeader'
   [visible]='hidden' [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target'
-  [width]='Dialogwidth' [buttons]='dlgButtons' [position]="dlgPosition">
+  [width]='Dialogwidth' [buttons]='dlgButtons' [position]="dlgPosition" isModal="true">
   <ng-template #content>
     <div class="e-select-menu-label">Select Menu</div>
     <div class="e-current-menu-container">
@@ -617,8 +617,8 @@
     </div>
     <div class="e-quantity-label-container">
       <div class="e-quantity-label">Quantity</div>
-      <div class="e-quantity-label">Total kcal</div>
-      <div class="e-quantity-label">Recommended kcal</div>
+      <div class="e-total-label">Total kcal</div>
+      <div class="e-recommended-label">Recommended kcal</div>
     </div>
     <div class="e-quantity-value-container">
       <div class="e-quantity-container">
@@ -628,23 +628,23 @@
           <div class="e-quantity-plus icon-plus" (click)="quantityPlusClick()"></div>
         </div>
       </div>
-      <div class="e-quantity-container">
+      <div class="e-quantity-total-container">
         <div class="e-quantity-total">{{ currentTotalCal }} kcal</div>
       </div>
-      <div class="e-quantity-container">
+      <div class="e-quantity-recom-container">
         <div class="e-quantity-recom">{{ currentRecom }} kcal</div>
       </div>
     </div>
     <div class="e-quantity-date-label-container">
       <div class="e-quantity-date-label">Date</div>
-      <div class="e-quantity-date-label">Time</div>
+      <div class="e-quantity-time-label">Time</div>
     </div>
     <div class="e-quantity-date-value-container">
       <div class="e-quantity-date-value">
-        <ejs-datepicker id='quantity-datepicker' width="80%" [value]='today'></ejs-datepicker>
+        <ejs-datepicker id='quantity-datepicker' [width]="dateWidth" [value]='today'></ejs-datepicker>
       </div>
       <div class="e-quantity-time-value">
-        <ejs-timepicker id='quantity-timepicker' width="160px" [value]='today'></ejs-timepicker>
+        <ejs-timepicker id='quantity-timepicker' [width]="timeWidth" [value]='today'></ejs-timepicker>
       </div>
     </div>
   </ng-template>
@@ -652,7 +652,7 @@
 
 <ejs-dialog id="fasting-dialog" class="e-fasting-dialog" #FastingDialog [header]='fastingDialogeader' [visible]='hidden'
   [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='fastingDialogwidth'
-  [buttons]='fastingDlgButtons' [position]="dlgPosition">
+  [buttons]='fastingDlgButtons' [position]="dlgPosition" isModal="true">
   <ng-template #content>
     <div class="e-fast-start-label">Start Time</div>
     <div class="e-fast-start-date">
@@ -672,7 +672,7 @@
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
   [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
-  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen($event)" [position]="editDlgPosition">
+  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen($event)" [position]="editDlgPosition" isModal="true">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">

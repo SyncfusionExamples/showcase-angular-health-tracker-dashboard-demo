@@ -1174,6 +1174,12 @@ body {
   line-height: 150%;
   color: #7D96A6;
   margin-top: 16px;
+  height: 65px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .e-meals-card .e-calories-gain {

@@ -44,6 +44,11 @@ export class AppComponent {
   public currentBreakFastMenu = [];
   public currentBreakFastCalories = 0;
   public currentLunchMenu = [];
+  public currentBreakFastMenuText;
+  public currentLunchMenuText;
+  public currentSnack1MenuText;
+  public currentSnack2MenuText;
+  public currentDinnerMenuText;
   public currentLunchCalories = 0;
   public currentDinnerMenu = [];
   public currentDinnerCalories = 0;
@@ -862,6 +867,9 @@ export class AppComponent {
       this.currentBreakFastMenu = this.currentMenu.filter(function (item) {
         return item.isAdded;
       });
+      this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
       this.currentBreakFastCalories = this.currentTotalCal;
       this.consumedCalories += this.currentBreakFastCalories;
       this.isBreakFastMenuAdded = true;
@@ -871,6 +879,9 @@ export class AppComponent {
       this.currentSnack1Menu = this.currentMenu.filter(function (item) {
         return item.isAdded;
       });
+      this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
       this.currentSnack1Calories = this.currentTotalCal;
       this.consumedCalories += this.currentSnack1Calories;
       this.isSnack1MenuAdded = true;
@@ -880,6 +891,9 @@ export class AppComponent {
       this.currentLunchMenu = this.currentMenu.filter(function (item) {
         return item.isAdded;
       });
+      this.currentLunchMenuText = this.currentLunchMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
       this.currentLunchCalories = this.currentTotalCal;
       this.consumedCalories += this.currentLunchCalories;
       this.isLunchMenuAdded = true;
@@ -889,6 +903,9 @@ export class AppComponent {
       this.currentSnack2Menu = this.currentMenu.filter(function (item) {
         return item.isAdded;
       });
+      this.currentSnack2MenuText = this.currentSnack2Menu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
       this.currentSnack2Calories = this.currentTotalCal;
       this.consumedCalories += this.currentSnack2Calories;
       this.isSnack2MenuAdded = true;
@@ -898,15 +915,19 @@ export class AppComponent {
       this.currentDinnerMenu = this.currentMenu.filter(function (item) {
         return item.isAdded;
       });
+      this.currentDinnerMenuText = this.currentDinnerMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
       this.currentDinnerCalories = this.currentTotalCal;
       this.consumedCalories += this.currentDinnerCalories;
       this.isDinnerMenuAdded = true;
     }
-    this.menuDialog.hide();
+    this.menuCancelBtnClick();
   }
 
   menuCancelBtnClick() {
     this.menuDialog.hide();
+    this.currentTotalCal = 0;
   }
 
   created() {
@@ -928,12 +949,12 @@ export class AppComponent {
   addBtnClick(args) {
     if (args.currentTarget.classList.contains('e-breakfast-add-btn')) {
       this.currentMenuHeader = " Add Breakfast Menu";
-      this.currentMenu = this.breakfastMenu;
+      this.currentMenu = JSON.parse(JSON.stringify(this.breakfastMenu));
       this.currentRecom = this.breakFastRecom;
       this.currentAddedMenu = 'Breakfast';
     } else if (args.currentTarget.classList.contains('e-snack1-add-btn') || args.currentTarget.classList.contains('e-snack2-add-btn')) {
       this.currentMenuHeader = "Add Snack Menu";
-      this.currentMenu = this.snackMenu;
+      this.currentMenu = JSON.parse(JSON.stringify(this.snackMenu));
       if (args.currentTarget.classList.contains('e-snack1-add-btn')) {
         this.currentRecom = this.snack1Recom;
         this.currentAddedMenu = 'Snack 1';
@@ -943,12 +964,12 @@ export class AppComponent {
       }
     } else if (args.currentTarget.classList.contains('e-lunch-add-btn')) {
       this.currentMenuHeader = "Add Lunch Menu";
-      this.currentMenu = this.lunchMenu;
+      this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
       this.currentRecom = this.lunchRecom;
       this.currentAddedMenu = 'Lunch';
     } else if (args.currentTarget.classList.contains('e-dinner-add-btn')) {
       this.currentMenuHeader = "Add Dinner Menu";
-      this.currentMenu = this.lunchMenu;
+      this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
       this.currentRecom = this.dinnerRecom;
       this.currentAddedMenu = 'Dinner';
     }
@@ -960,30 +981,45 @@ export class AppComponent {
     this.currentBreakFastMenu = [];
     this.currentBreakFastCalories = 0;
     this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
     this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
     this.consumedCalories += this.currentBreakFastCalories;
     this.isBreakFastMenuAdded = true;
     this.currentSnack1Menu = [];
     this.currentSnack1Calories = 0;
     this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
     this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
     this.consumedCalories += this.currentSnack1Calories;
     this.isSnack1MenuAdded = true;
     this.currentLunchMenu = [];
     this.currentLunchCalories = 0;
     this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentLunchMenuText = this.currentLunchMenu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
     this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
     this.consumedCalories += this.currentLunchCalories;
     this.isLunchMenuAdded = true;
     this.currentSnack2Menu = [];
     this.currentSnack2Calories = 0;
     this.currentSnack2Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentSnack2MenuText = this.currentSnack2Menu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
     this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
     this.consumedCalories += this.currentSnack2Calories;
     this.isSnack2MenuAdded = true;
     this.currentDinnerMenu = [];
     this.currentDinnerCalories = 0;
     this.currentDinnerMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentDinnerMenuText = this.currentDinnerMenu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
     this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
     this.consumedCalories += this.currentDinnerCalories;
     this.isDinnerMenuAdded = true;

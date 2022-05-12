@@ -192,7 +192,8 @@
                         </div>
                         <div *ngIf="isBreakFastMenuAdded; else breakFastElseBlock">
                           <div class="e-had-meals">
-                            <div class="e-meals-value" *ngFor="let menu of currentBreakFastMenu">{{ menu.item }}</div>
+                            <div class="e-meals-value" [title]="currentBreakFastMenuText">{{ currentBreakFastMenuText }}
+                            </div>
                           </div>
                           <div class="e-calories-gain">{{ currentBreakFastCalories }} <span
                               class="e-card-cal-unit e-add-cal-unit">kcal</span></div>
@@ -220,7 +221,7 @@
                         </div>
                         <div *ngIf="isSnack1MenuAdded; else snack1ElseBlock">
                           <div class="e-had-meals">
-                            <div class="e-meals-value" *ngFor="let menu of currentSnack1Menu">{{ menu.item }}</div>
+                            <div class="e-meals-value" [title]="currentSnack1MenuText">{{ currentSnack1MenuText }}</div>
                           </div>
                           <div class="e-calories-gain">{{ currentSnack1Calories }} <span
                               class="e-card-cal-unit e-add-cal-unit">kcal</span></div>
@@ -246,7 +247,7 @@
                         </div>
                         <div *ngIf="isLunchMenuAdded; else lunchElseBlock">
                           <div class="e-had-meals">
-                            <div class="e-meals-value" *ngFor="let menu of currentLunchMenu">{{ menu.item }}</div>
+                            <div class="e-meals-value" [title]="currentLunchMenuText">{{ currentLunchMenuText }}</div>
                           </div>
                           <div class="e-calories-gain">{{ currentLunchCalories }} <span
                               class="e-card-cal-unit e-add-cal-unit">kcal</span></div>
@@ -272,7 +273,7 @@
                         </div>
                         <div *ngIf="isSnack2MenuAdded; else snack2ElseBlock">
                           <div class="e-had-meals">
-                            <div class="e-meals-value" *ngFor="let menu of currentSnack2Menu">{{ menu.item }}</div>
+                            <div class="e-meals-value" [title]="currentSnack2MenuText">{{ currentSnack2MenuText }}</div>
                           </div>
                           <div class="e-calories-gain">{{ currentSnack2Calories }} <span
                               class="e-card-cal-unit e-add-cal-unit">kcal</span></div>
@@ -298,7 +299,7 @@
                         </div>
                         <div *ngIf="isDinnerMenuAdded; else dinnerElseBlock">
                           <div class="e-had-meals">
-                            <div class="e-meals-value" *ngFor="let menu of currentDinnerMenu">{{ menu.item }}</div>
+                            <div class="e-meals-value" [title]="currentDinnerMenuText">{{ currentDinnerMenuText }}</div>
                           </div>
                           <div class="e-calories-gain">{{ currentDinnerCalories }} <span
                               class="e-card-cal-unit e-add-cal-unit">kcal</span></div>

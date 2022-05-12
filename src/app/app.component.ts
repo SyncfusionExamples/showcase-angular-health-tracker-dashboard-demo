@@ -1073,6 +1073,7 @@ export class AppComponent {
     if (this.editDialog.element.querySelector('.e-height-gauge-container') && this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.remove('e-hidden');
     }
+    this.heightSlider.refresh();
   }
 
   changeWeight() {
@@ -1093,6 +1094,7 @@ export class AppComponent {
     if (this.editDialog.element.querySelector('.e-height-gauge-container') && !this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
     }
+    this.weightSlider.refresh();
   }
 
   changeGoal() {
@@ -1277,9 +1279,6 @@ export class AppComponent {
 
   dialogOpen(args) {
     args.preventFocus = true;
-  }
-
-  dialogBeforeOpen(args) {
     this.weightSlider.refresh();
     this.heightSlider.refresh();
   }

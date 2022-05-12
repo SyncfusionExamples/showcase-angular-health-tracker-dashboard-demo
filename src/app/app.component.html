@@ -322,19 +322,19 @@
                 data-sizeY="1">
                 <div class="e-panel-container">
                   <div class="e-panel-header">
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-diet-panel-header-text">Calorie Diet</div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-consumed">
-                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-12 col-xs-3">Consumed Calories</div>
-                      <div class="e-consumed-wrapper-value col-lg-6 col-md-8 col-sm-12 col-xs-6 text-md-center">
-                        <span class="e-consumed-value text-md-center">{{ consumedCalories }}</span><span
-                          class="e-card-cal-unit e-add-cal-unit text-md-center"> kcal</span>
-                        <span class="e-card-cal-unit e-add-cal-unit text-md-center"> / 2400kcal</span></div>
+                    <div class="col-lg-5 col-md-4 col-sm-4 col-xs-12 e-diet-panel-header-text">Calorie Diet</div>
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 e-consumed">
+                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-4 col-xs-3">Consumed Calories</div>
+                      <div class="e-consumed-wrapper-value col-lg-9 col-md-8 col-sm-8 col-xs-6">
+                        <span class="e-consumed-value">{{ consumedCalories }}</span><span
+                          class="e-card-cal-unit e-add-cal-unit"> kcal</span>
+                        <span class="e-card-cal-unit e-add-cal-unit"> / 2400kcal</span></div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 e-burned">
-                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-12 col-xs-3">Burned Calories</div>
-                      <div class="e-consumed-wrapper-value col-lg-5 col-md-6 col-sm-12 col-xs-6 text-md-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 e-burned">
+                      <div class="e-consumed-wrapper-text col-lg-4 col-md-4 col-sm-4 col-xs-3">Burned Calories</div>
+                      <div class="e-consumed-wrapper-value col-lg-8 col-md-6 col-sm-4 col-xs-6">
                         {{ burnedCalories }}
-                        <span class="e-card-cal-unit e-add-cal-unit text-md-center">kcal</span>
+                        <span class="e-card-cal-unit e-add-cal-unit">kcal</span>
                       </div>
                     </div>
                   </div>
@@ -652,7 +652,7 @@
 
 <ejs-dialog id="fasting-dialog" class="e-fasting-dialog" #FastingDialog [header]='fastingDialogeader' [visible]='hidden'
   [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='fastingDialogwidth'
-  [buttons]='fastingDlgButtons' [position]="dlgPosition" isModal="true">
+  [buttons]='fastingDlgButtons' [position]="dlgPosition" isModal="true" (open)="dialogOpen($event)">
   <ng-template #content>
     <div class="e-fast-start-label">Start Time</div>
     <div class="e-fast-start-date">
@@ -672,7 +672,7 @@
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
   [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
-  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen($event)" [position]="editDlgPosition" isModal="true">
+  (open)="dialogOpen($event)" [position]="editDlgPosition" isModal="true">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">

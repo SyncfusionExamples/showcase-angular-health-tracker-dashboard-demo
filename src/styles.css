@@ -1,17 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
-/* You can add global styles to this file, and also import other style files */
-@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
-
 @font-face {
   font-family: 'icomoon';
   src: url('assets/fonts/icomoon.eot?hvguwa');
@@ -264,6 +250,22 @@ body {
   .e-meals-card-container::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .5);
     border-radius: 6px;
+  }
+
+  /*! Firefox */
+  body.e-dark .e-dashboardlayout-container,
+  body.e-dark .e-meals-card-container {
+    scrollbar-color: rgba(255, 255, 255, .5) none rgba(255, 255, 255, .5) none;
+  }
+
+  body.e-dark .e-dashboardlayout-container,
+  body.e-dark .e-meals-card-container {
+    scrollbar-color: rgba(255, 255, 255, .5);
+  }
+
+  body.e-dark .e-dashboardlayout-container::-webkit-scrollbar-thumb,
+  body.e-dark .e-meals-card-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, .5);
   }
 }
 
@@ -1006,8 +1008,8 @@ body {
   padding: 0 !important;
 }
 
-.col-sm-12.e-consumed,
-.col-sm-12.e-burned {
+.col-xs-12.e-consumed,
+.col-xs-12.e-burned {
   padding-left: 24px !important;
 }
 
@@ -1889,7 +1891,7 @@ body.e-dark .e-quantity-date-label,
 body.e-dark .e-quantity-time-label,
 body.e-dark .e-quantity-label,
 body.e-dark .e-recommended-label,
-body.e-dark .e-total-label
+body.e-dark .e-total-label,
 body.e-dark .e-select-menu-label {
   color: #9E9FB1 !important;
 }
@@ -1947,12 +1949,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     border-radius: 30px !important;
   }
 
-  .e-diet-panel-header-text,
-  .e-consumed,
-  .e-burned {
-    width: 100%;
-  }
-
   .e-consumed-wrapper-text {
     font-size: 12px;
     padding: 0 !important;
@@ -1971,7 +1967,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-nutrition-container {
     width: 100%;
     height: 50%;
-    margin-top: 0px !important;
+    padding-bottom: 24px;
   }
 
   .e-diet-panel-header-text {
@@ -2118,10 +2114,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     margin-top: 20px;
   }
 
-  .e-nutrition-container {
-    margin: 24px;
-  }
-
   .e-diet-chart-panel .e-panel-header {
     height: auto !important;
   }
@@ -2198,7 +2190,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-quantity-label,
   .e-recommended-label,
-  .e-total-label  {
+  .e-total-label {
     width: 30%;
   }
 
@@ -2253,6 +2245,12 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   body.e-dark .separator-div {
     background: #4b5563;
+  }
+
+  .e-add-menu-dialog,
+  .e-fasting-dialog {
+    max-width: 700px;
+    width: auto !important;
   }
 }
 
@@ -2338,5 +2336,9 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
 
   .e-profile-edit-dialog {
     max-height: fit-content !important;
+  }
+
+  .e-nutrition-container {
+    margin: 24px;
   }
 }

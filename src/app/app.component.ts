@@ -8,7 +8,7 @@ import { DatePickerComponent, DateTimePickerComponent } from '@syncfusion/ej2-an
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { AnimationSettingsModel, ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { CircularGaugeComponent } from '@syncfusion/ej2-angular-circulargauge';
-import { LinearGaugeComponent } from '@syncfusion/ej2-angular-lineargauge';
+import { LinearGaugeComponent, PointerModel } from '@syncfusion/ej2-angular-lineargauge';
 import { RadioButtonComponent } from '@syncfusion/ej2-angular-buttons';
 import { SliderComponent } from '@syncfusion/ej2-angular-inputs';
 
@@ -90,9 +90,9 @@ export class AppComponent {
   public lunchMenu = [{ item: 'Plain Rice', cal: 173 }, { item: 'Roti', cal: 97 }, { item: 'Moong Dal', cal: 342 }, { item: 'Mixed Vegetables', cal: 82 }, { item: 'Curd Rice', cal: 176 }, { item: 'Chicken Curry', cal: 359 }];
 
   public todayActivities = [{ activity: 'Morning Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '7:00 AM' },
-  { activity: 'Water taken', amount: '2 Glasses', percentage: '6%', time: '7:40 AM' },
+  { activity: 'Water Taken', amount: '2 Glasses', percentage: '6%', time: '7:40 AM' },
   { activity: 'Breakfast', amount: 'Toast Bread', percentage: '20%', time: '9:00 AM' },
-  { activity: 'Water taken', amount: '1 Glasses', percentage: '3%', time: '9:40 AM' },
+  { activity: 'Water Taken', amount: '1 Glasses', percentage: '3%', time: '9:40 AM' },
   { activity: 'Lunch', amount: 'Pizza', percentage: '20%', time: '1:00 PM' },
   { activity: 'Lunch Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '1:30 PM' }];
 
@@ -296,8 +296,8 @@ export class AppComponent {
   public palette = ['#F547A8'];
   public headerPlacement = this.isSmallDevice ? 'Bottom' : 'Top';
   public width: string = this.isDevice ? '100%' : '60%';
-  public chartWidth: string = this.isDevice ? '98%' : '97%';
-  public gridWidth: string = this.isDevice ? '97%' : '96.5%';
+  public chartWidth: string = '100%';
+  public gridWidth: string = '100%';
   public gridColumnWidth = this.isDevice ? 150 : 200;
   public datePickerWidth: string = '100%';
   public chartDietData: Object[] = this.getChartData();
@@ -407,10 +407,10 @@ export class AppComponent {
     {
       start: 2,
       end: 98,
-      radius: '94%',
+      radius: '91%',
       startWidth: 5,
       endWidth: 5,
-      roundedCornerRadius: 5,
+      roundedCornerRadius: 2,
       color: '#FFFFFF',
       opacity: 0.35
     },
@@ -476,13 +476,13 @@ export class AppComponent {
   },
   {
     zIndex: '1',
-    radius: '90%',
+    radius: '89%',
     angle: 60,
     content: '<div class="e-gauge-status-img icon-Diet"></div>'
   },
   {
     zIndex: '1',
-    radius: '90%',
+    radius: '89%',
     angle: 280,
     content: '<div class="e-gauge-status-img icon-Thunder"></div>'
   }];
@@ -519,11 +519,128 @@ export class AppComponent {
       pointers: [
         {
           value: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100),
-          height: 60,
-          width: 60,
-          roundedCornerRadius: 40,
+          height: 50,
+          width: 50,
+          roundedCornerRadius: 35,
           type: 'Bar',
           color: '#61a9f7',
+        },
+        {
+          value: 8,
+          width: 5,
+          height: 5,
+          offset: -60,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 8 ? 1 : 0
+        },
+        {
+          value: 15,
+          width: 4,
+          height: 4,
+          offset: -80,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 15 ? 1 : 0
+        },
+        {
+          value: 21,
+          width: 7,
+          height: 7,
+          offset: -75,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 21 ? 1 : 0
+        },
+        {
+          value: 27,
+          width: 8,
+          height: 8,
+          offset: -65,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 27 ? 1 : 0
+        },
+        {
+          value: 37,
+          width: 4,
+          height: 4,
+          offset: -55,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 37 ? 1 : 0
+        },
+        {
+          value: 42,
+          width: 6,
+          height: 6,
+          offset: -75,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 42 ? 1 : 0
+        },
+        {
+          value: 48,
+          width: 8,
+          height: 8,
+          offset: -58,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 48 ? 1 : 0
+        },
+        {
+          value: 56,
+          width: 5,
+          height: 5,
+          offset: -72,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 56 ? 1 : 0
+        },
+        {
+          value: 64,
+          width: 6,
+          height: 6,
+          offset: -79,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 64 ? 1 : 0
+        },
+        {
+          value: 72,
+          width: 8,
+          height: 8,
+          offset: -55,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 72 ? 1 : 0
+        },
+        {
+          value: 80,
+          width: 5,
+          height: 5,
+          offset: -70,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 80 ? 1 : 0
+        },
+        {
+          value: 86,
+          width: 6,
+          height: 6,
+          offset: -77,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 86 ? 1 : 0
+        },
+        {
+          value: 94,
+          width: 8,
+          height: 8,
+          offset: -54,
+          markerType: 'Circle',
+          color: '#87CEFA',
+          opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 94 ? 1 : 0
         },
       ],
     },
@@ -598,8 +715,8 @@ export class AppComponent {
   ];
 
   public waterGaugeContainer: Object = {
-    width: 70,
-    roundedCornerRadius: 50,
+    width: 50,
+    roundedCornerRadius: 35,
     type: 'RoundedRectangle',
     backgroundColor: '#3993F5',
   };
@@ -629,8 +746,8 @@ export class AppComponent {
     width: 0
   };
   public weightGaugeCenterX = this.isDevice ? (this.innerWidth < 450 ? '30%' : '60%') : '35%';
-  public dateWidth: string = this.isDevice &&  this.innerWidth < 450 ? '100%' : '80%';
-  public timeWidth: string = this.isDevice && this.innerWidth < 450? '100%' : '160px';
+  public dateWidth: string = this.isDevice && this.innerWidth < 450 ? '100%' : '80%';
+  public timeWidth: string = this.isDevice && this.innerWidth < 450 ? '100%' : '160px';
   public weightGaugeCenterY = this.isDevice ? '50%' : '50%';
   public weightGaugeBackground = '#FFF7EC';
   public weightGaugeStartAngle: Object = 210;
@@ -830,20 +947,153 @@ export class AppComponent {
     if (content[index + 1]) {
       this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
     }
-    this.gauge.axes[0].pointers[0].value = percent;
+    this.updateWaterGaugePointer(percent);
+  }
+
+  updateWaterGaugePointer(percent) {
+    let pointers: PointerModel[] = [
+      {
+        value: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100),
+        height: 50,
+        width: 50,
+        roundedCornerRadius: 35,
+        type: 'Bar',
+        color: '#61a9f7',
+      },
+      {
+        value: 8,
+        width: 5,
+        height: 5,
+        offset: -60,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 8 ? 1 : 0
+      },
+      {
+        value: 15,
+        width: 4,
+        height: 4,
+        offset: -80,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 15 ? 1 : 0
+      },
+      {
+        value: 21,
+        width: 7,
+        height: 7,
+        offset: -75,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 21 ? 1 : 0
+      },
+      {
+        value: 27,
+        width: 8,
+        height: 8,
+        offset: -65,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 27 ? 1 : 0
+      },
+      {
+        value: 37,
+        width: 4,
+        height: 4,
+        offset: -55,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 37 ? 1 : 0
+      },
+      {
+        value: 42,
+        width: 6,
+        height: 6,
+        offset: -75,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 42 ? 1 : 0
+      },
+      {
+        value: 48,
+        width: 8,
+        height: 8,
+        offset: -58,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 48 ? 1 : 0
+      },
+      {
+        value: 56,
+        width: 5,
+        height: 5,
+        offset: -72,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 56 ? 1 : 0
+      },
+      {
+        value: 64,
+        width: 6,
+        height: 6,
+        offset: -79,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 64 ? 1 : 0
+      },
+      {
+        value: 72,
+        width: 8,
+        height: 8,
+        offset: -55,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 72 ? 1 : 0
+      },
+      {
+        value: 80,
+        width: 5,
+        height: 5,
+        offset: -70,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 80 ? 1 : 0
+      },
+      {
+        value: 86,
+        width: 6,
+        height: 6,
+        offset: -77,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 86 ? 1 : 0
+      },
+      {
+        value: 94,
+        width: 8,
+        height: 8,
+        offset: -54,
+        markerType: 'Circle',
+        color: '#87CEFA',
+        opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 94 ? 1 : 0
+      },
+    ];
+    this.gauge.axes[0].pointers = pointers;
   }
 
   plusClick() {
-    this.consumedWaterCount += 1;
-    this.consumedWaterAmount = this.consumedWaterCount * 150;
-    let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
-    let index = this.closestIndex(percent);
-    let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
-    this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
-    if (content[index - 1]) {
-      this.gauge.annotations[index - 1].content = '<div class="e-water-annotation-text">' + content[index - 1] + '</div>';
+    if (this.consumedWaterCount < 20) {
+      this.consumedWaterCount += 1;
+      this.consumedWaterAmount = this.consumedWaterCount * 150;
+      let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
+      let index = this.closestIndex(percent);
+      let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
+      this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
+      if (content[index - 1]) {
+        this.gauge.annotations[index - 1].content = '<div class="e-water-annotation-text">' + content[index - 1] + '</div>';
+      }
+      this.updateWaterGaugePointer(percent);
     }
-    this.gauge.axes[0].pointers[0].value = percent;
   }
 
   closestIndex(num) {
@@ -945,7 +1195,10 @@ export class AppComponent {
     containerDiv.className = 'e-tab-header-icon-container';
     containerDiv.appendChild(iconDiv);
     containerDiv.appendChild(titleDiv);
-    this.tabInstance.element.querySelector('.e-tab-header').prepend(containerDiv)
+    this.tabInstance.element.querySelector('.e-tab-header').prepend(containerDiv);
+    setTimeout(() => {
+      this.tabInstance.refreshActiveTabBorder();
+    }, 50);
   }
 
   addBtnClick(args) {

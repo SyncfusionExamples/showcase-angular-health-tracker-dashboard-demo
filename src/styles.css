@@ -319,10 +319,10 @@ body {
   padding: 0 !important;
 }
 
-.e-fasting-panel-header-text,
-.e-water-panel-header-text,
-.e-weight-chart-header-text {
-  margin: 24px 0 0 24px;
+.e-fasting-panel,
+.e-water-panel,
+.e-fasting-chart-panel {
+  padding: 24px;
 }
 
 .e-tab-header-icon-div {
@@ -729,6 +729,15 @@ body {
   margin-top: 24px;
 }
 
+.e-fasting-panel,
+.e-water-panel,
+.e-fasting-chart-panel,
+.e-diet-chart-panel,
+.e-workout-panel,
+.e-activity-panel {
+  padding: 24px !important;
+}
+
 .e-my-activities-header {
   padding: 0 !important;
   margin-top: 4px;
@@ -748,8 +757,6 @@ body {
 .e-activity-panel .e-panel-header {
   width: 100%;
   border-radius: 24px;
-  padding-left: 24px !important;
-  padding-top: 24px !important;
 }
 
 .e-activity-panel,
@@ -782,13 +789,12 @@ body {
 
 .e-chart-dropdown {
   float: right;
-  padding: 0 24px;
 }
 
 .e-grid,
 .e-chart {
   width: 100%;
-  margin: 24px;
+  margin-top: 20px;
 }
 
 .e-activity-chart,
@@ -997,20 +1003,12 @@ body {
 }
 
 .e-diet-panel-header-text {
-  padding-left: 24px;
-  padding-right: 0;
-  margin-top: 24px;
+  padding: 0 !important;
 }
 
 .e-consumed,
 .e-burned {
-  margin-top: 24px;
   padding: 0 !important;
-}
-
-.col-xs-12.e-consumed,
-.col-xs-12.e-burned {
-  padding-left: 24px !important;
 }
 
 .e-consumed-wrapper-value {
@@ -1286,7 +1284,6 @@ body {
 .e-fasting-header {
   font-weight: 700;
   font-size: 24px;
-  line-height: 125%;
   color: #303343;
   margin: 0 0 20px 20px;
 }
@@ -1344,11 +1341,10 @@ body {
   font-weight: 500;
   font-size: 20px;
   color: #000000;
-  margin-top: 16px;
 }
 
 .e-fasting-button-container {
-  margin: 30px 0;
+  margin: 24px 0;
   align-items: center;
   justify-content: space-around;
 }
@@ -1498,6 +1494,8 @@ body {
   font-size: 40px;
   line-height: 125%;
   color: #56648A;
+  width: 100px;
+  margin-left: 10px;
 }
 
 .e-water-image {
@@ -1505,10 +1503,6 @@ body {
   height: 56px;
   font-size: 52px;
   color: #3993F5;
-}
-
-.e-water-count {
-  margin-left: 5%;
 }
 
 .e-water-plus,
@@ -1521,7 +1515,7 @@ body {
 }
 
 .e-water-value-container {
-  margin: 50px 0;
+  margin: 36px 0;
 }
 
 .e-water-consumed-text {
@@ -1540,6 +1534,7 @@ body {
   font-size: 40px;
   line-height: 125%;
   color: #303343;
+  width: 300px;
 }
 
 .e-water-consumed-expect {
@@ -1967,7 +1962,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-nutrition-container {
     width: 100%;
     height: 50%;
-    padding-bottom: 24px;
+    margin-left: 0;
   }
 
   .e-diet-panel-header-text {
@@ -1979,7 +1974,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-dashboardlayout-container {
-    height: calc(100vh - 130px) !important;
+    height: calc(100vh - 185px) !important;
     padding: 0 0 20px 0;
   }
 
@@ -2034,6 +2029,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   }
 
   .e-tab .e-tab-header {
+    z-index: 1000 !important;
     top: initial !important;
     bottom: 0 !important;
     position: fixed !important;
@@ -2217,20 +2213,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     border-radius: 24px;
   }
 
-  .e-workout-panel .e-panel-header,
-  .e-activity-panel .e-panel-header {
-    padding-left: 10px !important;
-  }
-
-  .e-chart-dropdown {
-    padding: 0 10px;
-  }
-
-  .e-grid,
-  .e-chart {
-    margin: 10px;
-  }
-
   .e-my-activities-date {
     padding-right: 2px;
   }
@@ -2252,9 +2234,26 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     max-width: 700px;
     width: auto !important;
   }
+
+  .e-fasting-chart-panel,
+  .e-workout-panel,
+  .e-activity-panel {
+    padding: 20px 10px !important;
+  }
+
+  .e-fasting-panel,
+  .e-water-panel,
+  .e-diet-chart-panel {
+    padding: 20px !important;
+  }
+
+  .e-grid,
+  .e-chart {
+    margin-top: 10px;
+  }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 767px) {
 
   .e-heart-rate-card,
   .e-steps-card,
@@ -2304,14 +2303,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     width: 25%;
   }
 
-  .e-grid {
-    width: 95% !important;
-  }
-
-  .e-chart {
-    width: 99% !important;
-  }
-
   .e-dialog .e-footer-content {
     display: flex;
   }
@@ -2338,7 +2329,8 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     max-height: fit-content !important;
   }
 
-  .e-nutrition-container {
-    margin: 24px;
+  .e-consumed,
+  .e-burned {
+    padding-top: 20px !important;
   }
 }

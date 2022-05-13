@@ -385,14 +385,31 @@ body {
 .e-base-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  padding-top: 20px;
 }
 
 .e-height-img-container {
   display: flex;
   align-items: flex-end;
-  padding: 50px 0;
   width: 30%;
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.e-profile-height-label {
+  white-space: nowrap;
+  -webkit-transform: inherit !important;
+  transform: inherit !important;
+  position: absolute;
+  padding: 2px 8px;
+  font-weight: 700;
+  font-size: 21.3765px;
+  width: auto !important;
+}
+
+.e-profile-height-label > span {
+  display: contents;
+  font-size: 16px !important;
 }
 
 .e-weight-gauge-annotation {
@@ -402,19 +419,15 @@ body {
   color: #000000;
 }
 
-.e-height-gauge-container {
-  width: 100%;
-}
-
+.e-height-gauge-container,
 .e-weight-gauge-container {
+  padding: inherit;
   width: 100%;
+  padding-top: 20px;
 }
 
+.e-height-gauge-container.e-hidden,
 .e-weight-gauge-container.e-hidden {
-  display: none;
-}
-
-.e-height-gauge-container.e-hidden {
   display: none;
 }
 
@@ -2251,6 +2264,15 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-chart {
     margin-top: 10px;
   }
+
+  .e-profile-pic-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .e-modify-container {
+    margin-top: 150px;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2332,5 +2354,28 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-consumed,
   .e-burned {
     padding-top: 20px !important;
+  }
+
+  .e-profile-details {
+    margin-top: 20px !important;
+  }
+
+  .e-profile-details > div:first-child {
+    text-align: center;
+  }
+
+  .e-profile-pic-container {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .e-modify-container {
+    margin-top: 20px;
+  }
+
+  .e-profile-panel,
+  .e-profile-container {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }

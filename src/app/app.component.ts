@@ -745,7 +745,7 @@ export class AppComponent {
   public weightGaugeLineStyle: Object = {
     width: 0
   };
-  public weightGaugeCenterX = this.isDevice ? (this.innerWidth < 450 ? '30%' : '60%') : '35%';
+  public weightGaugeCenterX = this.isDevice ? '50%' : '50%';
   public dateWidth: string = this.isDevice && this.innerWidth < 450 ? '100%' : '80%';
   public timeWidth: string = this.isDevice && this.innerWidth < 450 ? '100%' : '160px';
   public weightGaugeCenterY = this.isDevice ? '50%' : '50%';
@@ -786,6 +786,7 @@ export class AppComponent {
   public orientation = 'Vertical';
   public heightGaugeContainer: Object = {
     width: 80,
+    height: 390,
     border: {
       width: 2,
       color: '#E1E9ED',
@@ -930,11 +931,12 @@ export class AppComponent {
     this.weightGauge.axes[0].pointers[0].value = args.value;
   }
 
-  sliderHeightChange(args) {
-    this.heightGauge.annotations[0].axisValue = args.value;
-    this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + args.value + this.currentHtUnit + '</div>';
-    this.heightGauge.axes[0].pointers[0].value = args.value;
-    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (args.value * (this.currentHtUnit.toUpperCase() === 'CM' ? 1.5 : 40)) + 'px';
+  sliderHeightChange() {
+    this.heightGauge.axes[0].pointers[0].value = this.heightSlider.value as number;
+    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = ((this.heightSlider.value as number) * (this.currentHtUnit.toUpperCase() === 'CM' ? 2 : 50)) + 'px';
+    (document.querySelector('.e-profile-height-label') as HTMLElement).innerHTML = (this.heightSlider.value as number) + '<span>' + ' ' + this.currentHtUnit + '</span>';
+    (document.querySelector('.e-profile-height-label') as HTMLElement).style.bottom = (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height;
+    (document.querySelector('.e-profile-height-label') as HTMLElement).style.left = ((this.heightSlider.value as number) * (this.currentHtUnit.toUpperCase() === 'CM' ? 0.1 : 3.5)) + 'px';
   }
 
   minusClick() {
@@ -1532,8 +1534,10 @@ export class AppComponent {
 
   dialogOpen(args) {
     args.preventFocus = true;
+    this.weightGauge.refresh();
     this.weightSlider.refresh();
     this.heightSlider.refresh();
+    this.sliderHeightChange();
   }
 
   legendClick(args) {

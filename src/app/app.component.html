@@ -683,7 +683,7 @@
   </ng-template>
   <ng-template #content>
     <div class="e-edit-dialog-container col-md-12 col-sm-12">
-      <div class="e-profile-container col-md-6 col-sm-12">
+      <div class="e-profile-container col-md-6 col-sm-6">
         <div class="col-md-12 col-sm-12">
           <div class="e-profile-back" (click)="closeEditDialog()"><span class="icon-arrow-left"></span><span
               class="e-profile-back-text">Back to
@@ -749,7 +749,7 @@
           </div>
         </div>
       </div>
-      <div class="e-modify-container col-md-6 col-sm-12">
+      <div class="e-modify-container col-md-6 col-sm-6">
         <div class="e-modify-title">{{ modifyHeaderTitle }}</div>
         <div class='e-modify-btn-group e-btn-group e-outline'>
           <input type="radio" [id]="modifyBtnGroup[0]" name="modifyunit" [value]="modifyBtnGroup[0]" checked="true"
@@ -785,13 +785,13 @@
         </div>
         <div class="e-height-gauge-container e-hidden">
           <div class="e-base-container">
-            <ejs-lineargauge id="heightgauge" #heightgauge style="display:block;" orientation="Vertical"
-              [container]="heightGaugeContainer" [axes]="heightGaugeAxes" [annotations]='heightGaugeAnnotation'
-              width="200px" height="400px" [theme]="theme">
-            </ejs-lineargauge>
-            <div class="e-height-img-container"><img id="height-svg" src="./assets/Profile/Height.svg" alt="Height" />
+            <div class="e-height-img-container"><div class="e-age-edit e-profile-height-label">{{ profileStats.height }} <span>{{ profileStats.heightMes }}</span></div><img id="height-svg" src="./assets/Profile/Height.svg" alt="Height" />
             </div>
-            <div class="slider-container" style="height: 350px; width: 100px;">
+            <ejs-lineargauge id="heightgauge" #heightgauge style="display:block;" orientation="Vertical"
+              [container]="heightGaugeContainer" [axes]="heightGaugeAxes"
+              width="100px" height="400px" [theme]="theme">
+            </ejs-lineargauge>
+            <div class="slider-container" style="height: 390px; width: 50px; margin-top: 5px;">
               <ejs-slider id="heightrange" #heightrange [value]="profileStats.height" [type]="mintype" width="100px"
                 height="300px" (change)="sliderHeightChange($event)" [min]="heightSliderMin" [max]="heightSliderMax"
                 [orientation]="orientation" cssClass="height-slider-container">

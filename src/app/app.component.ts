@@ -96,7 +96,7 @@ export class AppComponent {
   { activity: 'Lunch', amount: 'Pizza', percentage: '20%', time: '1:00 PM' },
   { activity: 'Lunch Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '1:30 PM' }];
 
-  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 65, email: 'john.watson@gmail.com', weightMes: 'kg', goalMes: 'kg', heightMes: 'cm' };
+  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 60, email: 'john.watson@gmail.com', weightMes: 'kg', goalMes: 'kg', heightMes: 'cm' };
 
   @ViewChild('fitnesstab')
   public tabInstance: TabComponent;

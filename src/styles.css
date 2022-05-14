@@ -407,7 +407,7 @@ body {
   width: auto !important;
 }
 
-.e-profile-height-label > span {
+.e-profile-height-label>span {
   display: contents;
   font-size: 16px !important;
 }
@@ -802,6 +802,7 @@ body {
 
 .e-chart-dropdown {
   float: right;
+  padding: 0;
 }
 
 .e-grid,
@@ -810,10 +811,8 @@ body {
   margin-top: 20px;
 }
 
-.e-activity-chart,
-.e-weight-chart {
-  height: 80%;
-  display: block !important;
+.e-activity-chart svg {
+  margin-top: 5px;
 }
 
 .e-grid .e-row.e-altrow {
@@ -1507,7 +1506,7 @@ body {
   font-size: 40px;
   line-height: 125%;
   color: #56648A;
-  width: 100px;
+  width: 90px;
   margin-left: 10px;
 }
 
@@ -1532,14 +1531,13 @@ body {
 }
 
 .e-water-consumed-text {
-  margin-right: 10%;
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #B5C2CA;
-  width: 15%;
+  width: 90px;
 }
 
 .e-water-consumed-value {
@@ -1547,7 +1545,8 @@ body {
   font-size: 40px;
   line-height: 125%;
   color: #303343;
-  width: 300px;
+  margin-left: 16px;
+  white-space: nowrap;
 }
 
 .e-water-consumed-expect {
@@ -1773,10 +1772,6 @@ body {
   line-height: 125% !important;
   text-align: center !important;
   color: #56648A !important;
-}
-
-.e-activity-chart svg {
-  margin-top: 5px;
 }
 
 body.e-dark .e-activity-panel,
@@ -2156,10 +2151,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     font-size: 25px;
   }
 
-  .e-water-consumed-text {
-    width: 17%;
-  }
-
   .e-water-consumed-value {
     font-size: 32px;
   }
@@ -2220,10 +2211,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
   .e-workout-panel .e-panel-container,
   .e-activity-panel .e-panel-container {
     width: 100%;
-  }
-
-  .e-activity-chart svg {
-    border-radius: 24px;
   }
 
   .e-my-activities-date {
@@ -2321,10 +2308,6 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     width: 40%;
   }
 
-  .e-water-consumed-text {
-    width: 25%;
-  }
-
   .e-dialog .e-footer-content {
     display: flex;
   }
@@ -2360,7 +2343,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     margin-top: 20px !important;
   }
 
-  .e-profile-details > div:first-child {
+  .e-profile-details>div:first-child {
     text-align: center;
   }
 
@@ -2368,7 +2351,7 @@ body.e-dark .e-fast-end-date .e-datetime-wrapper {
     width: 100px;
     height: 100px;
   }
-  
+
   .e-modify-container {
     margin-top: 20px;
   }

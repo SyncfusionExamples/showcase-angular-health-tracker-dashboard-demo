@@ -100,7 +100,7 @@
                     </div>
                   </div>
                   <div class="e-chart-panel-content">
-                    <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' [width]='chartWidth'
+                    <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' width='101%'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
                       [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [marker]="marker"
                       [background]="chartBackGround" [crosshair]="crosshair" (legendClick)="legendClick($event)">
@@ -555,7 +555,7 @@
                     <div class="e-weight-chart-header-text">Weight Journey</div>
                   </div>
                   <div class="e-panel-content">
-                    <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' width='98%'
+                    <ejs-chart #weightchart class="e-weight-chart" [chartArea]='chartArea' [width]='chartWidth'
                       [primaryXAxis]='weightChartPrimaryXAxis' [primaryYAxis]='weightChartPrimaryYAxis'
                       [height]="activityChartHeight" [theme]="theme" [tooltip]='weightChartTooltip'>
                       <e-series-collection>

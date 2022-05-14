@@ -194,7 +194,7 @@ export class AppComponent {
   public progressColor = '#3881f5';
   public segmentCount: number = this.isDevice ? 30 : 50;
   public trackColor = '#FFFFFF';
-  public activityChartHeight = '55%';
+  public activityChartHeight = '60%';
   public Axes: Object[] = [
     {
       minimum: 0,

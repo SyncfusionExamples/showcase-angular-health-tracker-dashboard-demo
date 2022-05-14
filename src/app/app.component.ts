@@ -924,16 +924,16 @@ export class AppComponent {
     this.diff = Math.floor((((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   }
 
-  sliderChange(args) {
+  sliderChange() {
     this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' +
-      args.value + this.currentWtUnit + '</div>';
-    this.weightGauge.axes[0].ranges[0].end = args.value;
-    this.weightGauge.axes[0].pointers[0].value = args.value;
+      (this.weightSlider.value as number) + this.currentWtUnit + '</div>';
+    this.weightGauge.axes[0].ranges[0].end = this.weightSlider.value as number;
+    this.weightGauge.axes[0].pointers[0].value = this.weightSlider.value as number;
   }
 
   sliderHeightChange() {
     this.heightGauge.axes[0].pointers[0].value = this.heightSlider.value as number;
-    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = ((this.heightSlider.value as number) * (this.currentHtUnit.toUpperCase() === 'CM' ? 2 : 50)) + 'px';
+    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = ((this.heightSlider.value as number) * (this.currentHtUnit.toUpperCase() === 'CM' ? 2 : 61)) + 'px';
     (document.querySelector('.e-profile-height-label') as HTMLElement).innerHTML = (this.heightSlider.value as number) + '<span>' + ' ' + this.currentHtUnit + '</span>';
     (document.querySelector('.e-profile-height-label') as HTMLElement).style.bottom = (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height;
     (document.querySelector('.e-profile-height-label') as HTMLElement).style.left = ((this.heightSlider.value as number) * (this.currentHtUnit.toUpperCase() === 'CM' ? 0.1 : 3.5)) + 'px';
@@ -1328,13 +1328,16 @@ export class AppComponent {
     if (this.editDialog.element.querySelector('.e-height-gauge-container') && this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.remove('e-hidden');
     }
+    this.updateHeightGauge();
+    this.sliderHeightChange();
     this.heightSlider.refresh();
   }
 
   changeWeight() {
-    this.currentWtUnit = this.profileStats.weightMes;
+    this.currentWtUnit = this.profileStats.weightMes.toUpperCase();
     this.isGoalEdit = false;
     this.showWeight();
+    this.updateWeightGauge(false);
   }
 
   showWeight() {
@@ -1353,9 +1356,31 @@ export class AppComponent {
   }
 
   changeGoal() {
-    this.currentWtUnit = this.profileStats.goalMes;
+    this.currentWtUnit = this.profileStats.goalMes.toUpperCase();
     this.isGoalEdit = true;
     this.showWeight();
+    this.updateWeightGauge(true);
+  }
+
+  ngAfterContentChecked() {
+    if (!this.isGoalEdit) {
+      if (this.profileStats.weightMes.toUpperCase() === 'KG' && document.querySelector('.e-modify-btn-group #KG')) {
+        (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
+      } else if (document.querySelector('.e-modify-btn-group #LB')) {
+        (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
+      }
+    } else {
+      if (this.profileStats.goalMes.toUpperCase() === 'KG' && document.querySelector('.e-modify-btn-group #KG')) {
+        (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
+      } else if (document.querySelector('.e-modify-btn-group #LB')) {
+        (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
+      }
+    }
+    if (this.profileStats.heightMes.toUpperCase() === 'CM' && document.querySelector('.e-modify-btn-group #CM')) {
+      (document.querySelector('.e-modify-btn-group #CM') as HTMLInputElement).checked = true;
+    } else if (document.querySelector('.e-modify-btn-group #CM')) {
+      (document.querySelector('.e-modify-btn-group #FT') as HTMLInputElement).checked = true;
+    }
   }
 
   cancelWeight() {
@@ -1365,10 +1390,10 @@ export class AppComponent {
 
   updateWeight() {
     if (this.isGoalEdit) {
-      this.profileStats.goalMes = this.currentWtUnit;
+      this.profileStats.goalMes = this.currentWtUnit.toLowerCase();
       this.profileStats.goal = this.weightGauge.axes[0].pointers[0].value;
     } else {
-      this.profileStats.weightMes = this.currentWtUnit;
+      this.profileStats.weightMes = this.currentWtUnit.toLowerCase();
       this.profileStats.weight = this.weightGauge.axes[0].pointers[0].value;
     }
     this.isGoalEdit = false;
@@ -1382,7 +1407,7 @@ export class AppComponent {
   }
 
   updateHeight() {
-    this.profileStats.heightMes = this.currentHtUnit;
+    this.profileStats.heightMes = this.currentHtUnit.toLowerCase();
     this.profileStats.height = this.heightGauge.axes[0].pointers[0].value;
     this.cancelHeight();
   }
@@ -1519,26 +1544,69 @@ export class AppComponent {
       this.weightSlider.value = value;
     } else if (['CM', 'FT'].includes(unit) && this.currentHtUnit !== unit) {
       this.currentHtUnit = unit;
-      this.heightGauge.axes[0].maximum = unit === 'CM' ? 200 : 8;
-      this.heightSlider.max = unit === 'CM' ? 200 : 8;
-      let value = Number(Math.round(((unit === 'CM' ? (this.heightSlider.value as number * 30.48) : (this.heightSlider.value as number / 30.48) * 100) / 100)).toFixed(2));
+      this.heightGauge.axes[0].maximum = unit === 'CM' ? 200 : 6.56;
+      this.heightSlider.max = unit === 'CM' ? 200 : 6.56;
+      this.heightSlider.limits.minStart = unit === 'CM' ? 30 : 1;
+      this.heightSlider.step = unit === 'CM' ? 1 : 0.1;
+      this.heightSlider.ticks.format = unit === 'CM' ? 'N0' : '#.00';
+      let value = unit === 'CM' ? Math.round(this.heightSlider.value as number * 30.48) : Number((this.heightSlider.value as number / 30.48).toFixed(2));
       this.heightGauge.annotations[0].axisValue = value;
       this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + value + this.currentHtUnit + '</div>';
       this.heightGauge.axes[0].pointers[0].value = value;
       this.heightGauge.axes[0].majorTicks.interval = unit === 'CM' ? 20 : 1;
       this.heightGauge.axes[0].minorTicks.interval = unit === 'CM' ? 5 : 0.1;
-      (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (value * (unit === 'CM' ? 1.5 : 25)) + 'px';
+      (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (value * (unit === 'CM' ? 2 : 61)) + 'px';
       this.heightSlider.value = value;
     }
   }
 
+  updateWeightGauge(isGoal) {
+    this.currentWtUnit = isGoal ? this.profileStats.goalMes.toUpperCase() : this.profileStats.weightMes.toUpperCase();
+    let value = isGoal ? this.profileStats.goal as number : this.profileStats.weight as number;
+    this.weightGauge.axes[0].maximum = this.currentWtUnit === 'KG' ? 100 : 250;
+    this.weightSlider.max = this.currentWtUnit === 'KG' ? 100 : 250;
+    this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' + value
+      + this.currentWtUnit + '</div>';
+    this.weightGauge.axes[0].ranges[0].end = value;
+    this.weightGauge.axes[0].pointers[0].value = value;
+    this.weightSlider.value = value;
+  }
+
+  updateHeightGauge() {
+    this.currentHtUnit = this.profileStats.heightMes.toUpperCase();
+    this.heightGauge.axes[0].maximum = this.currentHtUnit === 'CM' ? 200 : 6.56;
+    this.heightSlider.max = this.currentHtUnit === 'CM' ? 200 : 6.56;
+    this.heightSlider.limits.minStart = this.currentHtUnit === 'CM' ? 30 : 1;
+    this.heightSlider.step = this.currentHtUnit === 'CM' ? 1 : 0.1;
+    this.heightSlider.ticks.format = this.currentHtUnit === 'CM' ? 'N0' : '#.00';
+    this.heightGauge.annotations[0].axisValue = this.profileStats.height;
+    this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + this.profileStats.height + this.currentHtUnit + '</div>';
+    this.heightGauge.axes[0].pointers[0].value = this.profileStats.height;
+    this.heightGauge.axes[0].majorTicks.interval = this.currentHtUnit === 'CM' ? 20 : 1;
+    this.heightGauge.axes[0].minorTicks.interval = this.currentHtUnit === 'CM' ? 5 : 0.1;
+    (document.querySelectorAll('#height-svg')[0] as HTMLElement).style.height = (this.profileStats.height * (this.currentHtUnit === 'CM' ? 2 : 61)) + 'px';
+  }
+
   dialogOpen(args) {
     args.preventFocus = true;
+    this.currentWtUnit = '';
+    this.weightSlider.value = this.profileStats.weight;
+    this.heightSlider.value = this.profileStats.height;
+    this.updateWeightGauge(false);
+    this.sliderChange();
     this.weightGauge.refresh();
     this.weightSlider.refresh();
-    this.heightSlider.refresh();
-    this.sliderHeightChange();
   }
+
+  dialogBeforeOpen() {
+    this.changeWeight();
+    if (this.profileStats.weightMes.toUpperCase() === 'KG') {
+      (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
+    } else {
+      (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
+    }
+  }
+
 
   legendClick(args) {
     if (args.legendText === 'Diet') {

@@ -699,7 +699,8 @@
           <div class="e-profile-container col-md-9">
             <div class="e-profile-label">Name</div>
             <div class="e-profile-value">
-              <ejs-textbox width="80%" [value]="profileStats.name" (input)="onNameChange($event)"></ejs-textbox>
+              <ejs-textbox width="80%" [value]="profileStats.name" (input)="onNameChange($event)"
+                cssClass="e-profile-input"></ejs-textbox>
             </div>
             <div class="e-profile-label">Age</div>
             <div class="e-age-edit e-profile-value">
@@ -709,14 +710,16 @@
             </div>
             <div class="e-profile-label">Weight</div>
             <div class="e-profile-value">
-              <ejs-textbox width="80%" [value]="profileStats.weight + ' ' + profileStats.weightMes" readonly="true">
+              <ejs-textbox width="80%" [value]="profileStats.weight + ' ' + profileStats.weightMes" readonly="true"
+                cssClass="e-profile-input e-weight-text">
               </ejs-textbox>
               <div ejs-button class="e-weight-change-btn" (click)="changeWeight()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span></div>
             </div>
             <div class="e-profile-label">Set your Goal</div>
             <div class="e-profile-value">
-              <ejs-textbox width="80%" [value]="profileStats.goal + ' ' + profileStats.goalMes" readonly="true">
+              <ejs-textbox width="80%" [value]="profileStats.goal + ' ' + profileStats.goalMes" readonly="true"
+                cssClass="e-profile-input e-goal-text">
               </ejs-textbox>
               <div ejs-button class="e-goal-change-btn" (click)="changeGoal()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span>
@@ -724,19 +727,22 @@
             </div>
             <div class="e-profile-label">Height</div>
             <div class="e-profile-value">
-              <ejs-textbox width="80%" [value]="profileStats.height + ' ' + profileStats.heightMes" readonly="true">
+              <ejs-textbox width="80%" [value]="profileStats.height + ' ' + profileStats.heightMes" readonly="true"
+                cssClass="e-profile-input e-height-text">
               </ejs-textbox>
               <div ejs-button class="e-height-change-btn" (click)="changeHeight()"><span>CHANGE</span><span
                   class="e-change-right icon-chevron-right"></span></div>
             </div>
             <div class="e-profile-label">Location</div>
             <div class="e-profile-value">
-              <ejs-textbox width="100%" [value]="profileStats.location" (input)="onLocationChange($event)">
+              <ejs-textbox width="100%" [value]="profileStats.location" (input)="onLocationChange($event)"
+                cssClass="e-profile-input">
               </ejs-textbox>
             </div>
             <div class="e-profile-label">Email</div>
             <div class="e-profile-value">
-              <ejs-textbox width="100%" [value]="profileStats.email" type="email" (input)="onEmailChange($event)">
+              <ejs-textbox width="100%" [value]="profileStats.email" type="email" (input)="onEmailChange($event)"
+                cssClass="e-profile-input">
               </ejs-textbox>
             </div>
             <div class="e-profile-label">Theme</div>
@@ -751,13 +757,17 @@
       </div>
       <div class="e-modify-container col-md-6 col-sm-6">
         <div class="e-modify-title">{{ modifyHeaderTitle }}</div>
-        <div class='e-modify-btn-group e-btn-group e-outline'>
-          <input type="radio" [id]="modifyBtnGroup[0]" name="modifyunit" [value]="modifyBtnGroup[0]" checked="true"
-            (change)="handleChange($event)" />
-          <label class="e-btn" [for]="modifyBtnGroup[0]">{{ modifyBtnGroup[0] }}</label>
-          <input type="radio" [id]="modifyBtnGroup[1]" name="modifyunit" [value]="modifyBtnGroup[1]"
-            (change)="handleChange($event)" />
-          <label class="e-btn" [for]="modifyBtnGroup[1]">{{ modifyBtnGroup[1] }}</label>
+        <div class='e-weight-modify-btn-group e-btn-group e-outline'>
+          <input type="radio" id="KG" name="modifyunit" value="KG" checked="true" (change)="handleChange($event)" />
+          <label class="e-btn" for="KG">KG</label>
+          <input type="radio" id="LB" name="modifyunit" value="LB" (change)="handleChange($event)" />
+          <label class="e-btn" for="LB">LB</label>
+        </div>
+        <div class='e-height-modify-btn-group e-btn-group e-outline e-hidden'>
+          <input type="radio" id="CM" name="modifyunit" value="CM" checked="true" (change)="handleChange($event)" />
+          <label class="e-btn" for="CM">CM</label>
+          <input type="radio" id="FT" name="modifyunit" value="FT" (change)="handleChange($event)" />
+          <label class="e-btn" for="FT">FT</label>
         </div>
         <div class="e-weight-gauge-container">
           <ejs-circulargauge #weightgauge id='weightgauge' style='display:block;' [theme]="theme" width="100%"

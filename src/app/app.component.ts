@@ -1349,6 +1349,15 @@ export class AppComponent {
   }
 
   changeHeight() {
+    if (document.querySelector('.e-weight-text') && document.querySelector('.e-weight-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-weight-text').classList.remove('e-edit-color');
+    }
+    if (document.querySelector('.e-goal-text') && document.querySelector('.e-goal-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-goal-text').classList.remove('e-edit-color');
+    }
+    if (document.querySelector('.e-height-text') && !document.querySelector('.e-height-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-height-text').classList.add('e-edit-color');
+    }
     this.currentHtUnit = this.profileStats.heightMes;
     this.modifyHeaderTitle = "Change Your Height";
     this.modifyBtnGroup = ['CM', 'FT'];
@@ -1361,12 +1370,32 @@ export class AppComponent {
     if (this.editDialog.element.querySelector('.e-height-gauge-container') && this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.remove('e-hidden');
     }
+    if (this.editDialog.element.querySelector('.e-weight-modify-btn-group') && !this.editDialog.element.querySelector('.e-weight-modify-btn-group').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-weight-modify-btn-group').classList.add('e-hidden');
+    }
+    if (this.editDialog.element.querySelector('.e-height-modify-btn-group') && this.editDialog.element.querySelector('.e-height-modify-btn-group').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-height-modify-btn-group').classList.remove('e-hidden');
+    }
     this.updateHeightGauge();
     this.sliderHeightChange();
     this.heightSlider.refresh();
+    if (this.profileStats.heightMes.toUpperCase() === 'CM' && document.querySelector('.e-height-modify-btn-group #CM')) {
+      (document.querySelector('.e-height-modify-btn-group #CM') as HTMLInputElement).checked = true;
+    } else if (document.querySelector('.e-height-modify-btn-group #CM')) {
+      (document.querySelector('.e-height-modify-btn-group #FT') as HTMLInputElement).checked = true;
+    }
   }
 
   changeWeight() {
+    if (document.querySelector('.e-weight-text') && !document.querySelector('.e-weight-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-weight-text').classList.add('e-edit-color');
+    }
+    if (document.querySelector('.e-goal-text') && document.querySelector('.e-goal-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-goal-text').classList.remove('e-edit-color');
+    }
+    if (document.querySelector('.e-height-text') && document.querySelector('.e-height-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-height-text').classList.remove('e-edit-color');
+    }
     this.currentWtUnit = this.profileStats.weightMes.toUpperCase();
     this.isGoalEdit = false;
     this.showWeight();
@@ -1385,35 +1414,42 @@ export class AppComponent {
     if (this.editDialog.element.querySelector('.e-height-gauge-container') && !this.editDialog.element.querySelector('.e-height-gauge-container').classList.contains('e-hidden')) {
       this.editDialog.element.querySelector('.e-height-gauge-container').classList.add('e-hidden');
     }
+    if (this.editDialog.element.querySelector('.e-height-modify-btn-group') && !this.editDialog.element.querySelector('.e-height-modify-btn-group').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-height-modify-btn-group').classList.add('e-hidden');
+    }
+    if (this.editDialog.element.querySelector('.e-weight-modify-btn-group') && this.editDialog.element.querySelector('.e-weight-modify-btn-group').classList.contains('e-hidden')) {
+      this.editDialog.element.querySelector('.e-weight-modify-btn-group').classList.remove('e-hidden');
+    }
     this.weightSlider.refresh();
+    if (!this.isGoalEdit) {
+      if (this.profileStats.weightMes.toUpperCase() === 'KG' && document.querySelector('.e-weight-modify-btn-group #KG')) {
+        (document.querySelector('.e-weight-modify-btn-group #KG') as HTMLInputElement).checked = true;
+      } else if (document.querySelector('.e-weight-modify-btn-group #LB')) {
+        (document.querySelector('.e-weight-modify-btn-group #LB') as HTMLInputElement).checked = true;
+      }
+    } else {
+      if (this.profileStats.goalMes.toUpperCase() === 'KG' && document.querySelector('.e-weight-modify-btn-group #KG')) {
+        (document.querySelector('.e-weight-modify-btn-group #KG') as HTMLInputElement).checked = true;
+      } else if (document.querySelector('.e-weight-modify-btn-group #LB')) {
+        (document.querySelector('.e-weight-modify-btn-group #LB') as HTMLInputElement).checked = true;
+      }
+    }
   }
 
   changeGoal() {
+    if (document.querySelector('.e-weight-text') && document.querySelector('.e-weight-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-weight-text').classList.remove('e-edit-color');
+    }
+    if (document.querySelector('.e-goal-text') && !document.querySelector('.e-goal-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-goal-text').classList.add('e-edit-color');
+    }
+    if (document.querySelector('.e-height-text') && document.querySelector('.e-height-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-height-text').classList.remove('e-edit-color');
+    }
     this.currentWtUnit = this.profileStats.goalMes.toUpperCase();
     this.isGoalEdit = true;
     this.showWeight();
     this.updateWeightGauge(true);
-  }
-
-  ngAfterContentChecked() {
-    if (!this.isGoalEdit) {
-      if (this.profileStats.weightMes.toUpperCase() === 'KG' && document.querySelector('.e-modify-btn-group #KG')) {
-        (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
-      } else if (document.querySelector('.e-modify-btn-group #LB')) {
-        (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
-      }
-    } else {
-      if (this.profileStats.goalMes.toUpperCase() === 'KG' && document.querySelector('.e-modify-btn-group #KG')) {
-        (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
-      } else if (document.querySelector('.e-modify-btn-group #LB')) {
-        (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
-      }
-    }
-    if (this.profileStats.heightMes.toUpperCase() === 'CM' && document.querySelector('.e-modify-btn-group #CM')) {
-      (document.querySelector('.e-modify-btn-group #CM') as HTMLInputElement).checked = true;
-    } else if (document.querySelector('.e-modify-btn-group #CM')) {
-      (document.querySelector('.e-modify-btn-group #FT') as HTMLInputElement).checked = true;
-    }
   }
 
   cancelWeight() {
@@ -1612,6 +1648,7 @@ export class AppComponent {
     this.heightSlider.limits.minStart = this.currentHtUnit === 'CM' ? 30 : 1;
     this.heightSlider.step = this.currentHtUnit === 'CM' ? 1 : 0.1;
     this.heightSlider.ticks.format = this.currentHtUnit === 'CM' ? 'N0' : '#.00';
+    this.heightSlider.value = this.profileStats.height;
     this.heightGauge.annotations[0].axisValue = this.profileStats.height;
     this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + this.profileStats.height + this.currentHtUnit + '</div>';
     this.heightGauge.axes[0].pointers[0].value = this.profileStats.height;
@@ -1629,14 +1666,23 @@ export class AppComponent {
     this.sliderChange();
     this.weightGauge.refresh();
     this.weightSlider.refresh();
+    if (document.querySelector('.e-weight-text') && !document.querySelector('.e-weight-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-weight-text').classList.add('e-edit-color');
+    }
+    if (document.querySelector('.e-goal-text') && document.querySelector('.e-goal-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-goal-text').classList.remove('e-edit-color');
+    }
+    if (document.querySelector('.e-height-text') && document.querySelector('.e-height-text').classList.contains('e-edit-color')) {
+      document.querySelector('.e-height-text').classList.remove('e-edit-color');
+    }
   }
 
   dialogBeforeOpen() {
     this.changeWeight();
-    if (this.profileStats.weightMes.toUpperCase() === 'KG') {
-      (document.querySelector('.e-modify-btn-group #KG') as HTMLInputElement).checked = true;
-    } else {
-      (document.querySelector('.e-modify-btn-group #LB') as HTMLInputElement).checked = true;
+    if (this.profileStats.weightMes.toUpperCase() === 'KG' && document.querySelector('.e-weight-modify-btn-group #KG')) {
+      (document.querySelector('.e-weight-modify-btn-group #KG') as HTMLInputElement).checked = true;
+    } else if (document.querySelector('.e-weight-modify-btn-group #LB')) {
+      (document.querySelector('.e-weight-modify-btn-group #LB') as HTMLInputElement).checked = true;
     }
   }
 

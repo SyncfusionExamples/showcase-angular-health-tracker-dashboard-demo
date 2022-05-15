@@ -66,6 +66,12 @@ export class AppComponent {
   public currentMenuHeader;
   public currentMenu;
   public currentTotalCal = 0;
+  public currentTotalProteins = 0;
+  public currentTotalFat = 0;
+  public currentTotalCarbs = 0;
+  public currentTotalCalcium = 0;
+  public currentTotalIron = 0;
+  public currentTotalSodium = 0;
   public currentRecom = 0;
   public currentQuantity = 1;
   public modifyHeaderTitle = "Change Your Weight";
@@ -82,12 +88,37 @@ export class AppComponent {
   public weightSliderMax = 120;
   public heightSliderMin = 0;
   public heightSliderMax = 200;
+  public lastSelectItem = '';
 
-  public breakfastMenu = [{ item: 'Banana', cal: 117 }, { item: 'Bread', cal: 136 }, { item: 'Boiled Egg', cal: 86 }, { item: 'Wheat Chapathi', cal: 146 }, { item: 'Dosa', cal: 302 }, { item: 'Tea', cal: 73 }, { item: 'Coffee', cal: 135 }, { item: 'Milk', cal: 167 }];
-  public bfNutrition = [{}];
-  public snackMenu = [{ item: 'Banana', cal: 117 }, { item: 'Apple', cal: 131 }, { item: 'Orange', cal: 62 }, { item: 'Samosa', cal: 349 }, { item: 'Peas', cal: 340 }, { item: 'Tea', cal: 73 }, { item: 'Coffee', cal: 135 }, { item: 'Biscuits', cal: 89 }];
+  public breakfastMenu = [
+    { item: 'Banana', cal: 105, fat: 0.4, carbs: 27, proteins: 1.3, sodium: 0.0012, iron: 0.00031, calcium: 0.005 },
+    { item: 'Bread', cal: 77, fat: 1, carbs: 14, proteins: 2.6, sodium: 0.142, iron: 0.0036, calcium: 0.260 },
+    { item: 'Boiled Egg', cal: 78, fat: 5.3, carbs: 0.6, proteins: 6.3, sodium: 0.062, iron: 0.001, calcium: 0.05 },
+    { item: 'Wheat Chapathi', cal: 120, fat: 3.7, carbs: 18, proteins: 3.1, sodium: 0.119, iron: 0.001, calcium: 0.01 },
+    { item: 'Dosa', cal: 168, fat: 3.7, carbs: 29, proteins: 3.9, sodium: 0.094, iron: 0.0005, calcium: 0.01 },
+    { item: 'Tea', cal: 5, fat: 0.1, carbs: 1.4, proteins: 0.1, sodium: 0.0008, iron: 0, calcium: 0.02 },
+    { item: 'Coffee', cal: 2, fat: 0.1, carbs: 0, proteins: 0.3, sodium: 0.047, iron: 0, calcium: 0.039 },
+    { item: 'Milk', cal: 122, fat: 4.8, carbs: 12, proteins: 8.1, sodium: 0.115, iron: 0, calcium: 0.125 }
+  ];
+  public snackMenu = [
+    { item: 'Banana', cal: 105, fat: 0.4, carbs: 27, proteins: 1.3, sodium: 0.0012, iron: 0.00031, calcium: 0.006 },
+    { item: 'Apple', cal: 95, fat: 0.3, carbs: 25, proteins: 0.5, sodium: 0.018, iron: 0.0001, calcium: 0.0085 },
+    { item: 'Orange', cal: 69, fat: 0.2, carbs: 18, proteins: 1.3, sodium: 0.0014, iron: 0.0001, calcium: 0.04 },
+    { item: 'Samosa', cal: 262, fat: 17, carbs: 24, proteins: 3.5, sodium: 0.423, iron: 0.0005, calcium: 0.013 },
+    { item: 'Peas', cal: 134, fat: 0.3, carbs: 25, proteins: 8.6, sodium: 0.048, iron: 0.00015, calcium: 0.036 },
+    { item: 'Tea', cal: 5, fat: 0.1, carbs: 1.4, proteins: 0.1, sodium: 0.0008, iron: 0, calcium: 0.02 },
+    { item: 'Coffee', cal: 2, fat: 0.1, carbs: 0, proteins: 0.3, sodium: 0.047, iron: 0, calcium: 0.039 },
+    { item: 'Biscuits', cal: 37, fat: 1.2, carbs: 6.2, proteins: 0.5, sodium: 0.002, iron: 0.00031, calcium: 0.03 }
+  ];
 
-  public lunchMenu = [{ item: 'Plain Rice', cal: 173 }, { item: 'Roti', cal: 97 }, { item: 'Moong Dal', cal: 342 }, { item: 'Mixed Vegetables', cal: 82 }, { item: 'Curd Rice', cal: 176 }, { item: 'Chicken Curry', cal: 359 }];
+  public lunchMenu = [
+    { item: 'Plain Rice', cal: 205, fat: 0.4, carbs: 45, proteins: 4.3, sodium: 0.0016, iron: 0.0002, calcium: 0.011 },
+    { item: 'Roti', cal: 120, fat: 3.7, carbs: 18, proteins: 3.1, sodium: 0.119, iron: 0.003, calcium: 0.01 },
+    { item: 'Moong Dal', cal: 236, fat: 2, carbs: 41, proteins: 16, sodium: 0.465, iron: 0.0032, calcium: 0.06 },
+    { item: 'Mixed Vegetables', cal: 45, fat: 0.5, carbs: 9.7, proteins: 2.4, sodium: 0.043, iron: 0.0021, calcium: 0.022 },
+    { item: 'Curd Rice', cal: 207, fat: 3.2, carbs: 38, proteins: 6.1, sodium: 0.167, iron: 0.0006, calcium: 0.272 },
+    { item: 'Chicken Curry', cal: 243, fat: 11, carbs: 7.5, proteins: 28, sodium: 0.073, iron: 0.0008, calcium: 0.023 }
+  ];
 
   public todayActivities = [{ activity: 'Morning Walk', duration: '30m', distance: '3.4km', percentage: '12%', time: '7:00 AM' },
   { activity: 'Water Taken', amount: '2 Glasses', percentage: '6%', time: '7:40 AM' },
@@ -161,6 +192,12 @@ export class AppComponent {
       return elem.item;
     }).join(", ");
     this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
+    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentBreakFastMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
+    this.currentTotalFat = Number((this.currentTotalFat + this.currentBreakFastMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
+    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentBreakFastMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
+    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
+    this.currentTotalIron = Number((this.currentTotalIron + this.currentBreakFastMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
+    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
     this.consumedCalories += this.currentBreakFastCalories;
     this.isBreakFastMenuAdded = true;
     this.currentSnack1Menu = [];
@@ -170,8 +207,15 @@ export class AppComponent {
       return elem.item;
     }).join(", ");
     this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
+    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack1Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
+    this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack1Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
+    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack1Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
+    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack1Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
+    this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack1Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
+    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack1Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
     this.consumedCalories += this.currentSnack1Calories;
     this.isSnack1MenuAdded = true;
+    this.pieData = this.getPieChartData();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -207,10 +251,12 @@ export class AppComponent {
   public headerText: Object = [{ 'text': 'ACTIVITIES', iconCss: 'icon-Activities', iconPosition: 'top' }, { 'text': 'DIET', iconCss: 'icon-Diet', iconPosition: 'top' }, { 'text': 'FASTING', iconCss: 'icon-Fasting', iconPosition: 'top' }, { 'text': 'PROFILE', iconCss: 'icon-Profile', iconPosition: 'top' }];
 
   public animation: AnimationModel = { enable: true, duration: 2000, delay: 0 };
-  public trackThickness: number = 25;
-  public progressThickness: number = 25;
-  public labelStyle = { textAlignment: 'Center', text: this.heartRate + ' BPM', color: '#FFFFFF' };
-  public progressColor = '#3881f5';
+  public trackThickness: number = 5;
+  public progressThickness: number = 5;
+  public progressHeight = this.isDevice ? '100px' : '120px';
+  public progressColor = '#90EE90';
+  public progressStartAngle = 240;
+  public progressEndAngle = 120;
   public segmentCount: number = this.isDevice ? 30 : 50;
   public trackColor = '#FFFFFF';
   public activityChartHeight = '60%';
@@ -274,9 +320,7 @@ export class AppComponent {
     },
   ];
 
-  public pieData: Object[] = [{ x: 'PROTEINS', y: 17, text: '17%', fill: '#4DD291' }, { x: 'FAT', y: 8, text: '8%', fill: '#901C53' },
-  { x: 'CARBOHYDRATES', y: 22, text: '22%', fill: '#CB4967' }, { x: 'CALCIUM', y: 8, text: '8%', fill: '#E25641' },
-  { x: 'SODIUM', y: 24, text: '24%', fill: '#FC892C' }, { x: 'IRON', y: 12, text: '12%', fill: '#FFC147' }];
+  public pieData: Object[] = this.getPieChartData();
   public piePalette = ['#4DD291', '#901C53', '#CB4967', '#E25641', '#FC892C', '#FFC147'];
   public pieLegendSettings: Object = {
     visible: false,
@@ -287,14 +331,14 @@ export class AppComponent {
   public pieChartWidth = '100%';
   public pieChartHeight = this.isDevice ? '80%' : '80%';
   public pieChartRadius = this.isDevice ? '90%' : '80%';
+  public pieExplode = true;
   public center = this.isDevice ? { x: '50%', y: '50%' } : { x: '50%', y: '50%' };
   public dataLabel: Object = {
     visible: true,
     name: 'text',
-    position: 'Inside',
     font: {
       fontWeight: '600',
-      color: '#ffffff'
+      color: '#d4e1e9'
     }
   };
   public startAngle: number = 325;
@@ -1209,12 +1253,25 @@ export class AppComponent {
       this.consumedCalories += this.currentDinnerCalories;
       this.isDinnerMenuAdded = true;
     }
+    for (var i = 0; i < this.currentMenu.length; i++) {
+      if (this.currentMenu[i].isAdded) {
+        this.currentTotalProteins = Number((this.currentTotalProteins + (this.currentMenu[i].proteins * this.currentMenu[i].quantity)).toFixed(2));
+        this.currentTotalFat = Number((this.currentTotalFat + (this.currentMenu[i].fat * this.currentMenu[i].quantity)).toFixed(2));
+        this.currentTotalCarbs = Number((this.currentTotalCarbs + (this.currentMenu[i].carbs * this.currentMenu[i].quantity)).toFixed(2));
+        this.currentTotalCalcium = Number((this.currentTotalCalcium + (this.currentMenu[i].calcium * this.currentMenu[i].quantity)).toFixed(2));
+        this.currentTotalIron = Number((this.currentTotalIron + (this.currentMenu[i].iron * this.currentMenu[i].quantity)).toFixed(2));
+        this.currentTotalSodium = Number((this.currentTotalSodium + (this.currentMenu[i].sodium * this.currentMenu[i].quantity)).toFixed(2));
+      }
+    }
+    this.pieData = this.getPieChartData();
     this.menuCancelBtnClick();
   }
 
   menuCancelBtnClick() {
     this.menuDialog.hide();
     this.currentTotalCal = 0;
+    this.lastSelectItem = '';
+    this.currentQuantity = 1;
   }
 
   created() {
@@ -1316,11 +1373,32 @@ export class AppComponent {
   }
 
   quantityMinusClick() {
-    this.currentQuantity = this.currentQuantity > 0 ? (this.currentQuantity - 1) : 0;
+    this.currentQuantity = this.currentQuantity > 1 ? (this.currentQuantity - 1) : 1;
+    for (var i = 0; i < this.currentMenu.length; i++) {
+      if (this.currentMenu[i].item === this.lastSelectItem) {
+        this.currentMenu[i].quantity = this.currentQuantity;
+      }
+    }
+    this.updateTotalCal();
   }
 
   quantityPlusClick() {
     this.currentQuantity += 1;
+    for (var i = 0; i < this.currentMenu.length; i++) {
+      if (this.currentMenu[i].item === this.lastSelectItem) {
+        this.currentMenu[i].quantity = this.currentQuantity;
+      }
+    }
+    this.updateTotalCal();
+  }
+
+  updateTotalCal() {
+    this.currentTotalCal = 0;
+    for (var i = 0; i < this.currentMenu.length; i++) {
+      if (this.currentMenu[i].isAdded) {
+        this.currentTotalCal += (this.currentMenu[i].cal * this.currentMenu[i].quantity);
+      }
+    }
   }
 
   ageMinusClick() {
@@ -1332,20 +1410,25 @@ export class AppComponent {
   }
 
   onMenuCardSelect(args) {
+    this.currentQuantity = 1;
     args.currentTarget.classList.toggle('e-card-select');
+    if (args.currentTarget.classList.contains('e-card-select')) {
+      this.lastSelectItem = args.currentTarget.innerText;
+    } else {
+      this.lastSelectItem = '';
+    }
     for (var i = 0; i < this.currentMenu.length; i++) {
       if (this.currentMenu[i].item === args.currentTarget.innerText) {
         if (args.currentTarget.classList.contains('e-card-select')) {
-          this.currentTotalCal += (this.currentMenu[i].cal * this.currentQuantity);
           this.currentMenu[i].isAdded = true;
           this.currentMenu[i].quantity = this.currentQuantity;
         } else {
-          this.currentTotalCal -= (this.currentMenu[i].cal * this.currentMenu[i].quantity);
           this.currentMenu[i].isAdded = false;
           this.currentMenu[i].quantity = 0;
         }
       }
     }
+    this.updateTotalCal();
   }
 
   changeHeight() {
@@ -1716,6 +1799,23 @@ export class AppComponent {
 
   getSleepInHours(minutes: number) {
     return Math.floor(minutes / 60) + 'h' + ' ' + (minutes % 60) + 'm';
+  }
+
+  getPieChartData() {
+    return [{ x: 'PROTEINS', y: this.currentTotalProteins, fill: '#4DD291' }, { x: 'FAT', y: this.currentTotalFat, fill: '#901C53' },
+    { x: 'CARBOHYDRATES', y: this.currentTotalCarbs, fill: '#CB4967' }, { x: 'CALCIUM', y: this.currentTotalCalcium, fill: '#E25641' },
+    { x: 'SODIUM', y: this.currentTotalSodium, fill: '#FC892C' }, { x: 'IRON', y: this.currentTotalIron, fill: '#FFC147' }];
+  }
+
+  onTextRender(args) {
+    if (args.point.y > 0) {
+      let value = args.point.y / args.series.sumOfPoints * 100;
+      args.text = Math.ceil(value) + '%';
+    }
+  }
+
+  onTooltipRender(args) {
+    args.text = args.data.pointY < 1 ? ((args.data.pointY * 1000) + ' mg') : (args.data.pointY + ' gm');
   }
 
   getChartData() {

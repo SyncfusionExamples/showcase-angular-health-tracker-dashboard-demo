@@ -754,8 +754,13 @@ body {
   margin-left: 10px;
 }
 
-.e-heartrate-progress {
-  margin-top: 4px;
+.e-progress-annotation {
+  font-weight: 500;
+  font-size: 12px;
+  color: #FFFFFF;
+  opacity: 0.75;
+  width: 50px;
+  text-align: center;
 }
 
 .e-my-activities-panel {

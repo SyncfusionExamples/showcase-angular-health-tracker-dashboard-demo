@@ -35,12 +35,17 @@
                         </div>
                       </div>
                       <div class="e-card-content">
-                        <div class="e-bpm-value">{{ heartRate }} BPM</div>
+                        <!-- <div class="e-bpm-value">{{ heartRate }} BPM</div> -->
                         <ejs-progressbar #heartrateProgress id='heartrateProgress' class="e-heartrate-progress"
-                          type='Linear' maximum='120' minimum='0' [value]='heartRate' height='100%'
+                          type='Circular' maximum='120' minimum='0' [value]='heartRate' [height]='progressHeight'
                           [animation]='animation' [trackThickness]='trackThickness'
-                          [progressThickness]='progressThickness' [segmentCount]='segmentCount'
-                          [labelStyle]="labelStyle" [progressColor]="progressColor" [trackColor]="trackColor">
+                          [progressThickness]='progressThickness' [startAngle]="progressStartAngle"
+                          [endAngle]="progressEndAngle" [progressColor]="progressColor" [trackColor]="trackColor">
+                          <e-progressbar-annotations>
+                            <e-progressbar-annotation
+                              content='<div class="e-progress-annotation">{{ heartRate }} BPM</div>'>
+                            </e-progressbar-annotation>
+                          </e-progressbar-annotations>
                         </ejs-progressbar>
                       </div>
                     </div>
@@ -343,12 +348,13 @@
                       <div class="e-pie-chart-container">
                         <ejs-accumulationchart id="piecontainer" #piecontainer [legendSettings]="pieLegendSettings"
                           [tooltip]="pieTooltip" [theme]="theme" [height]="pieChartHeight" [width]="pieChartWidth"
-                          [center]='center' [background]="chartBackGround">
+                          [center]='center' [background]="chartBackGround" (textRender)="onTextRender($event)"
+                          (tooltipRender)="onTooltipRender($event)" enableSmartLabels="true">
                           <e-accumulation-series-collection>
-                            <e-accumulation-series name='Project' [dataSource]='pieData' pointColorMapping='fill'
+                            <e-accumulation-series name='Calories' [dataSource]='pieData' pointColorMapping='fill'
                               xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="50%"
-                              [radius]="pieChartRadius" [dataLabel]="dataLabel" explode=true explodeOffset='2%'
-                              explodeAll=true>
+                              [radius]="pieChartRadius" [dataLabel]="dataLabel" [explode]="pieExplode"
+                              explodeOffset='10%'>
                             </e-accumulation-series>
                           </e-accumulation-series-collection>
                         </ejs-accumulationchart>
@@ -361,14 +367,14 @@
                                 <div class="e-nutrition-img e-nutrition-protein-img"></div>
                                 <div>PROTEINS</div>
                               </div>
-                              <div class="e-nutrition-value">50gm</div>
+                              <div class="e-nutrition-value">{{ currentTotalProteins }} gm</div>
                             </td>
                             <td>
                               <div class="e-nutrition-text">
                                 <div class="e-nutrition-img e-nutrition-fat-img"></div>
                                 <div>FAT</div>
                               </div>
-                              <div class="e-nutrition-value">15gm</div>
+                              <div class="e-nutrition-value">{{ currentTotalFat }} gm</div>
                             </td>
                           </tr>
                           <tr>
@@ -377,14 +383,14 @@
                                 <div class="e-nutrition-img e-nutrition-carbo-img"></div>
                                 <div>CARBOHYDRATES</div>
                               </div>
-                              <div class="e-nutrition-value">250gm</div>
+                              <div class="e-nutrition-value">{{ currentTotalCarbs }} gm</div>
                             </td>
                             <td>
                               <div class="e-nutrition-text">
                                 <div class="e-nutrition-img e-nutrition-calcium-img"></div>
                                 <div>CALCIUM</div>
                               </div>
-                              <div class="e-nutrition-value">600mg</div>
+                              <div class="e-nutrition-value">{{ currentTotalCalcium * 1000 }} mg</div>
                             </td>
                           </tr>
                           <tr>
@@ -393,14 +399,14 @@
                                 <div class="e-nutrition-img e-nutrition-sodium-img"></div>
                                 <div>SODIUM</div>
                               </div>
-                              <div class="e-nutrition-value">1000mg</div>
+                              <div class="e-nutrition-value">{{ currentTotalSodium * 1000 }} mg</div>
                             </td>
                             <td>
                               <div class="e-nutrition-text">
                                 <div class="e-nutrition-img e-nutrition-iron-img"></div>
                                 <div>IRON</div>
                               </div>
-                              <div class="e-nutrition-value">17mg</div>
+                              <div class="e-nutrition-value">{{ currentTotalIron * 1000 }} mg</div>
                             </td>
                           </tr>
                         </table>
@@ -412,21 +418,21 @@
                                   <div class="e-nutrition-img e-nutrition-protein-img"></div>
                                   <div>PROTEINS</div>
                                 </div>
-                                <div class="e-nutrition-value">50gm</div>
+                                <div class="e-nutrition-value">{{ currentTotalProteins }} gm</div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-fat-img"></div>
                                   <div>FAT</div>
                                 </div>
-                                <div class="e-nutrition-value">15gm</div>
+                                <div class="e-nutrition-value">{{ currentTotalFat }} gm</div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-carbo-img"></div>
                                   <div>CARBOHYDRATES</div>
                                 </div>
-                                <div class="e-nutrition-value">250gm</div>
+                                <div class="e-nutrition-value">{{ currentTotalCarbs }} gm</div>
                               </td>
                             </tr>
                             <tr>
@@ -435,21 +441,21 @@
                                   <div class="e-nutrition-img e-nutrition-calcium-img"></div>
                                   <div>CALCIUM</div>
                                 </div>
-                                <div class="e-nutrition-value">600mg</div>
+                                <div class="e-nutrition-value">{{ currentTotalCalcium * 1000 }} mg</div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-sodium-img"></div>
                                   <div>SODIUM</div>
                                 </div>
-                                <div class="e-nutrition-value">1000mg</div>
+                                <div class="e-nutrition-value">{{ currentTotalSodium * 1000 }} mg</div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-iron-img"></div>
                                   <div>IRON</div>
                                 </div>
-                                <div class="e-nutrition-value">17mg</div>
+                                <div class="e-nutrition-value">{{ currentTotalIron * 1000 }} mg</div>
                               </td>
                             </tr>
                           </table>

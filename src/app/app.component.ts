@@ -787,6 +787,8 @@ export class AppComponent {
   public heightGaugeContainer: Object = {
     width: 80,
     height: 390,
+    type: 'RoundedRectangle',
+    backgroundColor: '#E1E9ED',
     border: {
       width: 2,
       color: '#E1E9ED',
@@ -806,18 +808,21 @@ export class AppComponent {
       minimum: 0,
       maximum: 200,
       line: {
-        offset: -80,
+        offset: -60,
+        color: '#7D96A6'
       },
       opposedPosition: true,
       majorTicks: {
         interval: 20,
+        color: '#7D96A6'
       },
       minorTicks: {
         interval: 5,
+        color: '#7D96A6'
       },
       labelStyle: {
         font: {
-          color: '#000000',
+          color: '#56648A'
         },
       },
       pointers: [
@@ -827,6 +832,15 @@ export class AppComponent {
           width: 80,
           linearGradient: this.heightGaugePointerLinearGradient,
         },
+        {
+          type: 'Bar',
+          height: 390,
+          width: 5,
+          value: 200,
+          color: '#7D96A6',
+          offset: -25,
+          roundedCornerRadius: 0
+        }
       ],
     },
   ];

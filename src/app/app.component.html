@@ -672,7 +672,7 @@
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
   [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
-  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen($event)" [position]="editDlgPosition" isModal="true">
+  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen()" [position]="editDlgPosition" isModal="true">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">

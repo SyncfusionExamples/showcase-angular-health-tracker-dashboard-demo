@@ -153,6 +153,25 @@ export class AppComponent {
     if (this.innerWidth <= 820) {
       this.isSmallDevice = true;
     }
+    this.consumedCalories = 0;
+    this.currentBreakFastMenu = [];
+    this.currentBreakFastCalories = 0;
+    this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
+    this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
+    this.consumedCalories += this.currentBreakFastCalories;
+    this.isBreakFastMenuAdded = true;
+    this.currentSnack1Menu = [];
+    this.currentSnack1Calories = 0;
+    this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
+    this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
+      return elem.item;
+    }).join(", ");
+    this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
+    this.consumedCalories += this.currentSnack1Calories;
+    this.isSnack1MenuAdded = true;
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -565,7 +584,7 @@ export class AppComponent {
           value: 37,
           width: 4,
           height: 4,
-          offset: -55,
+          offset: this.isDevice ? -85 : -55,
           markerType: 'Circle',
           color: '#87CEFA',
           opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 37 ? 1 : 0
@@ -583,7 +602,7 @@ export class AppComponent {
           value: 48,
           width: 8,
           height: 8,
-          offset: -58,
+          offset: this.isDevice ? -80 : -58,
           markerType: 'Circle',
           color: '#87CEFA',
           opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 48 ? 1 : 0
@@ -610,7 +629,7 @@ export class AppComponent {
           value: 72,
           width: 8,
           height: 8,
-          offset: -55,
+          offset: this.isDevice ? -85 : -55,
           markerType: 'Circle',
           color: '#87CEFA',
           opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 72 ? 1 : 0
@@ -637,7 +656,7 @@ export class AppComponent {
           value: 94,
           width: 8,
           height: 8,
-          offset: -54,
+          offset: this.isDevice ? -80 : -54,
           markerType: 'Circle',
           color: '#87CEFA',
           opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 94 ? 1 : 0
@@ -1016,7 +1035,7 @@ export class AppComponent {
         value: 37,
         width: 4,
         height: 4,
-        offset: -55,
+        offset: this.isDevice ? -85 : -55,
         markerType: 'Circle',
         color: '#87CEFA',
         opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 37 ? 1 : 0
@@ -1034,7 +1053,7 @@ export class AppComponent {
         value: 48,
         width: 8,
         height: 8,
-        offset: -58,
+        offset: this.isDevice ? -80 : -58,
         markerType: 'Circle',
         color: '#87CEFA',
         opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 48 ? 1 : 0
@@ -1061,7 +1080,7 @@ export class AppComponent {
         value: 72,
         width: 8,
         height: 8,
-        offset: -55,
+        offset: this.isDevice ? -85 : -55,
         markerType: 'Circle',
         color: '#87CEFA',
         opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 72 ? 1 : 0
@@ -1088,7 +1107,7 @@ export class AppComponent {
         value: 94,
         width: 8,
         height: 8,
-        offset: -54,
+        offset: this.isDevice ? -80 : -54,
         markerType: 'Circle',
         color: '#87CEFA',
         opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 94 ? 1 : 0

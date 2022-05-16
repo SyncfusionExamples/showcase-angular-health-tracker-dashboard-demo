@@ -1,4 +1,4 @@
-@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+/* @import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
 @import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
 @import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
@@ -8,7 +8,7 @@
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
 @import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
 @import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
-@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css'; */
 
 @font-face {
   font-family: 'icomoon';
@@ -1137,11 +1137,11 @@ body {
 }
 
 .e-nutrition-fat-img {
-  background: #901C53;
+  background: #FC892C;
 }
 
 .e-nutrition-carbo-img {
-  background: #CB4967;
+  background: #FFC147;
 }
 
 .e-nutrition-calcium-img {
@@ -1149,11 +1149,11 @@ body {
 }
 
 .e-nutrition-sodium-img {
-  background: #FC892C;
+  background: #901C53;
 }
 
 .e-nutrition-iron-img {
-  background: #FFC147;
+  background: #CB4967;
 }
 
 .e-nutrition-text {

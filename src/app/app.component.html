@@ -19,7 +19,7 @@
                   <div class="e-panel-header col-md-12 col-sm-12 col-xs-12 col-lg-12">
                     <div class="col-md-3 col-sm-6 col-xs-6 col-lg-3 e-my-activities-header">My Activities</div>
                     <div class="col-md-3 col-sm-6 col-xs-6 col-lg-3 e-my-activities-date">
-                      <ejs-datepicker #datepicker [value]='today' [max]="maxDate" [width]="datePickerWidth"
+                      <ejs-datepicker #datepicker [value]='currentDate' [max]="maxDate" [width]="datePickerWidth"
                         (change)="onDateChange($event)"></ejs-datepicker>
                     </div>
                   </div>
@@ -70,10 +70,10 @@
                         </div>
                       </div>
                       <div class="e-card-content">
-                        <div class="e-activity-actual">{{ calories }}
+                        <div class="e-activity-actual">{{ consumedCalories }}
                           <span class="e-activity-actual-unit">kcal</span>
                         </div>
-                        <div class="e-activity-goal">3095 kcal</div>
+                        <div class="e-activity-goal">{{ expectedCalories }} kcal</div>
                       </div>
                     </div>
                     <div tabindex="0" class="e-card e-sleep-card">
@@ -165,7 +165,7 @@
             <div id="activity-profile-panel-id" class="e-panel e-activity-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
               <div class="e-panel-container">
-                <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
+                <app-profile [currentDate]="currentDate" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
               </div>
@@ -334,7 +334,7 @@
                       <div class="e-consumed-wrapper-value col-lg-9 col-md-8 col-sm-8 col-xs-6">
                         <span class="e-consumed-value">{{ consumedCalories }}</span><span
                           class="e-card-cal-unit e-add-cal-unit"> kcal</span>
-                        <span class="e-card-cal-unit e-add-cal-unit"> / 2400kcal</span></div>
+                        <span class="e-card-cal-unit e-add-cal-unit"> / {{ expectedCalories }}kcal</span></div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 e-burned">
                       <div class="e-consumed-wrapper-text col-lg-4 col-md-4 col-sm-4 col-xs-3">Burned Calories</div>
@@ -352,8 +352,8 @@
                           [center]='center' [background]="chartBackGround" (textRender)="onTextRender($event)"
                           (tooltipRender)="onTooltipRender($event)" enableSmartLabels="true">
                           <e-accumulation-series-collection>
-                            <e-accumulation-series name='Calories' [dataSource]='pieData' pointColorMapping='fill'
-                              xName='x' yName='y' [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="50%"
+                            <e-accumulation-series [dataSource]='pieData' pointColorMapping='fill' xName='x' yName='y'
+                              [startAngle]="startAngle" [endAngle]="endAngle" innerRadius="50%"
                               [radius]="pieChartRadius" [dataLabel]="dataLabel" [explode]="pieExplode"
                               explodeOffset='10%'>
                             </e-accumulation-series>
@@ -472,7 +472,7 @@
             <div id="diet-profile-panel-id" class="e-panel e-diet-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
               <div class="e-panel-container">
-                <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
+                <app-profile [currentDate]="currentDate" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
               </div>
@@ -582,7 +582,7 @@
             <div id="fasting-profile-panel-id" class="e-panel e-fasting-profile-panel" data-row="0" data-col="4"
               data-sizeX="1" data-sizeY="3">
               <div class="e-panel-container">
-                <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
+                <app-profile [currentDate]="currentDate" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
               </div>
@@ -598,7 +598,7 @@
             <div id="profile-panel-id" class="e-panel e-profile-panel" data-row="0" data-col="0" data-sizeX="1"
               data-sizeY="1">
               <div class="e-panel-container">
-                <app-profile [today]="today" [activities]="todayActivities" [profileStats]="profileStats"
+                <app-profile [currentDate]="currentDate" [activities]="todayActivities" [profileStats]="profileStats"
                   (notify)="onProfileDateChange($event)" (onProfileEdit)="onProfileEdit()">
                 </app-profile>
               </div>
@@ -680,7 +680,8 @@
 
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
   [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
-  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen()" [position]="editDlgPosition" isModal="true">
+  (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen()" [position]="editDlgPosition" isModal="true"
+  [closeOnEscape]='showCloseIcon' (overlayClick)="overlayClick($event)">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">
@@ -805,8 +806,8 @@
           <div class="e-base-container">
             <div class="e-height-img-container">
               <div class="e-age-edit e-profile-height-label">{{ profileStats.height }}
-                <span>{{ profileStats.heightMes }}</span></div><img id="height-svg" src="./assets/Profile/Height.svg"
-                alt="Height" />
+                <span>{{ profileStats.heightMes }}</span></div><img id="height-svg"
+                [src]='"./assets/Profile/"+humanImg+".svg"' alt="Height" />
             </div>
             <ejs-lineargauge id="heightgauge" #heightgauge style="display:block;" orientation="Vertical"
               [container]="heightGaugeContainer" [axes]="heightGaugeAxes" width="100px" height="400px" [theme]="theme">

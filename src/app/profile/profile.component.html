@@ -47,7 +47,7 @@
   <div>
     <div class="e-journal" style="float: left;">Journals</div>
     <div class="e-journal-date" style="float: right;">
-      <ejs-datepicker #profiledate [value]='today' [max]="maxDate" width="100%" (change)="notify.emit($event)">
+      <ejs-datepicker #profiledate [value]='currentDate' [max]="maxDate" width="100%" (change)="notify.emit($event)">
       </ejs-datepicker>
     </div>
   </div>

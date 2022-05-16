@@ -89,6 +89,9 @@ export class AppComponent {
   public heightSliderMin = 0;
   public heightSliderMax = 200;
   public lastSelectItem = '';
+  public dateEnable = false;
+  public weightSliderLimit = { enabled: true, minStart: this.currentWtUnit === 'KG' ? 10 : 20 };
+  public heightSliderLimit = { enabled: true, minStart: this.currentHtUnit === 'CM' ? 30 : 1 };
 
   public breakfastMenu = [
     { item: 'Banana', cal: 105, fat: 0.4, carbs: 27, proteins: 1.3, sodium: 0.0012, iron: 0.00031, calcium: 0.005 },
@@ -251,7 +254,7 @@ export class AppComponent {
   public headerText: Object = [{ 'text': 'ACTIVITIES', iconCss: 'icon-Activities', iconPosition: 'top' }, { 'text': 'DIET', iconCss: 'icon-Diet', iconPosition: 'top' }, { 'text': 'FASTING', iconCss: 'icon-Fasting', iconPosition: 'top' }, { 'text': 'PROFILE', iconCss: 'icon-Profile', iconPosition: 'top' }];
 
   public animation: AnimationModel = { enable: true, duration: 2000, delay: 0 };
-  public trackThickness: number = 5;
+  public trackThickness: number = 10;
   public progressThickness: number = 5;
   public progressHeight = this.isDevice ? '100px' : '120px';
   public progressColor = '#90EE90';
@@ -883,11 +886,6 @@ export class AppComponent {
         interval: 5,
         color: '#7D96A6'
       },
-      labelStyle: {
-        font: {
-          color: '#56648A'
-        },
-      },
       pointers: [
         {
           type: 'Bar',
@@ -946,7 +944,7 @@ export class AppComponent {
       } else {
         this.circulargauge.axes[0].annotations[1].content = '';
       }
-      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
+      this.circulargauge.axes[0].annotations[0].content = '<div class="e-fast-ellapsed">Elapsed Time (' + percent + '%)</div><div class="e-fast-completed">' +
         this.sliderValue.toString() + '</div><div class="e-fast-left">Left ' + leftHours.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'h ' + leftMinutes.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + 'm</div>';
     }
   }
@@ -954,7 +952,7 @@ export class AppComponent {
   endFasting() {
     clearInterval(this.x);
     this.sliderValue = "Completed";
-    this.annotaions[0].content = '<div class="e-fast-ellapsed">Ellapsed Time (100%)</div><div class="e-fast-completed">' +
+    this.annotaions[0].content = '<div class="e-fast-ellapsed">Elapsed Time (100%)</div><div class="e-fast-completed">' +
       this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
     if (this.circulargauge) {
       this.circulargauge.axes[0].ranges[1].end = 0;
@@ -1644,6 +1642,7 @@ export class AppComponent {
       }
       this.theme = 'Tailwind';
       this.chartBackGround = '#FFFFFF';
+      this.weightGaugeBackground = '#FFF7EC';
       if (this.chartInstance) {
         this.chartInstance.theme = 'Tailwind';
         this.chartInstance.refresh();
@@ -1656,8 +1655,12 @@ export class AppComponent {
         this.nutritionChartInstance.theme = 'Tailwind';
         this.nutritionChartInstance.refresh();
       }
-      this.weightGaugeBackground = '#FFF7EC';
-      this.heightGauge.axes[0].labelStyle.font.color = '#000000';
+      if (this.weightGauge) {
+        this.weightGauge.refresh();
+      }
+      if (this.heightGauge) {
+        this.heightGauge.refresh();
+      }
     } else if (this.currrentTheme === 'Dark') {
       (findlink as any).href = "./assets/styles-dark.css";
       if (!document.body.classList.contains('e-dark')) {
@@ -1665,6 +1668,7 @@ export class AppComponent {
       }
       this.theme = 'TailwindDark';
       this.chartBackGround = '#26273B';
+      this.weightGaugeBackground = '#414255';
       if (this.chartInstance) {
         this.chartInstance.theme = 'TailwindDark';
         this.chartInstance.refresh();
@@ -1677,8 +1681,12 @@ export class AppComponent {
         this.nutritionChartInstance.theme = 'TailwindDark';
         this.nutritionChartInstance.refresh();
       }
-      this.weightGaugeBackground = '#414255';
-      this.heightGauge.axes[0].labelStyle.font.color = '#FFFFFF';
+      if (this.weightGauge) {
+        this.weightGauge.refresh();
+      }
+      if (this.heightGauge) {
+        this.heightGauge.refresh();
+      }
     }
   }
 
@@ -1688,6 +1696,7 @@ export class AppComponent {
       this.currentWtUnit = unit;
       this.weightGauge.axes[0].maximum = unit === 'KG' ? 100 : 250;
       this.weightSlider.max = unit === 'KG' ? 100 : 250;
+      this.weightSlider.limits.minStart = unit === 'KG' ? 10 : 20;
       let value = unit === 'KG' ? Math.round(this.weightSlider.value as number / 2.205) : Math.round(this.weightSlider.value as number * 2.205);
       this.weightGauge.axes[0].annotations[0].content = '<div class="e-weight-gauge-annotation">' +
         value + this.currentWtUnit + '</div>';

@@ -1,3 +1,15 @@
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+
 @font-face {
   font-family: 'icomoon';
   src: url('assets/fonts/icomoon.eot?hvguwa');
@@ -356,6 +368,7 @@ body {
 .e-weight-modify-btn-group .e-active,
 .e-height-modify-btn-group .e-active {
   background-color: #F15223;
+  color: #FFFFFF;
 }
 
 .e-profile-edit-dialog .e-dlg-header-content {
@@ -391,6 +404,11 @@ body {
 
 .e-control-wrapper.e-slider-container.e-horizontal .e-slider-track {
   height: 8px;
+}
+
+.e-control-wrapper.e-slider-container.e-horizontal .e-limits,
+.e-control-wrapper.e-slider-container.e-vertical .e-slider .e-limits {
+  background-color: transparent;
 }
 
 .slider-container {
@@ -468,6 +486,7 @@ body {
 
 .e-btn-group input:checked+label.e-btn {
   background-color: #F15223 !important;
+  color: #FFFFFF;
 }
 
 .e-add-weight button,
@@ -748,19 +767,25 @@ body {
 }
 
 .e-bpm-value {
-  font-size: 24px;
-  line-height: 125%;
+  font-size: 36px;
+  font-weight: 600;
   color: #FFFFFF;
-  margin-left: 10px;
+  align-self: center;
+  text-align: center;
+  width: 55%;
+  white-space: nowrap;
+}
+
+.e-bpm-value>span {
+  font-size: 20px;
 }
 
 .e-progress-annotation {
-  font-weight: 500;
-  font-size: 12px;
-  color: #FFFFFF;
-  opacity: 0.75;
-  width: 50px;
-  text-align: center;
+  width: 45%;
+}
+
+.e-progress-annotation>img {
+  width: 70px;
 }
 
 .e-my-activities-panel {
@@ -1022,6 +1047,10 @@ body {
 .e-calories-card .e-card-content,
 .e-sleep-card .e-card-content {
   margin-top: 5% !important;
+}
+
+.e-heart-rate-card .e-card-content {
+  display: flex;
 }
 
 .e-activity-card-title {
@@ -1536,6 +1565,7 @@ body {
   line-height: 52px;
   text-align: center;
   margin: 0 10%;
+  cursor: pointer;
 }
 
 .e-water-count {
@@ -1667,6 +1697,7 @@ body {
   box-shadow: none !important;
   border: none !important;
   padding: 5px;
+  cursor: pointer;
 }
 
 .e-current-menu-container .e-menu-card.e-card-select {
@@ -1756,6 +1787,13 @@ body {
   align-items: center;
 }
 
+.e-quantity-plus,
+.e-quantity-minus,
+.e-age-plus,
+.e-age-minus {
+  cursor: pointer;
+}
+
 .e-quantity-container {
   width: 26%;
 }
@@ -1807,6 +1845,10 @@ body {
 .e-profile-input {
   background-color: #F4F5F7 !important;
   border: none !important;
+}
+
+.e-profile-input>input {
+  height: 40px !important;
 }
 
 .e-profile-input.e-input-focus {
@@ -2429,5 +2471,9 @@ body.e-dark .e-profile-input.e-edit-color {
   .e-profile-container {
     padding-left: 0px !important;
     padding-right: 0px !important;
+  }
+
+  .e-progress-annotation>img {
+    width: 60px;
   }
 }

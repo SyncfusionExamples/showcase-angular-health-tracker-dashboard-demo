@@ -35,18 +35,19 @@
                         </div>
                       </div>
                       <div class="e-card-content">
-                        <!-- <div class="e-bpm-value">{{ heartRate }} BPM</div> -->
-                        <ejs-progressbar #heartrateProgress id='heartrateProgress' class="e-heartrate-progress"
-                          type='Circular' maximum='120' minimum='0' [value]='heartRate' [height]='progressHeight'
+                        <!-- <ejs-progressbar #heartrateProgress id='heartrateProgress' class="e-heartrate-progress"
+                          type='Circular' maximum='100' minimum='0' value='100' [height]='progressHeight' width="50%"
                           [animation]='animation' [trackThickness]='trackThickness'
                           [progressThickness]='progressThickness' [startAngle]="progressStartAngle"
-                          [endAngle]="progressEndAngle" [progressColor]="progressColor" [trackColor]="trackColor">
+                          [endAngle]="progressEndAngle" [progressColor]="progressColor" [trackColor]="trackColor" segmentCount="segmentCount">
                           <e-progressbar-annotations>
                             <e-progressbar-annotation
-                              content='<div class="e-progress-annotation">{{ heartRate }} BPM</div>'>
+                              content='<div class="e-progress-annotation"><img src="./assets/Profile/Heart-1.svg" alt="JW" /></div>'>
                             </e-progressbar-annotation>
                           </e-progressbar-annotations>
-                        </ejs-progressbar>
+                        </ejs-progressbar> -->
+                        <div class="e-progress-annotation"><img src="./assets/Profile/Heart-1.svg" alt="JW" /></div>
+                        <div class="e-bpm-value">{{ heartRate }} <span>bpm</span></div>
                       </div>
                     </div>
                     <div tabindex="0" class="e-card e-steps-card">
@@ -647,7 +648,8 @@
     </div>
     <div class="e-quantity-date-value-container">
       <div class="e-quantity-date-value">
-        <ejs-datepicker id='quantity-datepicker' [width]="dateWidth" [value]='today'></ejs-datepicker>
+        <ejs-datepicker id='quantity-datepicker' [width]="dateWidth" [value]='today' [enabled]="dateEnable">
+        </ejs-datepicker>
       </div>
       <div class="e-quantity-time-value">
         <ejs-timepicker id='quantity-timepicker' [width]="timeWidth" [value]='today'></ejs-timepicker>
@@ -790,10 +792,10 @@
           <div class="slider-container">
             <ejs-slider id="weightrange" #weightrange [value]="profileStats.weight" [type]="mintype" width="50%"
               (change)="sliderChange($event)" [min]="weightSliderMin" [max]="weightSliderMax"
-              cssClass="weight-slider-container"></ejs-slider>
+              cssClass="weight-slider-container" [limits]="weightSliderLimit"></ejs-slider>
           </div>
           <div class="e-add-weight">
-            <button ejs-button cssClass='e-primary' (click)="updateWeight()">ADD WEIGHT</button>
+            <button ejs-button cssClass='e-primary' (click)="updateWeight()">UPDATE WEIGHT</button>
           </div>
           <div class="e-cancel-weight">
             <button ejs-button cssClass='e-outline' (click)="cancelWeight()">CANCEL</button>
@@ -812,12 +814,12 @@
             <div class="slider-container" style="height: 390px; width: 50px; margin-top: 5px;">
               <ejs-slider id="heightrange" #heightrange [value]="profileStats.height" [type]="mintype" width="100px"
                 height="300px" (change)="sliderHeightChange($event)" [min]="heightSliderMin" [max]="heightSliderMax"
-                [orientation]="orientation" cssClass="height-slider-container">
+                [orientation]="orientation" cssClass="height-slider-container" [limits]="heightSliderLimit">
               </ejs-slider>
             </div>
           </div>
           <div class="e-add-height">
-            <button ejs-button cssClass='e-primary' (click)="updateHeight()">ADD HEIGHT</button>
+            <button ejs-button cssClass='e-primary' (click)="updateHeight()">UPDATE HEIGHT</button>
           </div>
           <div class="e-cancel-height">
             <button ejs-button cssClass='e-outline' (click)="cancelHeight()">CANCEL</button>

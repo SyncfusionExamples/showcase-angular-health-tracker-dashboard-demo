@@ -288,21 +288,6 @@ body {
   body.e-dark .e-meals-card-container::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, .5);
   }
-
-  .e-input-group-icon,
-  .e-input-group,
-  .e-input-group.e-input-focus.e-icon-admin {
-    border: 0px !important;
-    border-radius: 8px !important;
-    box-shadow: none !important;
-    background: #F2F5F8 !important;
-  }
-
-  body.e-dark .e-input-group-icon,
-  body.e-dark .e-input-group,
-  body.e-dark .e-input-group.e-input-focus.e-icon-admin {
-    background: #313246 !important;
-  }
 }
 
 #gradient-chart stop[offset="0"] {
@@ -1509,6 +1494,8 @@ body {
   font-size: 14px;
   line-height: 125%;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .e-menu-add,
@@ -2465,6 +2452,15 @@ body.e-dark .e-input-group.e-input-focus.e-icon-admin {
   .e-modify-container {
     margin-top: 150px;
   }
+
+  .e-input-group-icon,
+  .e-input-group,
+  .e-input-group.e-input-focus.e-icon-admin {
+    border: 0px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: #F2F5F8 !important;
+  }
 }
 
 @media only screen and (max-width: 767px) {
@@ -2569,5 +2565,14 @@ body.e-dark .e-input-group.e-input-focus.e-icon-admin {
 
   .e-progress-annotation {
     display: none;
+  }
+
+  .e-input-group-icon,
+  .e-input-group,
+  .e-input-group.e-input-focus.e-icon-admin {
+    border: 0px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: #F2F5F8 !important;
   }
 }

@@ -2130,10 +2130,6 @@ body.e-dark .e-grid .e-rowcell.completion-color {
   color: #F15223 !important;
 }
 
-body.e-dark .e-profile-editor:hover {
-  background-color: #26273b !important;
-}
-
 body.e-dark .e-input-group-icon,
 body.e-dark .e-input-group,
 body.e-dark .e-input-group.e-input-focus.e-icon-admin {

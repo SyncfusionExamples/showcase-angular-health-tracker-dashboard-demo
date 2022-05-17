@@ -25,27 +25,28 @@
   top: calc(0% - 1em);
 }
 
-.e-profile-editor div {
+.e-profile-editor .e-profile-inner-editor div {
   border: 2px solid #B5C2CA;
-  transform: rotate(90deg);
   margin-right: 3px;
   float: right;
 }
 
-.e-profile-editor:hover {
+.e-profile-editor .e-profile-inner-editor {
+  width: 40px;
+  height: 40px;
+  border: none;
+  float: right;
+}
+
+.e-profile-editor .e-profile-inner-editor:hover {
   cursor: pointer;
-  background-color: #F2F5F8;
 }
 
 .e-profile-editor {
+  margin-top: 16px;
   width: 30px;
   float: right;
-  width: 30px;
-  position: absolute;
-  left: 85%;
-  height: 30px;
-  border-radius: 50%;
-  padding: 4% 1%;
+  width: 100%;
 }
 
 .profile-row {

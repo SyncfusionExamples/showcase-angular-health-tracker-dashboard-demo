@@ -914,6 +914,14 @@ body {
   margin-top: 20px;
 }
 
+.e-grid .e-content {
+  overflow-y: hidden !important;
+}
+
+.e-grid .e-gridheader {
+  padding-right: 0 !important;
+}
+
 .e-activity-chart svg {
   margin-top: 5px;
 }
@@ -2092,6 +2100,10 @@ body.e-dark .e-profile-input {
 body.e-dark .e-profile-input.e-edit-color {
   background-color: #FFEDC7 !important;
   color: #303343 !important;
+}
+
+body.e-dark .e-grid .e-rowcell.completion-color {
+  color: #F15223 !important;
 }
 
 @media only screen and (max-width: 820px) {

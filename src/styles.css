@@ -294,21 +294,6 @@ body {
   body.e-dark .e-input-group.e-input-focus.e-icon-admin {
     background: #313246 !important;
   }
-/* 
-  .e-calendar .e-content td.e-today span.e-day, 
-  .e-calendar .e-content td.e-focused-date.e-today span.e-day,
-  .e-calendar .e-content td.e-selected span.e-day {
-    background: none;
-    background-color: #FF6F44;
-    color: #F4F5F7;
-  }
-
-  .e-calendar .e-content td.e-today span.e-day, 
-  .e-calendar .e-content td.e-focused-date.e-today span.e-day,
-  .e-calendar .e-content td.e-today.e-selected span.e-day {
-    border-color: #FF6F44 !important;
-    color: #FF6F44;
-  } */
 }
 
 #gradient-chart stop[offset="0"] {
@@ -446,6 +431,31 @@ body {
   background-color: transparent;
 }
 
+.e-calendar .e-content td.e-today:hover span.e-day,
+.e-calendar .e-content td.e-focused-date.e-today:hover span.e-day,
+.e-calendar .e-content td.e-focused-date.e-today span.e-day,
+.e-calendar .e-content td.e-today span.e-day {
+  color: #F15223;
+  background-color: #FFFFFF;
+  border: none;
+  box-shadow: inset 1px 0 #F15223, inset 0 1px #F15223, inset -1px 0 #F15223, inset 0 -1px #F15223;
+}
+
+.e-calendar .e-content td.e-selected span.e-day,
+.e-calendar .e-content.e-year td.e-selected:hover span.e-day,
+.e-calendar .e-content td.e-selected:hover span.e-day,
+.e-calendar .e-content td.e-selected.e-focused-date span.e-day,
+.e-calendar .e-footer-container .e-btn.e-today.e-flat.e-primary:not(:hover),
+.e-calendar .e-btn.e-today.e-flat.e-primary:active,
+.e-calendar .e-btn.e-today.e-flat.e-primary:hover,
+.e-calendar .e-css.e-btn.e-today.e-flat.e-primary:hover,
+.e-calendar .e-content.e-decade td.e-selected:hover span.e-day {
+  background-color: #F15223;
+  color: #FFFFFF;
+  border: none;
+  box-shadow: none;
+}
+
 .slider-container {
   width: 100%;
   display: flex;
@@ -566,8 +576,8 @@ body {
   padding-top: 7px;
 }
 
-.e-tab .e-tab-header .e-tab-title > span,
-.e-profile-edit-title > span {
+.e-tab .e-tab-header .e-tab-title>span,
+.e-profile-edit-title>span {
   font-weight: 700 !important;
 }
 
@@ -822,6 +832,7 @@ body {
 .e-card.e-heart-rate-card .e-card-content {
   justify-content: flex-start;
 }
+
 .e-progress-annotation {
   width: auto;
   height: inherit;

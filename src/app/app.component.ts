@@ -529,7 +529,7 @@ export class AppComponent {
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5", line: { color: '#EE4769' } };
   public marker = { visible: true, height: 15, width: 15 };
   public weightChartMarker = { visible: true, height: 10, width: 10 };
-  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}', textStyle: { fontFamily: 'Inter' }};
+  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}', textStyle: { fontFamily: 'Inter' } };
   public weightChartTooltip = { enable: true };
   public dropDownData: string[] = ['Weekly', 'Monthly'];
 
@@ -2085,7 +2085,9 @@ export class AppComponent {
     for (let i = count - 1; i >= 0; i--) {
       let date = (this.currentDate) ? new Date(this.currentDate) : new Date();
       let data: Object = {
-        x: new Date(date.setDate(date.getDate() - i)),
+        x: new Date(
+          new Date(date.setDate(date.getDate() - i)).setHours(0, 0, 0, 0)
+        ),
         y: Math.random() * (90 - 50) + 50
       };
       sampleData.push(data);

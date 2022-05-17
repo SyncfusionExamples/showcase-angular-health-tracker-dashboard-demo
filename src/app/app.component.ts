@@ -92,6 +92,7 @@ export class AppComponent {
   public heightSliderMax = 200;
   public lastSelectItem = '';
   public dateEnable = false;
+  public isToday = true;
   public weightSliderLimit = { enabled: true, minStart: this.currentWtUnit === 'KG' ? 10 : 20 };
   public heightSliderLimit = { enabled: true, minStart: this.currentHtUnit === 'CM' ? 30 : 1 };
   public humanImg = 'LightHuman';
@@ -129,7 +130,7 @@ export class AppComponent {
 
   public todayActivities = [];
 
-  public profileStats = { name: 'John Watson', age: 24, location: 'Australia', weight: 65, height: 165, goal: 60, email: 'john.watson@gmail.com', weightMes: 'kg', goalMes: 'kg', heightMes: 'cm' };
+  public profileStats = { name: 'John Watson', age: 24, location: 'India', weight: 70, height: 165, goal: 65, email: 'john.watson@gmail.com', weightMes: 'kg', goalMes: 'kg', heightMes: 'cm' };
 
   @ViewChild('fitnesstab')
   public tabInstance: TabComponent;
@@ -237,6 +238,7 @@ export class AppComponent {
     this.isLunchMenuAdded = true;
     this.pieData = this.getPieChartData();
     this.todayActivities = this.getInitialData();
+    this.updateWaterGauge();
   }
   @HostListener('window:resize', ['$event'])
   onResize(event) {
@@ -253,6 +255,12 @@ export class AppComponent {
         }
         this.isSmallDevice = false;
       }
+    }
+    if (this.gauge) {
+      this.gauge.refresh();
+    }
+    if (this.circulargauge) {
+      this.circulargauge.refresh();
     }
   }
 
@@ -295,7 +303,13 @@ export class AppComponent {
           consumedCalories: this.consumedCalories,
           burnedCalories: this.burnedCalories,
           breakfastWaterTaken: breakfastWaterTaken,
-          lunchWaterTaken: lunchWaterTaken
+          lunchWaterTaken: lunchWaterTaken,
+          proteins: this.currentTotalProteins,
+          fat: this.currentTotalFat,
+          carbs: this.currentTotalCarbs,
+          calcium: this.currentTotalCalcium,
+          sodium: this.currentTotalSodium,
+          iron: this.currentTotalIron,
         },
         fasting: {
           chartWeightData: this.weightChartData,
@@ -329,6 +343,12 @@ export class AppComponent {
       this.currentLunchMenuText = data.diet.lunchText;
       this.isLunchMenuAdded = data.diet.isLunchAdded;
       this.weightChartData = data.fasting.chartWeightData;
+      this.currentTotalProteins = data.diet.proteins;
+      this.currentTotalFat = data.diet.fat;
+      this.currentTotalCarbs = data.diet.carbs;
+      this.currentTotalCalcium = data.diet.calcium;
+      this.currentTotalSodium = data.diet.sodium;
+      this.currentTotalIron = data.diet.iron;
     }
     let activities = [
       { activity: 'Morning Walk', duration: '30m', distance: (data.activity.morningWalk / 1312).toFixed(2) + 'km', percentage: ((data.activity.morningWalk / 6000) * 100).toFixed(2) + '%', time: '7:00 AM' },
@@ -442,8 +462,7 @@ export class AppComponent {
     visible: true,
     name: 'text',
     font: {
-      fontWeight: '600',
-      color: '#d4e1e9'
+      color: '#303343'
     }
   };
   public startAngle: number = 325;
@@ -527,9 +546,9 @@ export class AppComponent {
   public gridData: Object[] = this.getData();
   public legendSettings = { position: 'Top' };
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5", line: { color: '#EE4769' } };
-  public marker = { visible: true, height: 15, width: 15 };
+  public marker = { visible: true, height: 10, width: 10 };
   public weightChartMarker = { visible: true, height: 10, width: 10 };
-  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}', textStyle: { fontFamily: 'Inter' } };
+  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.y}', textStyle: { fontFamily: 'Inter' }, enableMarker: false };
   public weightChartTooltip = { enable: true };
   public dropDownData: string[] = ['Weekly', 'Monthly'];
 
@@ -655,7 +674,7 @@ export class AppComponent {
     content: '<div class="e-gauge-status-img icon-Thunder"></div>'
   }];
 
-  @ViewChild('waterGaugeId')
+  @ViewChild('waterGauge')
   public gauge: LinearGaugeComponent;
   public gaugeOrientation = this.isDevice ? 'Vertical' : 'Horizontal';
   public gaugeHeight = this.isDevice ? '100%' : '250px';
@@ -1056,6 +1075,20 @@ export class AppComponent {
     this.annotaions[0].content = '<div class="e-fast-ellapsed">Elapsed Time (100%)</div><div class="e-fast-completed">' +
       this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
     if (this.circulargauge) {
+      let percent = 100;
+      this.circulargauge.axes[0].ranges[1].end = percent;
+      this.circulargauge.axes[0].annotations[1].angle = Math.round((percent / 100) * 340) + 10;
+      this.circulargauge.axes[0].annotations[1].content = '<div class="e-gauge-percent-img icon-Calories"></div>';
+      this.circulargauge.axes[0].annotations[0].content = this.annotaions[0].content;
+    }
+  }
+
+  clearFasting() {
+    clearInterval(this.x);
+    this.sliderValue = "Completed";
+    this.annotaions[0].content = '<div class="e-fast-ellapsed">Elapsed Time (100%)</div><div class="e-fast-completed">' +
+      this.sliderValue.toString() + '</div><div class="e-fast-left">Left 00h 00m</div>';
+    if (this.circulargauge) {
       this.circulargauge.axes[0].ranges[1].end = 0;
       this.circulargauge.axes[0].annotations[1].angle = 0;
       this.circulargauge.axes[0].annotations[1].content = '';
@@ -1123,7 +1156,7 @@ export class AppComponent {
     if (content[index + 1]) {
       this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
     }
-    this.updateWaterGaugePointer(percent);
+    this.updateWaterGaugePointer();
   }
 
   plusClick() {
@@ -1138,16 +1171,19 @@ export class AppComponent {
     let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
     let index = this.closestIndex(percent);
     let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
-    this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
+    (this.waterGaugeAnnotation[index] as any).content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
     for (let i = 0; i < content.length; i++) {
       if (i !== index) {
-        this.gauge.annotations[i].content = '<div class="e-water-annotation-text">' + content[i] + '</div>';
+        (this.waterGaugeAnnotation[i] as any).content = '<div class="e-water-annotation-text">' + content[i] + '</div>';
       }
     }
-    this.updateWaterGaugePointer(percent);
+    if (this.gauge) {
+      this.gauge.annotations = this.waterGaugeAnnotation;
+    }
+    this.updateWaterGaugePointer();
   }
 
-  updateWaterGaugePointer(percent) {
+  updateWaterGaugePointer() {
     let pointers: PointerModel[] = [
       {
         value: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100),
@@ -1275,7 +1311,11 @@ export class AppComponent {
         opacity: Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100) > 94 ? 1 : 0
       },
     ];
-    this.gauge.axes[0].pointers = pointers;
+    if (this.gauge) {
+      this.gauge.axes[0].pointers = pointers;
+    } else {
+      (this.waterGaugeAxes as any)[0].pointers = pointers;
+    }
   }
 
   closestIndex(num) {
@@ -1437,6 +1477,12 @@ export class AppComponent {
   }
 
   updateMenu() {
+    this.currentTotalProteins = 0;
+    this.currentTotalFat = 0;
+    this.currentTotalCarbs = 0;
+    this.currentTotalCalcium = 0;
+    this.currentTotalIron = 0;
+    this.currentTotalSodium = 0;
     this.consumedCalories = 0;
     this.currentBreakFastMenu = [];
     this.currentBreakFastCalories = 0;
@@ -1519,8 +1565,8 @@ export class AppComponent {
 
 
   updateComponents() {
-    let isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
-    if (!isToday) {
+    this.isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
+    if (!this.isToday) {
       this.updateMenu();
       let morningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
       let eveningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
@@ -1534,9 +1580,7 @@ export class AppComponent {
       this.sleepInHours = this.getSleepInHours(this.sleepInMinutes);
       this.consumedWaterCount = breakfastWaterTaken + brunchWaterTaken + lunchWaterTaken + eveningWaterTaken;
       this.consumedWaterAmount = this.consumedWaterCount * 150;
-      if (this.gauge) {
-        this.updateWaterGauge();
-      }
+      this.updateWaterGauge();
       if (this.circulargauge) {
         this.endFasting();
       }
@@ -1575,6 +1619,7 @@ export class AppComponent {
       this.isSnack2MenuAdded = false;
       this.isDinnerMenuAdded = false;
       this.todayActivities = this.getInitialData();
+      this.pieData = this.getPieChartData();
       this.countStartDate = new Date().getHours() >= 17 ? new Date(new Date().setHours(18, 0, 0, 0)) : new Date(new Date(new Date().setDate(new Date().getDate() - 1)).setHours(18, 0, 0, 0));
       this.countDownDate = new Date().getHours() >= 17 ? new Date(new Date().setHours(this.countStartDate.getHours() + 16, 0, 0, 0)) : new Date(new Date(new Date().setDate(this.countStartDate.getDate())).setHours(this.countStartDate.getHours() + 16, 0, 0, 0));
       this.diff = 16;
@@ -1582,16 +1627,13 @@ export class AppComponent {
       this.maximumDate = new Date(new Date().setHours(this.minimumDate.getHours() + 24, 0, 0));
       clearInterval(this.x);
       this.x = setInterval(this.intervalFn.bind(this), 1000);
-      if (this.gauge) {
-        this.updateWaterGauge();
-      }
+      this.updateWaterGauge();
     }
     this.disableElements();
   }
 
   disableElements() {
-    let isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
-    if (!isToday) {
+    if (!this.isToday) {
       if (document.querySelector('.e-fast-time-btn')) {
         (document.querySelector('.e-fast-time-btn') as HTMLElement).style.pointerEvents = 'none';
       }
@@ -1845,9 +1887,7 @@ export class AppComponent {
     if (this.nutritionChartInstance) {
       this.nutritionChartInstance.refresh();
     }
-    if (this.gauge) {
-      this.updateWaterGauge();
-    }
+    this.updateWaterGauge();
     this.disableElements();
   }
 
@@ -1901,6 +1941,7 @@ export class AppComponent {
         this.weightChartInstance.refresh();
       }
       if (this.nutritionChartInstance) {
+        this.nutritionChartInstance.series[0].dataLabel.font.color = '#303343';
         this.nutritionChartInstance.theme = 'Tailwind';
         this.nutritionChartInstance.refresh();
       }
@@ -1933,6 +1974,7 @@ export class AppComponent {
         this.weightChartInstance.refresh();
       }
       if (this.nutritionChartInstance) {
+        this.nutritionChartInstance.series[0].dataLabel.font.color = '#FFFFFF';
         this.nutritionChartInstance.theme = 'TailwindDark';
         this.nutritionChartInstance.refresh();
       }
@@ -2079,6 +2121,10 @@ export class AppComponent {
     args.text = args.data.pointX + ': ' + (args.data.pointY < 1 ? ((args.data.pointY * 1000) + ' mg') : (args.data.pointY + ' gm'));
   }
 
+  chartTooltipRender(args) {
+    args.text.splice(0, 2);
+  }
+
   getChartData() {
     let count: number = (this.dropDownInstance && this.dropDownInstance.value === 'Monthly') ? 30 : 7;
     let sampleData: Object[] = [];
@@ -2088,7 +2134,7 @@ export class AppComponent {
         x: new Date(
           new Date(date.setDate(date.getDate() - i)).setHours(0, 0, 0, 0)
         ),
-        y: Math.random() * (90 - 50) + 50
+        y: Number((Math.random() * (90 - 50) + 50).toFixed(2))
       };
       sampleData.push(data);
       if (i == 0) {

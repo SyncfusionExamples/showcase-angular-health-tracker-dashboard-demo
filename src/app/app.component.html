@@ -108,14 +108,15 @@
                   <div class="e-chart-panel-content">
                     <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' width='101%'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
-                      [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [marker]="marker"
-                      [background]="chartBackGround" [crosshair]="crosshair" (legendClick)="legendClick($event)">
+                      [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [crosshair]="crosshair"
+                      [marker]="marker" (legendClick)="legendClick($event)"
+                      (sharedTooltipRender)="chartTooltipRender($event)">
                       <e-series-collection>
                         <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
-                          xName='x' yName='y' enableTooltip="false">
+                          xName='x' yName='y'>
                         </e-series>
                         <e-series [dataSource]='chartData' type='SplineArea' fill='url(#gradient-activity-chart)'
-                          xName='x' yName='y' enableTooltip="false">
+                          xName='x' yName='y'>
                         </e-series>
                         <e-series [dataSource]='chartDietData' legendShape='Circle' type='Spline' fill="#2084FE"
                           xName='x' yName='y' name='Diet' width="4">
@@ -330,14 +331,14 @@
                   <div class="e-panel-header">
                     <div class="col-lg-5 col-md-3 col-sm-3 col-xs-12 e-diet-panel-header-text">Calorie Diet</div>
                     <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12 e-consumed">
-                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-4 col-xs-3">Consumed Calories</div>
+                      <div class="e-consumed-wrapper-text col-lg-3 col-md-4 col-sm-4 col-xs-4">Consumed Calories</div>
                       <div class="e-consumed-wrapper-value col-lg-9 col-md-8 col-sm-8 col-xs-6">
                         <span class="e-consumed-value">{{ consumedCalories }}</span><span
                           class="e-card-cal-unit e-add-cal-unit"> kcal</span>
                         <span class="e-card-cal-unit e-add-cal-unit"> / {{ expectedCalories }}kcal</span></div>
                     </div>
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12 e-burned">
-                      <div class="e-consumed-wrapper-text col-lg-4 col-md-4 col-sm-4 col-xs-3">Burned Calories</div>
+                      <div class="e-consumed-wrapper-text col-lg-4 col-md-4 col-sm-4 col-xs-4">Burned Calories</div>
                       <div class="e-consumed-wrapper-value col-lg-8 col-md-8 col-sm-8 col-xs-6">
                         {{ burnedCalories }}
                         <span class="e-card-cal-unit e-add-cal-unit">kcal</span>
@@ -349,7 +350,7 @@
                       <div class="e-pie-chart-container">
                         <ejs-accumulationchart id="piecontainer" #piecontainer [legendSettings]="pieLegendSettings"
                           [tooltip]="pieTooltip" [theme]="theme" [height]="pieChartHeight" [width]="pieChartWidth"
-                          [center]='center' [background]="chartBackGround" (textRender)="onTextRender($event)"
+                          [center]='center' (textRender)="onTextRender($event)"
                           (tooltipRender)="onTooltipRender($event)" enableSmartLabels="true">
                           <e-accumulation-series-collection>
                             <e-accumulation-series [dataSource]='pieData' pointColorMapping='fill' xName='x' yName='y'
@@ -391,7 +392,9 @@
                                 <div class="e-nutrition-img e-nutrition-calcium-img"></div>
                                 <div>CALCIUM</div>
                               </div>
-                              <div class="e-nutrition-value">{{ currentTotalCalcium * 1000 }} mg</div>
+                              <div class="e-nutrition-value">
+                                {{ currentTotalCalcium < 1 ? (currentTotalCalcium * 1000) + ' mg' : currentTotalCalcium + ' gm' }}
+                              </div>
                             </td>
                           </tr>
                           <tr>
@@ -400,14 +403,18 @@
                                 <div class="e-nutrition-img e-nutrition-sodium-img"></div>
                                 <div>SODIUM</div>
                               </div>
-                              <div class="e-nutrition-value">{{ currentTotalSodium * 1000 }} mg</div>
+                              <div class="e-nutrition-value">
+                                {{ currentTotalSodium < 1 ? (currentTotalSodium * 1000) + ' mg' : currentTotalSodium + ' gm' }}
+                              </div>
                             </td>
                             <td>
                               <div class="e-nutrition-text">
                                 <div class="e-nutrition-img e-nutrition-iron-img"></div>
                                 <div>IRON</div>
                               </div>
-                              <div class="e-nutrition-value">{{ currentTotalIron * 1000 }} mg</div>
+                              <div class="e-nutrition-value">
+                                {{ currentTotalIron < 1 ? (currentTotalIron * 1000) + ' mg' : currentTotalIron + ' gm' }}
+                              </div>
                             </td>
                           </tr>
                         </table>
@@ -442,21 +449,27 @@
                                   <div class="e-nutrition-img e-nutrition-calcium-img"></div>
                                   <div>CALCIUM</div>
                                 </div>
-                                <div class="e-nutrition-value">{{ currentTotalCalcium * 1000 }} mg</div>
+                                <div class="e-nutrition-value">
+                                  {{ currentTotalCalcium < 1 ? (currentTotalCalcium * 1000) + ' mg' : currentTotalCalcium + ' gm' }}
+                                </div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-sodium-img"></div>
                                   <div>SODIUM</div>
                                 </div>
-                                <div class="e-nutrition-value">{{ currentTotalSodium * 1000 }} mg</div>
+                                <div class="e-nutrition-value">
+                                  {{ currentTotalSodium < 1 ? (currentTotalSodium * 1000) + ' mg' : currentTotalSodium + ' gm' }}
+                                </div>
                               </td>
                               <td>
                                 <div class="e-nutrition-text">
                                   <div class="e-nutrition-img e-nutrition-iron-img"></div>
                                   <div>IRON</div>
                                 </div>
-                                <div class="e-nutrition-value">{{ currentTotalIron * 1000 }} mg</div>
+                                <div class="e-nutrition-value">
+                                  {{ currentTotalIron < 1 ? (currentTotalIron * 1000) + ' mg' : currentTotalIron + ' gm' }}
+                                </div>
                               </td>
                             </tr>
                           </table>
@@ -507,7 +520,7 @@
                       </ejs-circulargauge>
                       <div class="e-fasting-label-container">
                         <div>Started Fasting</div>
-                        <div>Fast Ending</div>
+                        <div>End Fasting</div>
                       </div>
                       <div class="e-fasting-value-container">
                         <div>{{ fastStartTime }}</div>
@@ -516,8 +529,8 @@
                       <div class="e-fasting-button-container">
                         <button ejs-button class="e-fast-time-btn" width="100%"
                           (click)="modifyFasting($event)">{{ changeTimeBtnText }}</button>
-                        <button ejs-button class="e-fast-end-btn" width="100%" (click)="endFasting($event)">END
-                          FAST</button>
+                        <button ejs-button class="e-fast-end-btn" width="100%" (click)="clearFasting($event)">END
+                          FASTING</button>
                       </div>
                     </div>
                   </div>
@@ -531,7 +544,7 @@
                       <div class="e-water-panel-header-text">Water</div>
                     </div>
                     <div class="e-panel-content">
-                      <ejs-lineargauge id="waterGaugeId" #waterGaugeId class="e-water-gauge" style="display:block;"
+                      <ejs-lineargauge id="waterGaugeId" #waterGauge class="e-water-gauge" style="display:block;"
                         [container]="waterGaugeContainer" [axes]="waterGaugeAxes" [width]="gaugeWidth"
                         [height]="gaugeHeight" [orientation]="gaugeOrientation" [annotations]="waterGaugeAnnotation"
                         centerX='10%' centerY='50%' [theme]="theme">

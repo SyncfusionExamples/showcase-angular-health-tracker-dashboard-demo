@@ -34,13 +34,18 @@
 
 .e-profile-editor:hover {
   cursor: pointer;
+  background-color: #F2F5F8;
 }
 
 .e-profile-editor {
-  margin-top: 16px;
   width: 30px;
   float: right;
-  width: 100%;
+  width: 30px;
+  position: absolute;
+  left: 85%;
+  height: 30px;
+  border-radius: 50%;
+  padding: 4% 1%;
 }
 
 .profile-row {

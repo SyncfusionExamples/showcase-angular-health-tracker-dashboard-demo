@@ -4,7 +4,7 @@ import { TabComponent } from '@syncfusion/ej2-angular-navigations';
 import { AnimationModel } from '@syncfusion/ej2-progressbar';
 import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import { AccumulationChartComponent, ChartComponent } from '@syncfusion/ej2-angular-charts';
-import { DatePickerComponent, DateTimePickerComponent } from '@syncfusion/ej2-angular-calendars';
+import { DatePickerComponent, DateTimePickerComponent, TimePickerComponent } from '@syncfusion/ej2-angular-calendars';
 import { GridComponent } from '@syncfusion/ej2-angular-grids';
 import { AnimationSettingsModel, ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { CircularGaugeComponent } from '@syncfusion/ej2-angular-circulargauge';
@@ -157,6 +157,9 @@ export class AppComponent {
 
   @ViewChild('AddMenuDialog')
   public menuDialog: DialogComponent;
+
+  @ViewChild('menutimepicker')
+  public menuTimePicker: TimePickerComponent;
 
   @ViewChild('FastingDialog')
   public fastingDialog: DialogComponent;
@@ -1304,7 +1307,7 @@ export class AppComponent {
       this.currentBreakFastCalories = this.currentTotalCal;
       this.consumedCalories += this.currentBreakFastCalories;
       this.isBreakFastMenuAdded = true;
-      let activity = { activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      let activity = { activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       this.todayActivities.push(activity);
     } else if (this.currentAddedMenu === 'Snack 1') {
       this.currentSnack1Menu = [];
@@ -1318,7 +1321,7 @@ export class AppComponent {
       this.currentSnack1Calories = this.currentTotalCal;
       this.consumedCalories += this.currentSnack1Calories;
       this.isSnack1MenuAdded = true;
-      let activity = { activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      let activity = { activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       this.todayActivities.push(activity);
     } else if (this.currentAddedMenu === 'Lunch') {
       this.currentLunchMenu = [];
@@ -1332,7 +1335,7 @@ export class AppComponent {
       this.currentLunchCalories = this.currentTotalCal;
       this.consumedCalories += this.currentLunchCalories;
       this.isLunchMenuAdded = true;
-      let activity = { activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      let activity = { activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       this.todayActivities.push(activity);
     } else if (this.currentAddedMenu === 'Snack 2') {
       this.currentSnack2Menu = [];
@@ -1346,7 +1349,7 @@ export class AppComponent {
       this.currentSnack2Calories = this.currentTotalCal;
       this.consumedCalories += this.currentSnack2Calories;
       this.isSnack2MenuAdded = true;
-      let activity = { activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      let activity = { activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       this.todayActivities.push(activity);
     } else if (this.currentAddedMenu === 'Dinner') {
       this.currentDinnerMenu = [];
@@ -1360,7 +1363,7 @@ export class AppComponent {
       this.currentDinnerCalories = this.currentTotalCal;
       this.consumedCalories += this.currentDinnerCalories;
       this.isDinnerMenuAdded = true;
-      let activity = { activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      let activity = { activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       this.todayActivities.push(activity);
     }
     for (var i = 0; i < this.currentMenu.length; i++) {
@@ -2037,6 +2040,14 @@ export class AppComponent {
 
   overlayClick() {
     this.editDialog.hide();
+  }
+
+  menuOverlayClick() {
+    this.menuDialog.hide();
+  }
+
+  fastingOverlayClick() {
+    this.fastingDialog.hide();
   }
 
   legendClick(args) {

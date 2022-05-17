@@ -612,7 +612,8 @@
 
 <ejs-dialog id="add-menu-dialog" class="e-add-menu-dialog" #AddMenuDialog [header]='currentMenuHeader'
   [visible]='hidden' [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target'
-  [width]='Dialogwidth' [buttons]='dlgButtons' [position]="dlgPosition" isModal="true">
+  [width]='Dialogwidth' [buttons]='dlgButtons' [position]="dlgPosition" isModal="true"
+  (overlayClick)="menuOverlayClick()">
   <ng-template #content>
     <div class="e-select-menu-label">Select Menu</div>
     <div class="e-current-menu-container">
@@ -652,7 +653,7 @@
         </ejs-datepicker>
       </div>
       <div class="e-quantity-time-value">
-        <ejs-timepicker id='quantity-timepicker' [width]="timeWidth" [value]='today'></ejs-timepicker>
+        <ejs-timepicker id='quantity-timepicker' #menutimepicker [width]="timeWidth" [value]='today'></ejs-timepicker>
       </div>
     </div>
   </ng-template>
@@ -660,7 +661,8 @@
 
 <ejs-dialog id="fasting-dialog" class="e-fasting-dialog" #FastingDialog [header]='fastingDialogeader' [visible]='hidden'
   [animationSettings]='animationSettings' [showCloseIcon]='showCloseIcon' [target]='target' [width]='fastingDialogwidth'
-  [buttons]='fastingDlgButtons' [position]="dlgPosition" isModal="true" (open)="dialogOpen($event)">
+  [buttons]='fastingDlgButtons' [position]="dlgPosition" isModal="true" (open)="dialogOpen($event)"
+  (overlayClick)="fastingOverlayClick()">
   <ng-template #content>
     <div class="e-fast-start-label">Start Time</div>
     <div class="e-fast-start-date">

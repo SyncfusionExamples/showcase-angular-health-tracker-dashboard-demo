@@ -279,6 +279,36 @@ body {
   body.e-dark .e-meals-card-container::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, .5);
   }
+
+  .e-input-group-icon,
+  .e-input-group,
+  .e-input-group.e-input-focus.e-icon-admin {
+    border: 0px !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    background: #F2F5F8 !important;
+  }
+
+  body.e-dark .e-input-group-icon,
+  body.e-dark .e-input-group,
+  body.e-dark .e-input-group.e-input-focus.e-icon-admin {
+    background: #313246 !important;
+  }
+/* 
+  .e-calendar .e-content td.e-today span.e-day, 
+  .e-calendar .e-content td.e-focused-date.e-today span.e-day,
+  .e-calendar .e-content td.e-selected span.e-day {
+    background: none;
+    background-color: #FF6F44;
+    color: #F4F5F7;
+  }
+
+  .e-calendar .e-content td.e-today span.e-day, 
+  .e-calendar .e-content td.e-focused-date.e-today span.e-day,
+  .e-calendar .e-content td.e-today.e-selected span.e-day {
+    border-color: #FF6F44 !important;
+    color: #FF6F44;
+  } */
 }
 
 #gradient-chart stop[offset="0"] {
@@ -344,7 +374,6 @@ body {
 
 .e-profile-edit-icon-container {
   display: flex;
-  margin-left: 13px;
   margin-top: 5px;
 }
 
@@ -394,7 +423,13 @@ body {
 
 .e-control-wrapper.e-slider-container .e-slider.height-slider-container .e-handle,
 .e-control-wrapper.e-slider-container .e-slider.height-slider-container .e-handle.e-tab-handle {
-  left: calc(50% - 10px);
+  left: calc(50% - 8px);
+}
+
+.e-control-wrapper.e-slider-container .e-slider.height-slider-container .e-slider-track,
+.e-control-wrapper.e-slider-container .e-slider.height-slider-container .e-limit-bar,
+.e-control-wrapper.e-slider-container .e-slider.height-slider-container .e-range {
+  width: 8px;
 }
 
 .e-control-wrapper.e-slider-container .e-slider .e-range {
@@ -529,6 +564,11 @@ body {
   line-height: 125%;
   color: #56648A;
   padding-top: 7px;
+}
+
+.e-tab .e-tab-header .e-tab-title > span,
+.e-profile-edit-title > span {
+  font-weight: 700 !important;
 }
 
 .e-profile-back {
@@ -771,8 +811,7 @@ body {
   font-weight: 600;
   color: #FFFFFF;
   align-self: center;
-  text-align: center;
-  width: 55%;
+  width: auto;
   white-space: nowrap;
 }
 
@@ -780,12 +819,17 @@ body {
   font-size: 20px;
 }
 
+.e-card.e-heart-rate-card .e-card-content {
+  justify-content: flex-start;
+}
 .e-progress-annotation {
-  width: 45%;
+  width: auto;
+  height: inherit;
+  align-self: center;
 }
 
 .e-progress-annotation>img {
-  width: 70px;
+  width: 30px;
 }
 
 .e-my-activities-panel {
@@ -911,7 +955,7 @@ body {
 }
 
 .e-panel-header {
-  font-weight: 700 !important;
+  font-weight: 600 !important;
   font-size: 24px !important;
   line-height: 125% !important;
   color: #303343 !important;
@@ -937,7 +981,7 @@ body {
 }
 
 .e-diet-card .e-card-header {
-  padding: 25px !important;
+  padding: 20px !important;
 }
 
 .e-diet-card .e-card-header-title {
@@ -949,7 +993,7 @@ body {
 
 .e-diet-card .e-card-header-sub-title {
   font-weight: 500 !important;
-  font-size: 10px !important;
+  font-size: 11px !important;
   line-height: 125% !important;
   color: #7D96A6 !important;
   margin-top: 10px !important;
@@ -2118,6 +2162,7 @@ body.e-dark .e-profile-input.e-edit-color {
     margin-bottom: 0;
   }
 
+  .e-bpm-value,
   .e-activity-actual {
     font-size: 32px !important;
   }
@@ -2473,7 +2518,7 @@ body.e-dark .e-profile-input.e-edit-color {
     padding-right: 0px !important;
   }
 
-  .e-progress-annotation>img {
-    width: 60px;
+  .e-progress-annotation {
+    display: none;
   }
 }

@@ -529,7 +529,7 @@ export class AppComponent {
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5", line: { color: '#EE4769' } };
   public marker = { visible: true, height: 15, width: 15 };
   public weightChartMarker = { visible: true, height: 10, width: 10 };
-  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}' };
+  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.x} : ${point.y}', textStyle: { fontFamily: 'Inter' }};
   public weightChartTooltip = { enable: true };
   public dropDownData: string[] = ['Weekly', 'Monthly'];
 
@@ -1395,7 +1395,7 @@ export class AppComponent {
     iconDiv.appendChild(iconSpan);
     let titleDiv = document.createElement('div');
     titleDiv.className = 'e-tab-title';
-    titleDiv.innerText = "GOFIT";
+    titleDiv.innerHTML = 'GO<span>FIT</span>';
     let containerDiv = document.createElement('div');
     containerDiv.className = 'e-tab-header-icon-container';
     containerDiv.appendChild(iconDiv);

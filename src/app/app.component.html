@@ -2,7 +2,7 @@
   <div class="e-tab-header-icon-div">
     <span class="e-tab-header-icon icon-Logo"></span>
   </div>
-  <div class="e-tab-title">GOFIT</div>
+  <div class="e-tab-title">GO><span>FIT</span></div>
 </div>
 <div *ngIf="isSmallDevice" class="separator-div"></div>
 <ejs-tab id="fitness-tab" #fitnesstab class="tab-container" (created)="created()" [headerPlacement]="headerPlacement"
@@ -46,8 +46,8 @@
                             </e-progressbar-annotation>
                           </e-progressbar-annotations>
                         </ejs-progressbar> -->
-                        <div class="e-progress-annotation"><img src="./assets/Profile/Heart-1.svg" alt="JW" /></div>
                         <div class="e-bpm-value">{{ heartRate }} <span>bpm</span></div>
+                        <div class="e-progress-annotation"><img src="./assets/Profile/Heart-1.svg" alt="JW" /></div>
                       </div>
                     </div>
                     <div tabindex="0" class="e-card e-steps-card">
@@ -689,7 +689,7 @@
       <div class="e-profile-edit-icon-div">
         <span class="e-profile-edit-icon icon-Logo"></span>
       </div>
-      <div class="e-profile-edit-title">GOFIT</div>
+      <div class="e-profile-edit-title">GO<span>FIT</span></div>
     </div>
   </ng-template>
   <ng-template #content>

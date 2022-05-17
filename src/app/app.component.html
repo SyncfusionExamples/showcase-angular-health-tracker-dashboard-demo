@@ -681,7 +681,7 @@
 <ejs-dialog id="profile-edit" class="e-profile-edit-dialog" #ProfileEditDialog [visible]='hidden'
   [animationSettings]='animationSettings' [target]='target' [width]='editDialogWidth' [height]="height"
   (open)="dialogOpen($event)" (beforeOpen)="dialogBeforeOpen()" [position]="editDlgPosition" isModal="true"
-  [closeOnEscape]='showCloseIcon' (overlayClick)="overlayClick($event)">
+  [closeOnEscape]='showCloseIcon' (overlayClick)="overlayClick()">
   <ng-template #header>
     <div class="e-profile-edit-icon-container">
       <div class="e-profile-edit-icon-div">

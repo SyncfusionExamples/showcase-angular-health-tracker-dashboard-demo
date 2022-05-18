@@ -257,10 +257,14 @@ export class AppComponent {
       }
     }
     if (this.gauge) {
-      this.gauge.refresh();
+      setTimeout(() => {
+        this.gauge.refresh();
+      }, 800);
     }
     if (this.circulargauge) {
-      this.circulargauge.refresh();
+      setTimeout(() => {
+        this.circulargauge.refresh();
+      }, 800);
     }
   }
 
@@ -548,7 +552,12 @@ export class AppComponent {
   public crosshair = { enable: true, lineType: 'Vertical', dashArray: "10,5", line: { color: '#EE4769' } };
   public marker = { visible: true, height: 10, width: 10 };
   public weightChartMarker = { visible: true, height: 10, width: 10 };
-  public tooltip = { enable: true, shared: true, format: '${series.name} : ${point.y}', textStyle: { fontFamily: 'Inter' }, enableMarker: false };
+  public tooltip = {
+    enable: true,
+    shared: true,
+    format: '${series.name} : ${point.y}',
+    textStyle: { fontFamily: 'Inter' },
+  };
   public weightChartTooltip = { enable: true };
   public dropDownData: string[] = ['Weekly', 'Monthly'];
 
@@ -2122,7 +2131,7 @@ export class AppComponent {
   }
 
   chartTooltipRender(args) {
-    args.text.splice(0, 2);
+    args.text.splice(2, 2);
   }
 
   getChartData() {

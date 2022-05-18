@@ -109,20 +109,19 @@
                     <ejs-chart #activitychart class="e-activity-chart" [chartArea]='chartArea' width='101%'
                       [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis' [height]="activityChartHeight"
                       [legendSettings]="legendSettings" [theme]="theme" [tooltip]='tooltip' [crosshair]="crosshair"
-                      [marker]="marker" (legendClick)="legendClick($event)"
-                      (sharedTooltipRender)="chartTooltipRender($event)">
+                      (legendClick)="legendClick($event)" (sharedTooltipRender)="chartTooltipRender($event)">
                       <e-series-collection>
+                        <e-series [dataSource]="chartDietData" legendShape="Circle" type="Spline" fill="#2084FE"
+                          xName="x" yName="y" name="Diet" width="4" [marker]="marker">
+                        </e-series>
+                        <e-series [dataSource]="chartData" legendShape="Circle" type="Spline" fill="#F547A8" xName="x"
+                          yName="y" name="Workout" width="4" [marker]="marker">
+                        </e-series>
                         <e-series [dataSource]='chartDietData' type='SplineArea' fill='url(#gradient-diet-chart)'
                           xName='x' yName='y'>
                         </e-series>
                         <e-series [dataSource]='chartData' type='SplineArea' fill='url(#gradient-activity-chart)'
                           xName='x' yName='y'>
-                        </e-series>
-                        <e-series [dataSource]='chartDietData' legendShape='Circle' type='Spline' fill="#2084FE"
-                          xName='x' yName='y' name='Diet' width="4">
-                        </e-series>
-                        <e-series [dataSource]='chartData' legendShape='Circle' type='Spline' fill="#F547A8" xName='x'
-                          yName='y' name='Workout' width="4">
                         </e-series>
                       </e-series-collection>
                     </ejs-chart>
@@ -500,7 +499,7 @@
           <div class="col-md-9 e-fasting-gauge-container  e-dashboard-content">
             <div class="e-fasting-header">Fasting</div>
             <div class="col-md-12 col-sm-12">
-              <div class="col-md-5 e-fasting-panel-container">
+              <div class="col-md-5 col-sm-12 col-xs-12 e-fasting-panel-container">
                 <div id="fasting-panel-id" class="e-panel e-fasting-panel" data-row="0" data-col="0" data-sizeX="2"
                   data-sizeY="2">
                   <div class="e-panel-container">
@@ -536,7 +535,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-7 e-water-panel-container">
+              <div class="col-md-7 col-sm-12 col-xs-12 e-water-panel-container">
                 <div id="water-panel-id" class="e-panel e-water-panel" data-row="0" data-col="2" data-sizeX="2"
                   data-sizeY="2">
                   <div class="e-panel-container">
@@ -567,7 +566,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-12 col-sm-12 col-xs-12">
               <div id="fasting-chart-panel-id" class="e-panel e-fasting-chart-panel" data-row="2" data-col="0"
                 data-sizeX="4" data-sizeY="1">
                 <div class="e-panel-container">

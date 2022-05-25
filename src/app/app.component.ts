@@ -190,52 +190,19 @@ export class AppComponent {
     if (this.innerWidth <= 820) {
       this.isSmallDevice = true;
     }
-    this.consumedCalories = 0;
     this.currentBreakFastMenu = [];
     this.currentBreakFastCalories = 0;
     this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentBreakFastMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentBreakFastMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentBreakFastMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentBreakFastMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.consumedCalories += this.currentBreakFastCalories;
     this.isBreakFastMenuAdded = true;
     this.currentSnack1Menu = [];
     this.currentSnack1Calories = 0;
     this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack1Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack1Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack1Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack1Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack1Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack1Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.consumedCalories += this.currentSnack1Calories;
     this.isSnack1MenuAdded = true;
     this.currentLunchMenu = [];
     this.currentLunchCalories = 0;
     this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentLunchMenuText = this.currentLunchMenu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentLunchMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentLunchMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentLunchMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentLunchMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentLunchMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentLunchMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentLunchCalories;
     this.isLunchMenuAdded = true;
+    this.updateConsumedCalories();
     this.pieData = this.getPieChartData();
     this.todayActivities = this.getInitialData();
     this.updateWaterGauge();
@@ -355,12 +322,12 @@ export class AppComponent {
       this.currentTotalIron = data.diet.iron;
     }
     let activities = [
-      { activity: 'Morning Walk', duration: '30m', distance: (data.activity.morningWalk / 1312).toFixed(2) + 'km', percentage: ((data.activity.morningWalk / 6000) * 100).toFixed(2) + '%', time: '7:00 AM' },
-      { activity: 'Water Taken', amount: data.diet.breakfastWaterTaken + ' Glasses', percentage: (((data.diet.breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2) + '%', time: '7:40 AM' },
-      { activity: 'Breakfast', amount: data.diet.breakFastText, percentage: ((data.diet.breakFastCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: '9:00 AM' },
-      { activity: 'Snack', amount: data.diet.snack1Text, percentage: ((data.diet.snack1Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: '11:00 AM' },
-      { activity: 'Water Taken', amount: data.diet.lunchWaterTaken + ' Glasses', percentage: (((data.diet.lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2) + '%', time: '12:00 PM' },
-      { activity: 'Lunch', amount: data.diet.lunchText, percentage: ((data.diet.lunchCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: '1:00 PM' },
+      { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (data.activity.morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((data.activity.morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
+      { name: 'Water Taken', activity: 'Water Taken', amount: data.diet.breakfastWaterTaken + ' Glasses', percentage: (((data.diet.breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
+      { name: 'Breakfast', activity: 'Breakfast', amount: data.diet.breakFastText, percentage: ((data.diet.breakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '9:00 AM' },
+      { name: 'Snack1', activity: 'Snack', amount: data.diet.snack1Text, percentage: ((data.diet.snack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '11:00 AM' },
+      { name: 'Water Taken', activity: 'Water Taken', amount: data.diet.lunchWaterTaken + ' Glasses', percentage: (((data.diet.lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
+      { name: 'Lunch', activity: 'Lunch', amount: data.diet.lunchText, percentage: ((data.diet.lunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '1:00 PM' },
     ];
     return activities;
   }
@@ -1344,6 +1311,7 @@ export class AppComponent {
   }
 
   menuDlgBtnClick(args) {
+    let isExist = false;
     if (this.currentAddedMenu === 'Breakfast') {
       this.currentBreakFastMenu = [];
       this.currentBreakFastCalories = 0;
@@ -1354,10 +1322,18 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentBreakFastCalories = this.currentTotalCal;
-      this.consumedCalories += this.currentBreakFastCalories;
       this.isBreakFastMenuAdded = true;
-      let activity = { activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
-      this.todayActivities.push(activity);
+      let activity = { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      for (let i = 0; i < this.todayActivities.length; i++) {
+        if (this.todayActivities[i].name === 'Breakfast') {
+          this.todayActivities[i] = activity;
+          isExist = true;
+          break;
+        }
+      }
+      if (!isExist) {
+        this.todayActivities.push(activity);
+      }
     } else if (this.currentAddedMenu === 'Snack 1') {
       this.currentSnack1Menu = [];
       this.currentSnack1Calories = 0;
@@ -1368,10 +1344,18 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentSnack1Calories = this.currentTotalCal;
-      this.consumedCalories += this.currentSnack1Calories;
       this.isSnack1MenuAdded = true;
-      let activity = { activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
-      this.todayActivities.push(activity);
+      let activity = { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      for (let i = 0; i < this.todayActivities.length; i++) {
+        if (this.todayActivities[i].name === 'Snack1') {
+          this.todayActivities[i] = activity;
+          isExist = true;
+          break;
+        }
+      }
+      if (!isExist) {
+        this.todayActivities.push(activity);
+      }
     } else if (this.currentAddedMenu === 'Lunch') {
       this.currentLunchMenu = [];
       this.currentLunchCalories = 0;
@@ -1382,10 +1366,18 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentLunchCalories = this.currentTotalCal;
-      this.consumedCalories += this.currentLunchCalories;
       this.isLunchMenuAdded = true;
-      let activity = { activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
-      this.todayActivities.push(activity);
+      let activity = { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      for (let i = 0; i < this.todayActivities.length; i++) {
+        if (this.todayActivities[i].name === 'Lunch') {
+          this.todayActivities[i] = activity;
+          isExist = true;
+          break;
+        }
+      }
+      if (!isExist) {
+        this.todayActivities.push(activity);
+      }
     } else if (this.currentAddedMenu === 'Snack 2') {
       this.currentSnack2Menu = [];
       this.currentSnack2Calories = 0;
@@ -1396,10 +1388,18 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentSnack2Calories = this.currentTotalCal;
-      this.consumedCalories += this.currentSnack2Calories;
       this.isSnack2MenuAdded = true;
-      let activity = { activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
-      this.todayActivities.push(activity);
+      let activity = { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      for (let i = 0; i < this.todayActivities.length; i++) {
+        if (this.todayActivities[i].name === 'Snack2') {
+          this.todayActivities[i] = activity;
+          isExist = true;
+          break;
+        }
+      }
+      if (!isExist) {
+        this.todayActivities.push(activity);
+      }
     } else if (this.currentAddedMenu === 'Dinner') {
       this.currentDinnerMenu = [];
       this.currentDinnerCalories = 0;
@@ -1410,23 +1410,97 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentDinnerCalories = this.currentTotalCal;
-      this.consumedCalories += this.currentDinnerCalories;
       this.isDinnerMenuAdded = true;
-      let activity = { activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
-      this.todayActivities.push(activity);
-    }
-    for (var i = 0; i < this.currentMenu.length; i++) {
-      if (this.currentMenu[i].isAdded) {
-        this.currentTotalProteins = Number((this.currentTotalProteins + (this.currentMenu[i].proteins * this.currentMenu[i].quantity)).toFixed(2));
-        this.currentTotalFat = Number((this.currentTotalFat + (this.currentMenu[i].fat * this.currentMenu[i].quantity)).toFixed(2));
-        this.currentTotalCarbs = Number((this.currentTotalCarbs + (this.currentMenu[i].carbs * this.currentMenu[i].quantity)).toFixed(2));
-        this.currentTotalCalcium = Number((this.currentTotalCalcium + (this.currentMenu[i].calcium * this.currentMenu[i].quantity)).toFixed(2));
-        this.currentTotalIron = Number((this.currentTotalIron + (this.currentMenu[i].iron * this.currentMenu[i].quantity)).toFixed(2));
-        this.currentTotalSodium = Number((this.currentTotalSodium + (this.currentMenu[i].sodium * this.currentMenu[i].quantity)).toFixed(2));
+      let activity = { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
+      for (let i = 0; i < this.todayActivities.length; i++) {
+        if (this.todayActivities[i].name === 'Dinner') {
+          this.todayActivities[i] = activity;
+          isExist = true;
+          break;
+        }
+      }
+      if (!isExist) {
+        this.todayActivities.push(activity);
       }
     }
+    this.updateConsumedCalories();
     this.pieData = this.getPieChartData();
     this.menuCancelBtnClick();
+  }
+
+  updateConsumedCalories() {
+    this.currentTotalProteins = 0;
+    this.currentTotalFat = 0;
+    this.currentTotalCarbs = 0;
+    this.currentTotalCalcium = 0;
+    this.currentTotalIron = 0;
+    this.currentTotalSodium = 0;
+    this.consumedCalories = 0;
+    if (this.isBreakFastMenuAdded) {
+      this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
+      this.currentTotalProteins = Number((this.currentTotalProteins + this.currentBreakFastMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalFat = Number((this.currentTotalFat + this.currentBreakFastMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentBreakFastMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalIron = Number((this.currentTotalIron + this.currentBreakFastMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalSodium = Number((this.currentTotalSodium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
+      this.consumedCalories += this.currentBreakFastCalories;
+    }
+    if (this.isSnack1MenuAdded) {
+      this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
+      this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack1Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack1Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack1Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack1Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack1Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack1Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
+      this.consumedCalories += this.currentSnack1Calories;
+    }
+    if (this.isLunchMenuAdded) {
+      this.currentLunchMenuText = this.currentLunchMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
+      this.currentTotalProteins = Number((this.currentTotalProteins + this.currentLunchMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalFat = Number((this.currentTotalFat + this.currentLunchMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentLunchMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentLunchMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalIron = Number((this.currentTotalIron + this.currentLunchMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalSodium = Number((this.currentTotalSodium + this.currentLunchMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
+      this.consumedCalories += this.currentLunchCalories;
+    }
+    if (this.isSnack2MenuAdded) {
+      this.currentSnack2MenuText = this.currentSnack2Menu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
+      this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack2Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack2Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack2Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack2Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack2Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack2Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
+      this.consumedCalories += this.currentSnack2Calories;
+    }
+    if (this.isDinnerMenuAdded) {
+      this.currentDinnerMenuText = this.currentDinnerMenu.map(function (elem) {
+        return elem.item;
+      }).join(", ");
+      this.currentTotalProteins = Number((this.currentTotalProteins + this.currentDinnerMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalFat = Number((this.currentTotalFat + this.currentDinnerMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentDinnerMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentDinnerMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalIron = Number((this.currentTotalIron + this.currentDinnerMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentTotalSodium = Number((this.currentTotalSodium + this.currentDinnerMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2).replace(/[.,]00$/, ""));
+      this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
+      this.consumedCalories += this.currentDinnerCalories;
+    }
   }
 
   menuCancelBtnClick() {
@@ -1486,91 +1560,59 @@ export class AppComponent {
   }
 
   updateMenu() {
-    this.currentTotalProteins = 0;
-    this.currentTotalFat = 0;
-    this.currentTotalCarbs = 0;
-    this.currentTotalCalcium = 0;
-    this.currentTotalIron = 0;
-    this.currentTotalSodium = 0;
-    this.consumedCalories = 0;
     this.currentBreakFastMenu = [];
     this.currentBreakFastCalories = 0;
     this.currentBreakFastMenu = this.breakfastMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentBreakFastMenuText = this.currentBreakFastMenu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentBreakFastMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentBreakFastMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentBreakFastMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentBreakFastMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentBreakFastMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentBreakFastCalories = this.currentBreakFastMenu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentBreakFastCalories;
     this.isBreakFastMenuAdded = true;
     this.currentSnack1Menu = [];
     this.currentSnack1Calories = 0;
     this.currentSnack1Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentSnack1MenuText = this.currentSnack1Menu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack1Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack1Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack1Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack1Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack1Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack1Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentSnack1Calories = this.currentSnack1Menu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentSnack1Calories;
     this.isSnack1MenuAdded = true;
     this.currentLunchMenu = [];
     this.currentLunchCalories = 0;
     this.currentLunchMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentLunchMenuText = this.currentLunchMenu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentLunchMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentLunchMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentLunchMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentLunchMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentLunchMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentLunchMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentLunchCalories = this.currentLunchMenu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentLunchCalories;
     this.isLunchMenuAdded = true;
     this.currentSnack2Menu = [];
     this.currentSnack2Calories = 0;
     this.currentSnack2Menu = this.snackMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentSnack2MenuText = this.currentSnack2Menu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentSnack2Menu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentSnack2Menu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentSnack2Menu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentSnack2Menu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentSnack2Menu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentSnack2Menu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentSnack2Calories = this.currentSnack2Menu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentSnack2Calories;
     this.isSnack2MenuAdded = true;
     this.currentDinnerMenu = [];
     this.currentDinnerCalories = 0;
     this.currentDinnerMenu = this.lunchMenu.sort(() => Math.random() - Math.random()).slice(0, 3);
-    this.currentDinnerMenuText = this.currentDinnerMenu.map(function (elem) {
-      return elem.item;
-    }).join(", ");
-    this.currentTotalProteins = Number((this.currentTotalProteins + this.currentDinnerMenu.reduce((a, b) => +a + +b.proteins, 0)).toFixed(2));
-    this.currentTotalFat = Number((this.currentTotalFat + this.currentDinnerMenu.reduce((a, b) => +a + +b.fat, 0)).toFixed(2));
-    this.currentTotalCarbs = Number((this.currentTotalCarbs + this.currentDinnerMenu.reduce((a, b) => +a + +b.carbs, 0)).toFixed(2));
-    this.currentTotalCalcium = Number((this.currentTotalCalcium + this.currentDinnerMenu.reduce((a, b) => +a + +b.calcium, 0)).toFixed(2));
-    this.currentTotalIron = Number((this.currentTotalIron + this.currentDinnerMenu.reduce((a, b) => +a + +b.iron, 0)).toFixed(2));
-    this.currentTotalSodium = Number((this.currentTotalSodium + this.currentDinnerMenu.reduce((a, b) => +a + +b.sodium, 0)).toFixed(2));
-    this.currentDinnerCalories = this.currentDinnerMenu.reduce((a, b) => +a + +b.cal, 0);
-    this.consumedCalories += this.currentDinnerCalories;
     this.isDinnerMenuAdded = true;
+    this.updateConsumedCalories();
     this.pieData = this.getPieChartData();
   }
 
+  editMenu(args) {
+    if (args.currentTarget.classList.contains('e-breakfast-edit')) {
+      this.currentMenuHeader = " Add Breakfast Menu";
+      this.currentMenu = JSON.parse(JSON.stringify(this.breakfastMenu));
+      this.currentRecom = this.breakFastRecom;
+      this.currentAddedMenu = 'Breakfast';
+    } else if (args.currentTarget.classList.contains('e-snack1-edit') || args.currentTarget.classList.contains('e-snack2-edit')) {
+      this.currentMenuHeader = "Add Snack Menu";
+      this.currentMenu = JSON.parse(JSON.stringify(this.snackMenu));
+      if (args.currentTarget.classList.contains('e-snack1-edit')) {
+        this.currentRecom = this.snack1Recom;
+        this.currentAddedMenu = 'Snack 1';
+      } else {
+        this.currentRecom = this.snack2Recom;
+        this.currentAddedMenu = 'Snack 2';
+      }
+    } else if (args.currentTarget.classList.contains('e-lunch-edit')) {
+      this.currentMenuHeader = "Add Lunch Menu";
+      this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
+      this.currentRecom = this.lunchRecom;
+      this.currentAddedMenu = 'Lunch';
+    } else if (args.currentTarget.classList.contains('e-dinner-edit')) {
+      this.currentMenuHeader = "Add Dinner Menu";
+      this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
+      this.currentRecom = this.dinnerRecom;
+      this.currentAddedMenu = 'Dinner';
+    }
+    this.menuDialog.show();
+  }
 
 
   updateComponents() {
@@ -1609,16 +1651,16 @@ export class AppComponent {
         this.weightChartInstance.series[0].dataSource = this.weightChartData;
       }
       this.todayActivities = [
-        { activity: 'Morning Walk', duration: '30m', distance: (morningWalk / 1312).toFixed(2) + 'km', percentage: ((morningWalk / 6000) * 100).toFixed(2) + '%', time: '7:00 AM' },
-        { activity: 'Water Taken', amount: breakfastWaterTaken + ' Glasses', percentage: (((breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2) + '%', time: '7:40 AM' },
-        { activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: '9:00 AM' },
-        { activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: '11:00 AM' },
-        { activity: 'Water Taken', amount: lunchWaterTaken + ' Glasses', percentage: (((lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2) + '%', time: '12:00 PM' },
-        { activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: '1:00 PM' },
-        { activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2) + '%', time: '3:00 PM' },
-        { activity: 'Water Taken', amount: eveningWaterTaken + ' Glasses', percentage: (((eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2) + '%', time: '4:00 PM' },
-        { activity: 'Evening Walk', duration: '30m', distance: (eveningWalk / 1312).toFixed(2) + 'km', percentage: ((eveningWalk / 6000) * 100).toFixed(2) + '%', time: '5:30 PM' },
-        { activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2) + '%', time: '8:00 PM' }
+        { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
+        { name: 'Water Taken', activity: 'Water Taken', amount: breakfastWaterTaken + ' Glasses', percentage: (((breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
+        { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '9:00 AM' },
+        { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '11:00 AM' },
+        { name: 'Water Taken', activity: 'Water Taken', amount: lunchWaterTaken + ' Glasses', percentage: (((lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
+        { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '1:00 PM' },
+        { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '3:00 PM' },
+        { name: 'Water Taken', activity: 'Water Taken', amount: eveningWaterTaken + ' Glasses', percentage: (((eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '4:00 PM' },
+        { name: 'Evening Walk', activity: 'Evening Walk', duration: '30m', distance: (eveningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((eveningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '5:30 PM' },
+        { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '8:00 PM' }
       ];
     } else {
       this.consumedCalories = 0;
@@ -1957,7 +1999,7 @@ export class AppComponent {
       if (this.circulargauge) {
         this.circulargauge.axes[0].ranges[0].color = '#E1E9ED';
         this.circulargauge.axes[0].ranges[1].color = '#CDD9E0';
-        this.circulargauge.refresh();
+        // this.circulargauge.refresh();
       }
       if (this.weightGauge) {
         this.weightGauge.refresh();
@@ -1990,7 +2032,7 @@ export class AppComponent {
       if (this.circulargauge) {
         this.circulargauge.axes[0].ranges[0].color = '#444660';
         this.circulargauge.axes[0].ranges[1].color = '#7C7E96';
-        this.circulargauge.refresh();
+        // this.circulargauge.refresh();
       }
       if (this.weightGauge) {
         this.weightGauge.refresh();
@@ -2021,7 +2063,7 @@ export class AppComponent {
       this.heightSlider.limits.minStart = unit === 'CM' ? 30 : 1;
       this.heightSlider.step = unit === 'CM' ? 1 : 0.1;
       this.heightSlider.ticks.format = unit === 'CM' ? 'N0' : '#.00';
-      let value = unit === 'CM' ? Math.round(this.heightSlider.value as number * 30.48) : Number((this.heightSlider.value as number / 30.48).toFixed(2));
+      let value = unit === 'CM' ? Math.round(this.heightSlider.value as number * 30.48) : Number((this.heightSlider.value as number / 30.48).toFixed(2).replace(/[.,]00$/, ""));
       this.heightGauge.annotations[0].axisValue = value;
       this.heightGauge.annotations[0].content = '<div class="e-height-gauge-annotation">' + value + this.currentHtUnit + '</div>';
       this.heightGauge.axes[0].pointers[0].value = value;
@@ -2103,9 +2145,9 @@ export class AppComponent {
 
   legendClick(args) {
     if (args.legendText === 'Diet') {
-      this.chartInstance.series[0].visible = !this.chartInstance.series[0].visible;
+      this.chartInstance.series[2].visible = !this.chartInstance.series[2].visible;
     } else if (args.legendText === 'Workout') {
-      this.chartInstance.series[1].visible = !this.chartInstance.series[1].visible;
+      this.chartInstance.series[3].visible = !this.chartInstance.series[3].visible;
     }
   }
 
@@ -2143,7 +2185,7 @@ export class AppComponent {
         x: new Date(
           new Date(date.setDate(date.getDate() - i)).setHours(0, 0, 0, 0)
         ),
-        y: Number((Math.random() * (90 - 50) + 50).toFixed(2))
+        y: Number((Math.random() * (90 - 50) + 50).toFixed(2).replace(/[.,]00$/, ""))
       };
       sampleData.push(data);
       if (i == 0) {
@@ -2160,7 +2202,7 @@ export class AppComponent {
       let date = (this.currentDate) ? new Date(this.currentDate) : new Date();
       let data: Object = {
         x: new Date(date.setMonth(date.getMonth() - i)),
-        y: Math.round(80 + (i * (Math.random() * (4 - 2) + 2)))
+        y: Math.round(70 + (i * (Math.random() * (3.5 - 2) + 2)))
       };
       sampleData.push(data);
     }

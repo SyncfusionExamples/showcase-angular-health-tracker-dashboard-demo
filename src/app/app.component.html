@@ -191,6 +191,9 @@
                         <div class="e-card-header-img-container e-breakfast-card-container">
                           <div class="e-card-header-image icon-Breakfast"></div>
                         </div>
+                        <div *ngIf="isBreakFastMenuAdded" class="e-meals-edit">
+                          <div class="e-breakfast-edit icon-edit-2" (click)="editMenu($event)"></div>
+                        </div>
                       </div>
                       <div class="e-card-content">
                         <div class="e-card-header-caption">
@@ -220,6 +223,9 @@
                         <div class="e-card-header-img-container e-snack1-card-container">
                           <div class="e-card-header-image icon-Snack-1"></div>
                         </div>
+                        <div *ngIf="isSnack1MenuAdded" class="e-meals-edit">
+                          <div class="e-snack1-edit icon-edit-2" (click)="editMenu($event)"></div>
+                        </div>
                       </div>
                       <div class="e-card-content">
                         <div class="e-card-header-caption">
@@ -245,6 +251,9 @@
                       <div class="e-card-header">
                         <div class="e-card-header-img-container e-lunch-card-container">
                           <div class="e-card-header-image icon-Lunch"></div>
+                        </div>
+                        <div *ngIf="isLunchMenuAdded" class="e-meals-edit">
+                          <div class="e-lunch-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
                       <div class="e-card-content">
@@ -272,6 +281,9 @@
                         <div class="e-card-header-img-container e-snack2-card-container">
                           <div class="e-card-header-image icon-Snack-2"></div>
                         </div>
+                        <div *ngIf="isSnack2MenuAdded" class="e-meals-edit">
+                          <div class="e-snack2-edit icon-edit-2" (click)="editMenu($event)"></div>
+                        </div>
                       </div>
                       <div class="e-card-content">
                         <div class="e-card-header-caption">
@@ -297,6 +309,9 @@
                       <div class="e-card-header">
                         <div class="e-card-header-img-container e-dinner-card-container">
                           <div class="e-card-header-image icon-Dinner"></div>
+                        </div>
+                        <div *ngIf="isDinnerMenuAdded" class="e-meals-edit">
+                          <div class="e-dinner-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
                       <div class="e-card-content">
@@ -499,7 +514,7 @@
           <div class="col-md-9 e-fasting-gauge-container  e-dashboard-content">
             <div class="e-fasting-header">Fasting</div>
             <div class="col-md-12 col-sm-12">
-              <div class="col-md-5 col-sm-12 col-xs-12 e-fasting-panel-container">
+              <div class="col-md-5 e-fasting-panel-container">
                 <div id="fasting-panel-id" class="e-panel e-fasting-panel" data-row="0" data-col="0" data-sizeX="2"
                   data-sizeY="2">
                   <div class="e-panel-container">
@@ -535,7 +550,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-7 col-sm-12 col-xs-12 e-water-panel-container">
+              <div class="col-md-7 e-water-panel-container">
                 <div id="water-panel-id" class="e-panel e-water-panel" data-row="0" data-col="2" data-sizeX="2"
                   data-sizeY="2">
                   <div class="e-panel-container">

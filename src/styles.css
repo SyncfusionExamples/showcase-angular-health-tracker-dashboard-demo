@@ -1248,8 +1248,23 @@ body {
 }
 
 .e-meals-card .e-card-header {
-  width: 50%;
-  display: block;
+  width: 100%;
+  display: flex;
+}
+
+.e-meals-edit {
+  width: 70%;
+}
+
+.e-meals-edit .icon-edit-2 {
+  width: 20px;
+  height: 20px;
+  color: #7D96A6;
+  float: right;
+}
+
+.e-meals-edit .icon-edit-2:hover {
+  cursor: pointer;
 }
 
 .e-meals-card .e-card-header .e-card-header-image {

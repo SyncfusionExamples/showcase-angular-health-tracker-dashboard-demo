@@ -1104,7 +1104,7 @@ export class AppComponent {
   }
 
   onFastDateChange() {
-    this.diff = Math.floor((((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    this.diff = Math.floor(((this.fastingEndDateInstance.value as any) - (this.fastingStartDateInstance.value as any)) / (1000 * 60 * 60));
   }
 
   sliderChange() {

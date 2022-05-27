@@ -644,7 +644,9 @@
   <ng-template #content>
     <div class="e-select-menu-label">Select Menu</div>
     <div class="e-current-menu-container">
-      <div tabindex="0" class="e-card e-menu-card" *ngFor="let menu of currentMenu" (click)="onMenuCardSelect($event)">
+      <div tabindex="0" *ngFor="let menu of currentMenu"
+        [ngClass]="menu.isAdded ? 'e-card e-menu-card e-card-select' : 'e-card e-menu-card'"
+        (click)="onMenuCardSelect($event)">
         <div class="e-card-content">
           <div class="e-menu-div">{{ menu.item }}</div>
         </div>

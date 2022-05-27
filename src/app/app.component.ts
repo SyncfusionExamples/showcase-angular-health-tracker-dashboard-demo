@@ -96,6 +96,8 @@ export class AppComponent {
   public weightSliderLimit = { enabled: true, minStart: this.currentWtUnit === 'KG' ? 10 : 20 };
   public heightSliderLimit = { enabled: true, minStart: this.currentHtUnit === 'CM' ? 30 : 1 };
   public humanImg = 'LightHuman';
+  public activityChartMonthData = {};
+  public activityChartWeekData = {};
   public masterData = [];
 
   public breakfastMenu = [
@@ -256,6 +258,8 @@ export class AppComponent {
           gridData: JSON.parse(JSON.stringify(this.gridData)),
           charDietData: JSON.parse(JSON.stringify(this.chartDietData)),
           chartWorkoutData: JSON.parse(JSON.stringify(this.chartData)),
+          activityChartMonthData: JSON.parse(JSON.stringify(this.activityChartMonthData)),
+          activityChartWeekData: JSON.parse(JSON.stringify(this.activityChartWeekData)),
           morningWalk: morningWalk
         },
         diet: {
@@ -301,6 +305,8 @@ export class AppComponent {
       this.gridData = data.activity.gridData;
       this.chartDietData = data.activity.charDietData;
       this.chartData = data.activity.chartWorkoutData;
+      this.activityChartMonthData = data.activity.activityChartMonthData;
+      this.activityChartWeekData = data.activity.activityChartWeekData;
       this.currentBreakFastMenu = data.diet.breakFastMenu;
       this.currentBreakFastCalories = data.diet.breakFastCalories;
       this.currentBreakFastMenuText = data.diet.breakFastText;
@@ -323,10 +329,10 @@ export class AppComponent {
     }
     let activities = [
       { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (data.activity.morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((data.activity.morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
-      { name: 'Water Taken', activity: 'Water Taken', amount: data.diet.breakfastWaterTaken + ' Glasses', percentage: (((data.diet.breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
+      { name: 'Breakfast Water', activity: 'Water Taken', count: data.diet.breakfastWaterTaken, amount: data.diet.breakfastWaterTaken + ' Glasses', percentage: (((data.diet.breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
       { name: 'Breakfast', activity: 'Breakfast', amount: data.diet.breakFastText, percentage: ((data.diet.breakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '9:00 AM' },
       { name: 'Snack1', activity: 'Snack', amount: data.diet.snack1Text, percentage: ((data.diet.snack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '11:00 AM' },
-      { name: 'Water Taken', activity: 'Water Taken', amount: data.diet.lunchWaterTaken + ' Glasses', percentage: (((data.diet.lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
+      { name: 'Lunch Water', activity: 'Water Taken', count: data.diet.lunchWaterTaken, amount: data.diet.lunchWaterTaken + ' Glasses', percentage: (((data.diet.lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
       { name: 'Lunch', activity: 'Lunch', amount: data.diet.lunchText, percentage: ((data.diet.lunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '1:00 PM' },
     ];
     return activities;
@@ -458,8 +464,8 @@ export class AppComponent {
   public gridWidth: string = '100%';
   public gridColumnWidth = this.isDevice ? 150 : 200;
   public datePickerWidth: string = '100%';
-  public chartDietData: Object[] = this.getChartData();
-  public chartData: Object[] = this.getChartData();
+  public chartDietData: Object[] = this.getChartData('Diet');
+  public chartData: Object[] = this.getChartData('Workout');
   public primaryXAxis: Object = {
     valueType: 'DateTime',
     labelFormat: 'MMM dd',
@@ -599,7 +605,7 @@ export class AppComponent {
   public diff = 16;
 
   public minimumDate = new Date(new Date().setHours(0, 0, 0));
-  public maximumDate = new Date(new Date().setHours(this.minimumDate.getHours() + 24, 0, 0));
+  public maximumDate = new Date(new Date(new Date().setDate(this.minimumDate.getDate() + 1)).setHours(24, 0, 0));
 
   // Update the count down every 1 second
   public x = setInterval(this.intervalFn.bind(this), 1000);
@@ -1086,7 +1092,7 @@ export class AppComponent {
   fastingDlgBtnClick(args) {
     this.countStartDate = this.fastingStartDateInstance.value;
     this.countDownDate = this.fastingEndDateInstance.value;
-    this.diff = Math.floor(((this.countDownDate - this.countStartDate) % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    this.diff = Math.floor((this.countDownDate - this.countStartDate) / (1000 * 60 * 60));
     clearInterval(this.x);
     this.x = setInterval(this.intervalFn.bind(this), 1000);
     this.fastingDialog.hide();
@@ -1123,19 +1129,54 @@ export class AppComponent {
   }
 
   minusClick() {
-    this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
-    this.consumedWaterAmount = this.consumedWaterCount * 150;
-    let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
-    let index = this.closestIndex(percent);
-    let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
-    this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
-    if (content[index + 1]) {
-      this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
+    let time = new Date().getHours();
+    let period = (time > 0 && time < 8) ? 'Breakfast Water' : (time > 8 && time < 16) ? 'Lunch Water' : 'Evening Water';
+    let ind;
+    let activity;
+    for (let i = 0; i < this.todayActivities.length; i++) {
+      if (this.todayActivities[i].name === period) {
+        ind = i;
+        break;
+      }
     }
-    this.updateWaterGaugePointer();
+    if (ind) {
+      if (this.todayActivities[ind].count > 0) {
+        activity = { name: period, activity: 'Water Taken', count: (this.todayActivities[ind].count - 1), amount: (this.todayActivities[ind].count - 1) + ' Glasses', percentage: ((((this.todayActivities[ind].count - 1) * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.todayActivities[ind].time };
+        this.todayActivities[ind] = activity;
+        this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
+        this.consumedWaterAmount = this.consumedWaterCount * 150;
+        let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
+        let index = this.closestIndex(percent);
+        let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
+        this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
+        if (content[index + 1]) {
+          this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
+        }
+        this.updateWaterGaugePointer();
+      } else {
+        this.todayActivities.splice(ind, 1);
+      }
+    }
   }
 
   plusClick() {
+    let time = new Date().getHours();
+    let period = (time > 0 && time < 8) ? 'Breakfast Water' : (time > 8 && time < 16) ? 'Lunch Water' : 'Evening Water';
+    let index;
+    let activity;
+    for (let i = 0; i < this.todayActivities.length; i++) {
+      if (this.todayActivities[i].name === period) {
+        index = i;
+        break;
+      }
+    }
+    if (index) {
+      activity = { name: period, activity: 'Water Taken', count: (this.todayActivities[index].count + 1), amount: (this.todayActivities[index].count + 1) + ' Glasses', percentage: ((((this.todayActivities[index].count + 1) * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' }) };
+      this.todayActivities[index] = activity;
+    } else {
+      activity = { name: period, activity: 'Water Taken', count: 1, amount: 1 + ' Glasses', percentage: (((1 * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: new Date().toLocaleTimeString('en-US', { hour: 'numeric', hour12: true, minute: 'numeric' }) };
+      this.todayActivities.push(activity);
+    }
     if (this.consumedWaterCount < 20) {
       this.consumedWaterCount += 1;
       this.consumedWaterAmount = this.consumedWaterCount * 150;
@@ -1588,6 +1629,7 @@ export class AppComponent {
     if (args.currentTarget.classList.contains('e-breakfast-edit')) {
       this.currentMenuHeader = " Add Breakfast Menu";
       this.currentMenu = JSON.parse(JSON.stringify(this.breakfastMenu));
+      this.updateCurrentMenu(this.currentBreakFastMenu);
       this.currentRecom = this.breakFastRecom;
       this.currentAddedMenu = 'Breakfast';
     } else if (args.currentTarget.classList.contains('e-snack1-edit') || args.currentTarget.classList.contains('e-snack2-edit')) {
@@ -1596,24 +1638,40 @@ export class AppComponent {
       if (args.currentTarget.classList.contains('e-snack1-edit')) {
         this.currentRecom = this.snack1Recom;
         this.currentAddedMenu = 'Snack 1';
+        this.updateCurrentMenu(this.currentSnack1Menu);
       } else {
         this.currentRecom = this.snack2Recom;
         this.currentAddedMenu = 'Snack 2';
+        this.updateCurrentMenu(this.currentSnack2Menu);
       }
     } else if (args.currentTarget.classList.contains('e-lunch-edit')) {
       this.currentMenuHeader = "Add Lunch Menu";
       this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
+      this.updateCurrentMenu(this.currentLunchMenu);
       this.currentRecom = this.lunchRecom;
       this.currentAddedMenu = 'Lunch';
     } else if (args.currentTarget.classList.contains('e-dinner-edit')) {
       this.currentMenuHeader = "Add Dinner Menu";
       this.currentMenu = JSON.parse(JSON.stringify(this.lunchMenu));
+      this.updateCurrentMenu(this.currentDinnerMenu);
       this.currentRecom = this.dinnerRecom;
       this.currentAddedMenu = 'Dinner';
     }
+    this.updateTotalCal();
     this.menuDialog.show();
   }
 
+  updateCurrentMenu(menu) {
+    for (let i = 0; i < menu.length; i++) {
+      for (let j = 0; j < this.currentMenu.length; j++) {
+        if (menu[i].item === this.currentMenu[j].item) {
+          this.currentMenu[j].isAdded = true;
+          this.currentMenu[j].quantity = menu[i].quantity ? menu[i].quantity : 1;
+          break;
+        }
+      }
+    }
+  }
 
   updateComponents() {
     this.isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
@@ -1622,14 +1680,13 @@ export class AppComponent {
       let morningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
       let eveningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
       let breakfastWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
-      let brunchWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
       let lunchWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
       let eveningWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
       this.steps = morningWalk + eveningWalk;
       this.heartRate = Math.round(Math.random() * (100 - 70) + 70);
       this.sleepInMinutes = Math.round(Math.random() * (480 - 300) + 300);
       this.sleepInHours = this.getSleepInHours(this.sleepInMinutes);
-      this.consumedWaterCount = breakfastWaterTaken + brunchWaterTaken + lunchWaterTaken + eveningWaterTaken;
+      this.consumedWaterCount = breakfastWaterTaken + lunchWaterTaken + eveningWaterTaken;
       this.consumedWaterAmount = this.consumedWaterCount * 150;
       this.updateWaterGauge();
       if (this.circulargauge) {
@@ -1639,8 +1696,8 @@ export class AppComponent {
       if (this.gridInstance) {
         this.gridInstance.dataSource = this.gridData;
       }
-      this.chartDietData = this.getChartData();
-      this.chartData = this.getChartData();
+      this.chartDietData = this.getChartData('Diet');
+      this.chartData = this.getChartData('Workout');
       if (this.chartInstance) {
         this.chartInstance.series[0].dataSource = this.chartInstance.series[2].dataSource = this.chartDietData;
         this.chartInstance.series[1].dataSource = this.chartInstance.series[3].dataSource = this.chartData;
@@ -1652,13 +1709,13 @@ export class AppComponent {
       }
       this.todayActivities = [
         { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
-        { name: 'Water Taken', activity: 'Water Taken', amount: breakfastWaterTaken + ' Glasses', percentage: (((breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
+        { name: 'Breakfast Water', activity: 'Water Taken', count: breakfastWaterTaken, amount: breakfastWaterTaken + ' Glasses', percentage: (((breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
         { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '9:00 AM' },
         { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '11:00 AM' },
-        { name: 'Water Taken', activity: 'Water Taken', amount: lunchWaterTaken + ' Glasses', percentage: (((lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
+        { name: 'Lunch Water', activity: 'Water Taken', count: lunchWaterTaken, amount: lunchWaterTaken + ' Glasses', percentage: (((lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
         { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '1:00 PM' },
         { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '3:00 PM' },
-        { name: 'Water Taken', activity: 'Water Taken', amount: eveningWaterTaken + ' Glasses', percentage: (((eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '4:00 PM' },
+        { name: 'Evening Water', activity: 'Water Taken', count: eveningWaterTaken, amount: eveningWaterTaken + ' Glasses', percentage: (((eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '4:00 PM' },
         { name: 'Evening Walk', activity: 'Evening Walk', duration: '30m', distance: (eveningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((eveningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '5:30 PM' },
         { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '8:00 PM' }
       ];
@@ -1949,8 +2006,8 @@ export class AppComponent {
   }
 
   onDropDownChange(args) {
-    this.chartDietData = this.getChartData();
-    this.chartData = this.getChartData();
+    this.chartDietData = this.getChartData('Diet');
+    this.chartData = this.getChartData('Workout');
   }
 
   onDateChange(args) {
@@ -2176,20 +2233,33 @@ export class AppComponent {
     args.text.splice(2, 2);
   }
 
-  getChartData() {
+  getChartData(action) {
     let count: number = (this.dropDownInstance && this.dropDownInstance.value === 'Monthly') ? 30 : 7;
     let sampleData: Object[] = [];
-    for (let i = count - 1; i >= 0; i--) {
-      let date = (this.currentDate) ? new Date(this.currentDate) : new Date();
-      let data: Object = {
-        x: new Date(
-          new Date(date.setDate(date.getDate() - i)).setHours(0, 0, 0, 0)
-        ),
-        y: Number((Math.random() * (90 - 50) + 50).toFixed(2).replace(/[.,]00$/, ""))
-      };
-      sampleData.push(data);
-      if (i == 0) {
-        this.todaysWorkoutPercent = data['y'];
+    if ((this.dropDownInstance && this.dropDownInstance.value === 'Monthly' && this.activityChartMonthData[action] && this.activityChartMonthData[action].length > 0) || (this.dropDownInstance && this.dropDownInstance.value === 'Weekly' && this.activityChartWeekData[action] && this.activityChartWeekData[action].length > 0)) {
+      if (this.dropDownInstance.value === 'Monthly') {
+        sampleData = this.activityChartMonthData[action];
+      } else {
+        sampleData = this.activityChartWeekData[action];
+      }
+    } else {
+      for (let i = count - 1; i >= 0; i--) {
+        let date = (this.currentDate) ? new Date(this.currentDate) : new Date();
+        let data: Object = {
+          x: new Date(
+            new Date(date.setDate(date.getDate() - i)).setHours(0, 0, 0, 0)
+          ),
+          y: Number((Math.random() * (90 - 50) + 50).toFixed(2).replace(/[.,]00$/, ""))
+        };
+        sampleData.push(data);
+        if (i == 0) {
+          this.todaysWorkoutPercent = data['y'];
+        }
+        if (this.dropDownInstance && this.dropDownInstance.value === 'Monthly') {
+          this.activityChartMonthData[action] = sampleData;
+        } else {
+          this.activityChartWeekData[action] = sampleData;
+        }
       }
     }
     return sampleData;

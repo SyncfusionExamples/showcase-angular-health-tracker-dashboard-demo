@@ -191,7 +191,7 @@
                         <div class="e-card-header-img-container e-breakfast-card-container">
                           <div class="e-card-header-image icon-Breakfast"></div>
                         </div>
-                        <div *ngIf="isBreakFastMenuAdded" class="e-meals-edit">
+                        <div *ngIf="(isBreakFastMenuAdded && isToday)" class="e-meals-edit">
                           <div class="e-breakfast-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
@@ -223,7 +223,7 @@
                         <div class="e-card-header-img-container e-snack1-card-container">
                           <div class="e-card-header-image icon-Snack-1"></div>
                         </div>
-                        <div *ngIf="isSnack1MenuAdded" class="e-meals-edit">
+                        <div *ngIf="(isSnack1MenuAdded && isToday)" class="e-meals-edit">
                           <div class="e-snack1-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
@@ -252,7 +252,7 @@
                         <div class="e-card-header-img-container e-lunch-card-container">
                           <div class="e-card-header-image icon-Lunch"></div>
                         </div>
-                        <div *ngIf="isLunchMenuAdded" class="e-meals-edit">
+                        <div *ngIf="(isLunchMenuAdded && isToday)" class="e-meals-edit">
                           <div class="e-lunch-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
@@ -281,7 +281,7 @@
                         <div class="e-card-header-img-container e-snack2-card-container">
                           <div class="e-card-header-image icon-Snack-2"></div>
                         </div>
-                        <div *ngIf="isSnack2MenuAdded" class="e-meals-edit">
+                        <div *ngIf="(isSnack2MenuAdded && isToday)" class="e-meals-edit">
                           <div class="e-snack2-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>
@@ -310,7 +310,7 @@
                         <div class="e-card-header-img-container e-dinner-card-container">
                           <div class="e-card-header-image icon-Dinner"></div>
                         </div>
-                        <div *ngIf="isDinnerMenuAdded" class="e-meals-edit">
+                        <div *ngIf="(isDinnerMenuAdded && isToday)" class="e-meals-edit">
                           <div class="e-dinner-edit icon-edit-2" (click)="editMenu($event)"></div>
                         </div>
                       </div>

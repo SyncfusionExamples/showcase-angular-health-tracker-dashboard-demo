@@ -1365,6 +1365,8 @@ export class AppComponent {
       this.currentBreakFastCalories = this.currentTotalCal;
       if (this.currentBreakFastMenuText !== '') {
         this.isBreakFastMenuAdded = true;
+      } else {
+        this.isBreakFastMenuAdded = false;
       }
       let activity = { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
@@ -1393,6 +1395,8 @@ export class AppComponent {
       this.currentSnack1Calories = this.currentTotalCal;
       if (this.currentSnack1MenuText !== '') {
         this.isSnack1MenuAdded = true;
+      } else {
+        this.isSnack1MenuAdded = false;
       }
       let activity = { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
@@ -1421,6 +1425,8 @@ export class AppComponent {
       this.currentLunchCalories = this.currentTotalCal;
       if (this.currentLunchMenuText !== '') {
         this.isLunchMenuAdded = true;
+      } else {
+        this.isLunchMenuAdded = false;
       }
       let activity = { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
@@ -1449,6 +1455,8 @@ export class AppComponent {
       this.currentSnack2Calories = this.currentTotalCal;
       if (this.currentSnack2MenuText !== '') {
         this.isSnack2MenuAdded = true;
+      } else {
+        this.isSnack2MenuAdded = false;
       }
       let activity = { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
@@ -1477,6 +1485,8 @@ export class AppComponent {
       this.currentDinnerCalories = this.currentTotalCal;
       if (this.currentDinnerMenuText !== '') {
         this.isDinnerMenuAdded = true;
+      } else {
+        this.isDinnerMenuAdded = false;
       }
       let activity = { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
@@ -1706,47 +1716,139 @@ export class AppComponent {
   updateComponents() {
     this.isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
     if (!this.isToday) {
-      this.updateMenu();
-      let morningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
-      let eveningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
-      let breakfastWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
-      let lunchWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
-      let eveningWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
-      this.steps = morningWalk + eveningWalk;
-      this.heartRate = Math.round(Math.random() * (100 - 70) + 70);
-      this.sleepInMinutes = Math.round(Math.random() * (480 - 300) + 300);
-      this.sleepInHours = this.getSleepInHours(this.sleepInMinutes);
-      this.consumedWaterCount = breakfastWaterTaken + lunchWaterTaken + eveningWaterTaken;
-      this.consumedWaterAmount = this.consumedWaterCount * 150;
+      let data;
+      let isExist = false;
+      let index = 0;
+      for (let i = 0; i < this.masterData.length; i++) {
+        if (this.masterData[i].date === this.currentDate.toLocaleDateString()) {
+          isExist = true;
+          index = i;
+          break;
+        }
+      }
+      if (isExist) {
+        data = this.masterData[index];
+        this.steps = data.activity.steps;
+        this.consumedWaterCount = data.fasting.consumedWaterCount;
+        this.consumedWaterAmount = this.consumedWaterCount * 150;
+        this.heartRate = data.activity.heartRate;
+        this.sleepInMinutes = data.activity.sleep;
+        this.sleepInHours = this.getSleepInHours(this.sleepInMinutes);
+        this.consumedCalories = data.diet.consumedCalories;
+        this.burnedCalories = data.diet.burnedCalories;
+        this.gridData = data.activity.gridData;
+        this.chartDietData = data.activity.charDietData;
+        this.chartData = data.activity.chartWorkoutData;
+        this.activityChartMonthData = data.activity.activityChartMonthData;
+        this.activityChartWeekData = data.activity.activityChartWeekData;
+        this.currentBreakFastMenu = data.diet.breakFastMenu;
+        this.currentBreakFastCalories = data.diet.breakFastCalories;
+        this.currentBreakFastMenuText = data.diet.breakFastText;
+        this.isBreakFastMenuAdded = data.diet.isBreakFastMenuAdded;
+        this.currentSnack1Menu = data.diet.snack1Menu;
+        this.currentSnack1Calories = data.diet.snack1Calories;
+        this.currentSnack1MenuText = data.diet.snack1Text;
+        this.isSnack1MenuAdded = data.diet.isSnack1Added;
+        this.currentLunchMenu = data.diet.lunchMenu;
+        this.currentLunchCalories = data.diet.lunchCalories;
+        this.currentLunchMenuText = data.diet.lunchText;
+        this.isLunchMenuAdded = data.diet.isLunchAdded;
+        this.weightChartData = data.fasting.chartWeightData;
+        this.currentTotalProteins = data.diet.proteins;
+        this.currentTotalFat = data.diet.fat;
+        this.currentTotalCarbs = data.diet.carbs;
+        this.currentTotalCalcium = data.diet.calcium;
+        this.currentTotalSodium = data.diet.sodium;
+        this.currentTotalIron = data.diet.iron;
+      } else {
+        this.updateMenu();
+        let morningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
+        let eveningWalk = Math.round(Math.random() * (3000 - 1000) + 1000);
+        let breakfastWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
+        let lunchWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
+        let eveningWaterTaken = Math.round(Math.random() * (5 - 2) + 2);
+        this.steps = morningWalk + eveningWalk;
+        this.heartRate = Math.round(Math.random() * (100 - 70) + 70);
+        this.sleepInMinutes = Math.round(Math.random() * (480 - 300) + 300);
+        this.sleepInHours = this.getSleepInHours(this.sleepInMinutes);
+        this.consumedWaterCount = breakfastWaterTaken + lunchWaterTaken + eveningWaterTaken;
+        this.consumedWaterAmount = this.consumedWaterCount * 150;
+        this.gridData = this.getData();
+        this.chartDietData = this.getChartData('Diet');
+        this.chartData = this.getChartData('Workout');
+        this.weightChartData = this.getWeightChartData();
+        data = {
+          date: this.currentDate.toLocaleDateString(),
+          activity: {
+            steps: this.steps,
+            heartRate: this.heartRate,
+            calories: this.consumedCalories,
+            sleep: this.sleepInMinutes,
+            gridData: JSON.parse(JSON.stringify(this.gridData)),
+            charDietData: JSON.parse(JSON.stringify(this.chartDietData)),
+            chartWorkoutData: JSON.parse(JSON.stringify(this.chartData)),
+            activityChartMonthData: JSON.parse(JSON.stringify(this.activityChartMonthData)),
+            activityChartWeekData: JSON.parse(JSON.stringify(this.activityChartWeekData)),
+            morningWalk: morningWalk,
+            eveningWalk: eveningWalk
+          },
+          diet: {
+            breakFastMenu: JSON.parse(JSON.stringify(this.currentBreakFastMenu)),
+            breakFastCalories: this.currentBreakFastCalories,
+            breakFastText: this.currentBreakFastMenuText,
+            isBreakFastMenuAdded: this.isBreakFastMenuAdded,
+            snack1Menu: JSON.parse(JSON.stringify(this.currentSnack1Menu)),
+            snack1Calories: this.currentSnack1Calories,
+            snack1Text: this.currentSnack1MenuText,
+            isSnack1Added: this.isSnack1MenuAdded,
+            lunchMenu: JSON.parse(JSON.stringify(this.currentLunchMenu)),
+            lunchCalories: this.currentLunchCalories,
+            lunchText: this.currentLunchMenuText,
+            isLunchAdded: this.isLunchMenuAdded,
+            consumedCalories: this.consumedCalories,
+            burnedCalories: this.burnedCalories,
+            breakfastWaterTaken: breakfastWaterTaken,
+            lunchWaterTaken: lunchWaterTaken,
+            eveningWaterTaken: eveningWaterTaken,
+            proteins: this.currentTotalProteins,
+            fat: this.currentTotalFat,
+            carbs: this.currentTotalCarbs,
+            calcium: this.currentTotalCalcium,
+            sodium: this.currentTotalSodium,
+            iron: this.currentTotalIron,
+          },
+          fasting: {
+            chartWeightData: this.weightChartData,
+            consumedWaterCount: this.consumedWaterCount
+          }
+        };
+        this.masterData.push(data);
+      }
       this.updateWaterGauge();
       if (this.circulargauge) {
         this.endFasting();
       }
-      this.gridData = this.getData();
       if (this.gridInstance) {
         this.gridInstance.dataSource = this.gridData;
       }
-      this.chartDietData = this.getChartData('Diet');
-      this.chartData = this.getChartData('Workout');
       if (this.chartInstance) {
         this.chartInstance.series[0].dataSource = this.chartInstance.series[2].dataSource = this.chartDietData;
         this.chartInstance.series[1].dataSource = this.chartInstance.series[3].dataSource = this.chartData;
         this.chartInstance.refresh();
       }
-      this.weightChartData = this.getWeightChartData();
       if (this.weightChartInstance) {
         this.weightChartInstance.series[0].dataSource = this.weightChartData;
       }
       this.todayActivities = [
-        { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
-        { name: 'Breakfast Water', activity: 'Water Taken', count: breakfastWaterTaken, amount: breakfastWaterTaken + ' Glasses', percentage: (((breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
+        { name: 'Morning Walk', activity: 'Morning Walk', duration: '30m', distance: (data.activity.morningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((data.activity.morningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:00 AM' },
+        { name: 'Breakfast Water', activity: 'Water Taken', count: data.diet.breakfastWaterTaken, amount: data.diet.breakfastWaterTaken + ' Glasses', percentage: (((data.diet.breakfastWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '7:40 AM' },
         { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '9:00 AM' },
         { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '11:00 AM' },
-        { name: 'Lunch Water', activity: 'Water Taken', count: lunchWaterTaken, amount: lunchWaterTaken + ' Glasses', percentage: (((lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
+        { name: 'Lunch Water', activity: 'Water Taken', count: data.diet.lunchWaterTaken, amount: data.diet.lunchWaterTaken + ' Glasses', percentage: (((data.diet.lunchWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '12:00 PM' },
         { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '1:00 PM' },
         { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '3:00 PM' },
-        { name: 'Evening Water', activity: 'Water Taken', count: eveningWaterTaken, amount: eveningWaterTaken + ' Glasses', percentage: (((eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '4:00 PM' },
-        { name: 'Evening Walk', activity: 'Evening Walk', duration: '30m', distance: (eveningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((eveningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '5:30 PM' },
+        { name: 'Evening Water', activity: 'Water Taken', count: data.diet.eveningWaterTaken, amount: data.diet.eveningWaterTaken + ' Glasses', percentage: (((data.diet.eveningWaterTaken * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '4:00 PM' },
+        { name: 'Evening Walk', activity: 'Evening Walk', duration: '30m', distance: (data.activity.eveningWalk / 1312).toFixed(2).replace(/[.,]00$/, "") + 'km', percentage: ((data.activity.eveningWalk / 6000) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '5:30 PM' },
         { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: '8:00 PM' }
       ];
     } else {

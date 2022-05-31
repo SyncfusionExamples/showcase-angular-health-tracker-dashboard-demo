@@ -1140,19 +1140,19 @@ export class AppComponent {
       }
     }
     if (ind) {
-      if (this.todayActivities[ind].count > 0) {
+      this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
+      this.consumedWaterAmount = this.consumedWaterCount * 150;
+      let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
+      let index = this.closestIndex(percent);
+      let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
+      this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
+      if (content[index + 1]) {
+        this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
+      }
+      this.updateWaterGaugePointer();
+      if (this.todayActivities[ind].count > 1) {
         activity = { name: period, activity: 'Water Taken', count: (this.todayActivities[ind].count - 1), amount: (this.todayActivities[ind].count - 1) + ' Glasses', percentage: ((((this.todayActivities[ind].count - 1) * 150) / this.expectedWaterAmount) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.todayActivities[ind].time };
         this.todayActivities[ind] = activity;
-        this.consumedWaterCount = this.consumedWaterCount > 0 ? (this.consumedWaterCount - 1) : 0;
-        this.consumedWaterAmount = this.consumedWaterCount * 150;
-        let percent = Math.round((this.consumedWaterAmount / this.expectedWaterAmount) * 100);
-        let index = this.closestIndex(percent);
-        let content = ['Poor', 'Good', 'Almost', 'Perfect!'];
-        this.gauge.annotations[index].content = '<div class="e-water-annotation-text e-highlight-text">' + content[index] + '</div>';
-        if (content[index + 1]) {
-          this.gauge.annotations[index + 1].content = '<div class="e-water-annotation-text">' + content[index + 1] + '</div>';
-        }
-        this.updateWaterGaugePointer();
       } else {
         this.todayActivities.splice(ind, 1);
       }
@@ -1363,11 +1363,17 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentBreakFastCalories = this.currentTotalCal;
-      this.isBreakFastMenuAdded = true;
+      if (this.currentBreakFastMenuText !== '') {
+        this.isBreakFastMenuAdded = true;
+      }
       let activity = { name: 'Breakfast', activity: 'Breakfast', amount: this.currentBreakFastMenuText, percentage: ((this.currentBreakFastCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
         if (this.todayActivities[i].name === 'Breakfast') {
-          this.todayActivities[i] = activity;
+          if (this.currentBreakFastMenuText !== '') {
+            this.todayActivities[i] = activity;
+          } else {
+            this.todayActivities.splice(i, 1);
+          }
           isExist = true;
           break;
         }
@@ -1385,11 +1391,17 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentSnack1Calories = this.currentTotalCal;
-      this.isSnack1MenuAdded = true;
+      if (this.currentSnack1MenuText !== '') {
+        this.isSnack1MenuAdded = true;
+      }
       let activity = { name: 'Snack1', activity: 'Snack', amount: this.currentSnack1MenuText, percentage: ((this.currentSnack1Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
         if (this.todayActivities[i].name === 'Snack1') {
-          this.todayActivities[i] = activity;
+          if (this.currentSnack1MenuText !== '') {
+            this.todayActivities[i] = activity;
+          } else {
+            this.todayActivities.splice(i, 1);
+          }
           isExist = true;
           break;
         }
@@ -1407,11 +1419,17 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentLunchCalories = this.currentTotalCal;
-      this.isLunchMenuAdded = true;
+      if (this.currentLunchMenuText !== '') {
+        this.isLunchMenuAdded = true;
+      }
       let activity = { name: 'Lunch', activity: 'Lunch', amount: this.currentLunchMenuText, percentage: ((this.currentLunchCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
         if (this.todayActivities[i].name === 'Lunch') {
-          this.todayActivities[i] = activity;
+          if (this.currentLunchMenuText !== '') {
+            this.todayActivities[i] = activity;
+          } else {
+            this.todayActivities.splice(i, 1);
+          }
           isExist = true;
           break;
         }
@@ -1429,11 +1447,17 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentSnack2Calories = this.currentTotalCal;
-      this.isSnack2MenuAdded = true;
+      if (this.currentSnack2MenuText !== '') {
+        this.isSnack2MenuAdded = true;
+      }
       let activity = { name: 'Snack2', activity: 'Snack', amount: this.currentSnack2MenuText, percentage: ((this.currentSnack2Calories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
         if (this.todayActivities[i].name === 'Snack2') {
-          this.todayActivities[i] = activity;
+          if (this.currentSnack2MenuText !== '') {
+            this.todayActivities[i] = activity;
+          } else {
+            this.todayActivities.splice(i, 1);
+          }
           isExist = true;
           break;
         }
@@ -1451,11 +1475,17 @@ export class AppComponent {
         return elem.item;
       }).join(", ");
       this.currentDinnerCalories = this.currentTotalCal;
-      this.isDinnerMenuAdded = true;
+      if (this.currentDinnerMenuText !== '') {
+        this.isDinnerMenuAdded = true;
+      }
       let activity = { name: 'Dinner', activity: 'Dinner', amount: this.currentDinnerMenuText, percentage: ((this.currentDinnerCalories / this.expectedCalories) * 100).toFixed(2).replace(/[.,]00$/, "") + '%', time: this.menuTimePicker.value.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) };
       for (let i = 0; i < this.todayActivities.length; i++) {
         if (this.todayActivities[i].name === 'Dinner') {
-          this.todayActivities[i] = activity;
+          if (this.currentDinnerMenuText !== '') {
+            this.todayActivities[i] = activity;
+          } else {
+            this.todayActivities.splice(i, 1);
+          }
           isExist = true;
           break;
         }

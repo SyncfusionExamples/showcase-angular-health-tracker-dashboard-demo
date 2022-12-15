@@ -1714,6 +1714,7 @@ export class AppComponent {
   }
 
   updateComponents() {
+    debugger
     this.isToday = this.currentDate.getDate() === new Date().getDate() && this.currentDate.getMonth() === new Date().getMonth() && this.currentDate.getFullYear() === new Date().getFullYear();
     if (!this.isToday) {
       let data;

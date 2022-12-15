@@ -1,13 +1,15 @@
 <div>
   <div class="e-card e-custom-card">
     <div class="e-card-header">
-      <div class="e-profile-editor" (click)="onProfileEdit.emit($event)">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
       <div class="e-avatar e-avatar-circle">
         <img src="./assets/Profile/02.png" alt="JW" />
+      </div>
+      <div class="e-profile-editor" (click)="onProfileEdit.emit($event)">
+        <div class="e-profile-inner-editor">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
       &nbsp;
     </div>
@@ -47,7 +49,7 @@
   <div>
     <div class="e-journal" style="float: left;">Journals</div>
     <div class="e-journal-date" style="float: right;">
-      <ejs-datepicker #profiledate [value]='today' [max]="maxDate" width="100%" (change)="notify.emit($event)">
+      <ejs-datepicker #profiledate [value]='currentDate' [max]="maxDate" width="100%" (change)="notify.emit($event)">
       </ejs-datepicker>
     </div>
   </div>

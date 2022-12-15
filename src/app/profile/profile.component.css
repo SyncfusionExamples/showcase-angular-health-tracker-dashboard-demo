@@ -25,20 +25,25 @@
   top: calc(0% - 1em);
 }
 
-.e-profile-editor div {
+.e-profile-editor .e-profile-inner-editor div {
   border: 2px solid #B5C2CA;
-  transform: rotate(90deg);
   margin-right: 3px;
   float: right;
 }
 
-.e-profile-editor:hover {
+.e-profile-editor .e-profile-inner-editor {
+  width: 40px;
+  height: 40px;
+  border: none;
+  float: right;
+}
+
+.e-profile-editor .e-profile-inner-editor:hover {
   cursor: pointer;
 }
 
 .e-profile-editor {
-  margin-right: 10px;
-  margin-top: 25px;
+  margin-top: 16px;
   width: 30px;
   float: right;
   width: 100%;
@@ -94,7 +99,7 @@
   overflow-y: auto;
   overflow-x: hidden;
   width: 100%;
-  padding: 32px 10px
+  padding-top: 20px;
 }
 
 @media only screen and (max-width: 1200px) {

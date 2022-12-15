@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class ProfileComponent implements OnInit {
   @Output() notify = new EventEmitter();
   @Output() onProfileEdit = new EventEmitter();
-  @Input() today: Date;
+  @Input() currentDate: Date;
   @Input() activities: any;
   @Input() profileStats: any;
   public maxDate: Date = new Date();

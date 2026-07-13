@@ -62,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fitness-app:build"
+            "buildTarget": "fitness-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fitness-app:build:production"
+              "buildTarget": "fitness-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fitness-app:build"
+            "buildTarget": "fitness-app:build"
           }
         },
         "test": {
